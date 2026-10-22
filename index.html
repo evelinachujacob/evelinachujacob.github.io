@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evelin Achu Jacob</title>
+<script src="cursor.js"></script>
+<meta name="description" content="Evelin Achu Jacob, industrial and interaction designer at NID.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
+<style>
+:root{
+  --ink:#1a1815; --mute:#8a857d; --soft:#6b665e; --faint:#b7b2aa; --line:#ebe8e3; --bg:#fff;
+  --serif:"Crimson Pro",Georgia,serif; --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--sans);letter-spacing:-.3px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* header */
+.head{position:sticky;top:0;z-index:20;height:70px;padding:0 20px;display:flex;align-items:center;justify-content:flex-end;background:var(--bg)}
+.clock{font-size:15px;color:var(--soft);font-variant-numeric:tabular-nums}
+
+/* layout: 312 sidebar, then two 514 columns (scale with the window) */
+.wrap{display:grid;grid-template-columns:312px 1fr;column-gap:32px;padding:70px 20px 80px}
+.side{position:sticky;top:82px;align-self:start}
+h1{font:300 34px/1.05 var(--serif);letter-spacing:-.34px;margin:-8px 0 8px}  /* cap height lines up with the top of the first card */
+.role{font-size:14px;line-height:1.35;color:var(--mute);margin:0 0 12px}
+.pov{font-size:13.5px;line-height:1.55;font-weight:300;color:var(--soft);margin:0 0 56px}
+.pov p{margin:0 0 14px}
+.pov p:last-child{margin:0}
+.quote{margin:0 0 14px;padding:0;font:italic 300 16px/1.4 var(--serif);color:var(--ink)}
+.quote cite{font:normal 400 12px/1.4 var(--sans);color:var(--mute);white-space:nowrap}
+.side hr{border:0;border-top:1px solid var(--line);margin:0 0 40px}
+.label{font-size:11px;font-weight:500;letter-spacing:.66px;text-transform:uppercase;color:var(--faint);margin:0 0 10px}
+.nav{list-style:none;margin:0 0 22px;padding:0}
+.nav li+li{margin-top:2px}
+.nav a{display:flex;align-items:center;font-size:13px;line-height:20px;color:var(--mute);padding:1px 0;transition:color .2s}
+.nav .num{width:28px}
+.nav .ar{margin-left:auto;transition:transform .2s}
+.nav a:hover{color:var(--ink)}
+.nav a:hover .ar{transform:translateX(3px)}
+.nav a.ext:hover .ar{transform:translate(2px,-2px)}
+
+.work{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;align-items:start}
+.col{display:flex;flex-direction:column;gap:28px}
+.card .img{overflow:hidden;background:#f3f2ef;aspect-ratio:16/9}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.card:hover img{transform:scale(1.02)}
+.cap{display:flex;justify-content:flex-start;align-items:baseline;gap:10px;margin-top:14px}
+.cap .t{font-size:15px;line-height:1.4}
+.cap .y{font-size:14px;color:var(--soft);font-variant-numeric:tabular-nums}
+
+footer{margin:0 20px;padding:20px 6px 40px;border-top:1px solid var(--line);font-size:11px;color:var(--faint)}
+
+@media (max-width:960px){
+  .wrap{grid-template-columns:1fr;padding-top:40px}
+  .side{position:static;margin-bottom:40px}
+  .pov{margin-bottom:32px}
+}
+@media (max-width:640px){
+  .head{padding:0 16px}
+  .wrap{padding:32px 16px 64px}
+  .work{grid-template-columns:1fr}
+  .col{gap:32px}
+  .col+.col{margin-top:32px}
+  footer{margin:0 16px}
+}
+</style>
+
+<header class="head">
+  <span class="clock" id="clock">India</span>
+</header>
+
+<main class="wrap">
+  <aside class="side">
+    <h1>Evelin Achu Jacob</h1>
+    <p class="role">Industrial &amp; Interaction Designer</p>
+    <div class="pov">
+      <p>I&rsquo;m interested in how people interact with products and the experiences they take away.</p>
+      <blockquote class="quote">&ldquo;People will never forget how you made them feel.&rdquo; <cite>&mdash; Maya Angelou</cite></blockquote>
+      <p>I believe products work the same way. Beyond what they do, it&rsquo;s how they make people feel that makes them memorable.</p>
+    </div>
+    <hr>
+    <p class="label">Sections</p>
+    <ul class="nav">
+      <li><a href="#work"><span class="num">01.</span><span>Work</span><span class="ar">→</span></a></li>
+    </ul>
+    <p class="label">Links</p>
+    <ul class="nav">
+      <li><a class="ext" href="mailto:jacobevelyn009@gmail.com"><span class="num">02.</span><span>Email</span><span class="ar">↗</span></a></li>
+      <li><a class="ext" href="https://www.linkedin.com/in/evelin-achu-jacob-a696622b6/" target="_blank" rel="noopener"><span class="num">03.</span><span>LinkedIn</span><span class="ar">↗</span></a></li>
+      <li><a class="ext" href="resume.pdf" target="_blank" rel="noopener" data-cursor-text="Open resume"><span class="num">04.</span><span>Resume</span><span class="ar">↗</span></a></li>
+    </ul>
+  </aside>
+
+  <section class="work" id="work" aria-label="Work">
+    <!-- reading order across the rows: SPD, KAI, TCP, CMF -->
+    <div class="col">
+      <a class="card" href="mamalap.html">
+        <div class="img"><img src="images/home/spd-mamalap-hero.jpg" width="1420" height="799" alt="MamaLap, a lilac breastfeeding lap support, with the MamaLap wordmark"></div>
+        <div class="cap"><span class="t">MamaLap: Breastfeeding support for new mothers</span><span class="y">2025</span></div>
+      </a>
+      <a class="card" href="calbre.html">
+        <div class="img"><img style="object-position:28% 50%" src="images/home/tcp-calbre.jpg" width="1300" height="578" alt="Calbre, a handheld breath device"></div>
+        <div class="cap"><span class="t">Calbre: A breath companion for weight maintenance</span><span class="y">2026</span></div>
+      </a>
+    </div>
+    <div class="col">
+      <a class="card" href="kai.html">
+        <div class="img"><img src="images/home/kai.jpg" width="1300" height="931" alt="Delivery rider with a voice navigation device on the helmet"></div>
+        <div class="cap"><span class="t">KAI: Voice navigation for delivery riders</span><span class="y">2026</span></div>
+      </a>
+      <a class="card" href="cmf.html">
+        <div class="img"><img src="images/home/cmf-ev6.jpg" width="1300" height="644" alt="Kia EV6 rear lights at night"></div>
+        <div class="cap"><span class="t">KIA EV6: Colour, material and finish</span><span class="y">2025</span></div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Evelin Achu Jacob</footer>
+
+<script>
+(function(){
+  var el=document.getElementById('clock');
+  function tick(){ el.textContent='India, '+new Date().toLocaleTimeString('en-US',{timeZone:'Asia/Kolkata',hour:'numeric',minute:'2-digit',second:'2-digit'}); }
+  tick(); setInterval(tick,1000);
+})();
+</script>
+</html>

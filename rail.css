@@ -1,0 +1,31 @@
+/* Left section panel for the Figma-canvas case studies (KAI, Calbre, CMF).
+   Same look as the MamaLap rail: 160px column, 56px gap, faint links,
+   the current section goes dark + bold with a short accent line sliding in. */
+html{scroll-behavior:smooth}
+.pw{
+  --r-faint:#8D98A3; --r-ink:#312F2F; --r-acc:#926F63;
+  display:grid;grid-template-columns:160px minmax(0,1fr);gap:56px;align-items:start;
+  max-width:1744px;margin:0 auto;padding:0 44px;
+}
+.pw .cv{min-width:0}
+.pw .cv .canvas{margin:0}
+.rail{position:sticky;top:40px;padding-top:52px}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.rail a{
+  position:relative;display:block;text-decoration:none;
+  font-family:var(--r-font,"Raleway","Helvetica Neue",Arial,sans-serif);font-variant-numeric:lining-nums;
+  font-size:13.5px;line-height:1.35;color:var(--r-faint);
+  transition:color .3s cubic-bezier(.16,1,.3,1),padding .4s cubic-bezier(.16,1,.3,1);
+}
+.rail a:hover{color:var(--r-ink)}
+.rail a.on{color:var(--r-ink);font-weight:600;padding-left:16px}
+.rail a::before{content:"";position:absolute;left:0;top:.68em;width:0;height:1px;background:var(--r-acc);transition:width .4s cubic-bezier(.16,1,.3,1)}
+.rail a.on::before{width:9px}
+.rail a:focus-visible{outline:2px solid var(--r-acc);outline-offset:3px;border-radius:2px}
+/* section targets inside the canvas */
+.anc{position:absolute;left:0;width:1px;height:1px;scroll-margin-top:32px}
+@media (max-width:980px){
+  .pw{grid-template-columns:1fr;gap:0;padding:0}
+  .rail{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
