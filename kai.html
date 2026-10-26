@@ -7,14 +7,13 @@
 <link rel="stylesheet" href="rail.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
 <style>
-/* Exact copy of Figma "Desktop - 7" (TJdzXFw3OL2XGe9txX3lkp, node 60:94), 1440 x 13475,
-   trimmed to 12132 (Figma canvas was blank below the rider film).
-   Background tiles = every non-text layer, exported from Figma.
-   Every text layer is live HTML at its Figma position, font, size and colour.
+/* Exact copy of Figma "Desktop - 7" (TJdzXFw3OL2XGe9txX3lkp, node 60:94), 1440 x 14217, rebuilt 2026-10-25.
+   Background tiles = every non-text layer, exported from Figma at 2x.
+   Every Raleway text layer is live HTML at its Figma position, font, size and colour.
    On screens narrower than 1440 the whole canvas scales down; nothing reflows. */
 html,body{margin:0;background:#fff}
 body{font-family:"Raleway",sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;overflow-x:hidden}
-.canvas{position:relative;width:1440px;height:12132px;margin:0 auto;overflow:hidden;background:#fff}
+.canvas{position:relative;width:1440px;height:14217px;margin:0 auto;overflow:hidden;background:#fff}
 .tile{position:absolute;left:0;width:1440px;display:block}
 .t{position:absolute;margin:0;line-height:normal;font-weight:400;color:#000;white-space:pre-wrap;overflow-wrap:normal}
 .t span{font-family:inherit}
@@ -31,202 +30,240 @@ video{position:absolute;display:block;object-fit:cover;background:#fff}
 <aside class="rail" aria-label="Sections">
   <ol>
     <li><a href="#overview">Overview</a></li>
+    <li><a href="#riders">Riders</a></li>
     <li><a href="#two-apps">Delivery workflow</a></li>
     <li><a href="#behaviour">Rider behaviour</a></li>
+    <li><a href="#insights">Key insights</a></li>
     <li><a href="#direction">Design direction</a></li>
-    <li><a href="#persona">System persona</a></li>
-    <li><a href="#voice">Voice decisions</a></li>
+    <li><a href="#exploring">Exploring</a></li>
+    <li><a href="#voice">KAI’s voice</a></li>
     <li><a href="#flow">Interaction flow</a></li>
-    <li><a href="#wireframes">Wireframes</a></li>
+    <li><a href="#wireframes">Designing the map</a></li>
     <li><a href="#final-ui">Final UI</a></li>
     <li><a href="#map-zoom">Map zoom</a></li>
     <li><a href="#in-use">In use</a></li>
+    <li><a href="#learned">What I learned</a></li>
   </ol>
 </aside>
 <div class="cv">
 <div class="canvas" id="canvas">
 <span class="anc" id="overview" style="top:0px"></span>
-<span class="anc" id="two-apps" style="top:1620px"></span>
-<span class="anc" id="behaviour" style="top:2200px"></span>
-<span class="anc" id="direction" style="top:3220px"></span>
-<span class="anc" id="persona" style="top:4130px"></span>
-<span class="anc" id="voice" style="top:4970px"></span>
-<span class="anc" id="flow" style="top:5365px"></span>
-<span class="anc" id="wireframes" style="top:6995px"></span>
-<span class="anc" id="final-ui" style="top:7940px"></span>
-<span class="anc" id="map-zoom" style="top:10115px"></span>
-<span class="anc" id="in-use" style="top:11280px"></span>
-<img class="tile" src="images/kai-figma/t0.jpg" style="top:0px;height:1500px" alt="">
-<img class="tile" src="images/kai-figma/t1.jpg" style="top:1500px;height:1500px" alt="">
-<img class="tile" src="images/kai-figma/t2.jpg" style="top:3000px;height:1500px" alt="">
-<img class="tile" src="images/kai-figma/t3.jpg" style="top:4500px;height:1500px" alt="">
-<img class="tile" src="images/kai-figma/t4.jpg" style="top:6000px;height:1500px" alt="">
-<img class="tile" src="images/kai-figma/t5.jpg" style="top:7500px;height:1500px" alt="">
-<img class="tile" src="images/kai-figma/t6.jpg" style="top:9000px;height:1500px" alt="">
-<img class="tile" src="images/kai-figma/t7.jpg" style="top:10500px;height:1500px" alt="">
+<span class="anc" id="riders" style="top:1707px"></span>
+<span class="anc" id="two-apps" style="top:2279px"></span>
+<span class="anc" id="behaviour" style="top:2923px"></span>
+<span class="anc" id="insights" style="top:3858px"></span>
+<span class="anc" id="direction" style="top:4489px"></span>
+<span class="anc" id="exploring" style="top:4924px"></span>
+<span class="anc" id="voice" style="top:5859px"></span>
+<span class="anc" id="flow" style="top:7249px"></span>
+<span class="anc" id="wireframes" style="top:8867px"></span>
+<span class="anc" id="final-ui" style="top:9856px"></span>
+<span class="anc" id="map-zoom" style="top:11672px"></span>
+<span class="anc" id="in-use" style="top:12894px"></span>
+<span class="anc" id="learned" style="top:13732px"></span>
+<img class="tile" src="images/kai-figma/t0.jpg?v=1025" style="top:0px;height:1500px" alt="">
+<img class="tile" src="images/kai-figma/t1.jpg?v=1025" style="top:1500px;height:1500px" alt="">
+<img class="tile" src="images/kai-figma/t2.jpg?v=1025" style="top:3000px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/kai-figma/t3.jpg?v=1025" style="top:4500px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/kai-figma/t4.jpg?v=1025" style="top:6000px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/kai-figma/t5.jpg?v=1025" style="top:7500px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/kai-figma/t6.jpg?v=1025" style="top:9000px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/kai-figma/t7.jpg?v=1025" style="top:10500px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/kai-figma/t8.jpg?v=1025" style="top:12000px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/kai-figma/t9.jpg?v=1025" style="top:13500px;height:717px" alt="" loading="lazy">
 
 <!-- videos -->
-<video src="images/kai-figma/kai-speaks.mp4" muted loop playsinline autoplay preload="metadata" style="left:264px;top:6275px;width:918px;height:516px;box-shadow:3px 4px 30.4px -11px rgba(0,0,0,.25)" aria-label="KAI speaking and listening"></video>
-<div class="scr scr-az" style="left:270.83px;top:10267.83px;width:342px;height:628.33px"><video src="images/kai-figma/autozoom.mp4" muted loop playsinline autoplay preload="metadata" style="left:49.19px;top:28.19px;width:243.74px;height:529.59px"></video></div>
-<img class="ov" src="images/kai-figma/phone-autozoom.png" style="left:270.83px;top:10267.83px;width:342px;height:628.33px" alt="KAI map, auto-zoom during the ride">
-<div class="scr scr-pv" style="left:842.83px;top:10553.5px;width:345px;height:640.67px"><video src="images/kai-figma/route-preview.mp4" muted loop playsinline autoplay preload="metadata" style="left:50.32px;top:28.65px;width:244.65px;height:540.27px"></video></div>
-<img class="ov" src="images/kai-figma/phone-preview.png" style="left:842.83px;top:10553.5px;width:345px;height:640.67px" alt="KAI map, route preview before the ride">
-<video src="images/kai-figma/rider-film.mp4" muted loop playsinline autoplay preload="metadata" style="left:90px;top:11314px;width:1287px;height:698px" aria-label="Rider using KAI"></video>
+<video src="images/kai-figma/kai-speaks.mp4" muted loop playsinline autoplay preload="metadata" style="left:264px;top:8170px;width:918px;height:516px;border-radius:14px;box-shadow:3px 4px 30.4px -11px rgba(0,0,0,.25)" aria-label="KAI speaking and listening"></video>
+<div class="scr scr-az" style="left:179.83px;top:11852.83px;width:342px;height:628.33px"><video src="images/kai-figma/autozoom.mp4" muted loop playsinline autoplay preload="metadata" style="left:49.19px;top:28.19px;width:243.74px;height:529.59px"></video></div>
+<img class="ov" src="images/kai-figma/phone-autozoom.png" style="left:179.83px;top:11852.83px;width:342px;height:628.33px" alt="KAI map, zooming out on a long stretch during the ride">
+<div class="scr scr-pv" style="left:830.83px;top:12040.50px;width:345px;height:640.67px"><video src="images/kai-figma/route-preview.mp4" muted loop playsinline autoplay preload="metadata" style="left:50.32px;top:28.65px;width:244.65px;height:540.27px"></video></div>
+<img class="ov" src="images/kai-figma/phone-preview.png" style="left:830.83px;top:12040.50px;width:345px;height:640.67px" alt="KAI map, route overview before the ride">
+<video src="images/kai-figma/rider-film.mp4" muted loop playsinline autoplay preload="metadata" style="left:95px;top:12934px;width:1287px;height:698px" aria-label="Rider using KAI"></video>
 
-<!-- text layers 1-50 -->
-<p class="t" style="left:91px;top:895px;width:1181px;"><span style="font-size:30px;color:#5f5f5f;">A navigation experience that reduces cognitive load for delivery riders through simplified maps and voice-guided directions.</span></p>
-<p class="t" style="left:92px;top:1654px;white-space:pre;"><span style="font-size:44px;color:#1a1a1a;font-weight:600;line-height:1.4;">Delivery Workflow</span></p>
-<p class="t" style="left:92px;top:1720px;width:1000px;"><span style="font-size:22px;color:#5f5f5f;line-height:1.4;">Riders switch between Zomato and Google Maps at different stages of a delivery.</span></p>
-<p class="t" style="left:89px;top:3251px;width:1200px;"><span style="font-size:44px;color:#1a1a1a;font-weight:600;line-height:1.4;">From reading the map to understanding the route</span></p>
-<p class="t" style="left:89px;top:3314px;width:1285px;"><span style="font-size:22px;color:#5f5f5f;line-height:1.4;">Riders rely on visual instructions while navigating, often needing to check the map, adjust the view, and interpret upcoming turns while riding.</span></p>
-<p class="t" style="left:92px;top:2140px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;line-height:1.4;">4 switches</span><span style="font-size:15px;color:#5f5f5f;line-height:1.4;"> between the two apps in one order.</span></p>
-<p class="t" style="left:92px;top:4324.01px;width:463.43px;height:25.58px;"><span style="font-size:22px;color:#5f5f5f;line-height:1.4;">Compared with Google Maps’ voice.</span></p>
-<p class="t" style="left:372.31px;top:4421.68px;width:73.66px;height:18.41px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">CONCISE</span></p>
-<p class="t" style="left:997.38px;top:4421.68px;width:103.33px;height:18.41px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">DETAILED</span></p>
-<p class="t" style="left:357.99px;top:4513.75px;width:99.23px;height:19.44px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">NUETRAL</span></p>
-<p class="t" style="left:997.38px;top:4513.75px;width:77.75px;height:19.44px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">CALM</span></p>
-<p class="t" style="left:312.97px;top:4606.85px;width:144.25px;height:18.41px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">LANDMARK-LED</span></p>
-<p class="t" style="left:997.38px;top:4606.85px;width:84.91px;height:15.35px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">ROAD-LED</span></p>
-<p class="t" style="left:332.41px;top:4698.92px;width:124.81px;height:18.41px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">CONTINUOUS</span></p>
-<p class="t" style="left:997px;top:4699.01px;width:154px;height:18px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">CONTEXT AWARE</span></p>
-<p class="t" style="left:955.44px;top:4770.53px;width:54.22px;height:18.41px;"><span style="font-size:16px;color:#5f5f5f;line-height:1.4;">KAI</span></p>
-<p class="t" style="left:1041.37px;top:4770.53px;width:109.46px;height:18.41px;"><span style="font-size:16px;color:#5f5f5f;line-height:1.4;">Google Maps</span></p>
-<p class="t" style="left:90px;top:5395px;white-space:pre;"><span style="font-size:36px;color:#1a1a1a;font-weight:600;line-height:1.35;">VUI Interaction Flow</span></p>
-<p class="t" style="left:90px;top:5561px;width:170px;"><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.35;"> Route Deviation</span></p>
-<p class="t" style="left:293px;top:5551px;width:138px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Rider leaves the route</span></p>
-<p class="t" style="left:513px;top:5540px;width:248px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Gives one useful direction</span></p>
-<p class="t" style="left:513px;top:5568px;width:248px;"><span style="font-size:14px;color:#5f5f5f;font-style:italic;line-height:1.35;">“Take the next left. </span></p>
-<p class="t" style="left:883.57px;top:5555px;width:100px;text-align:center;"><span style="font-size:13px;color:#1a1a1a;font-weight:600;line-height:1.35;">Keeps own
+<!-- text layers -->
+<p class="t" style="left:115px;top:2319px;white-space:pre;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.4;">Delivery Workflow</span></p>
+<p class="t" style="left:95px;top:2375px;width:1193px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.5;">Following the workflow revealed where riders had to keep checking, interpreting, switching apps and interacting with their phones.</span></p>
+<p class="t" style="left:113px;top:4964px;width:1200px;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.4;">Exploring ways to navigate</span></p>
+<p class="t" style="left:92px;top:5415px;width:330px;"><span style="font-size:25px;color:#3b82f6;line-height:1.4;">Why phone + voice?</span></p>
+<p class="t" style="left:92px;top:6162.01px;width:463.43px;height:25.58px;"><span style="font-size:22px;color:#5f5f5f;line-height:1.4;">Compared with Google Maps’ voice.</span></p>
+<p class="t" style="left:372.31px;top:6259.68px;width:73.66px;height:18.41px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">CONCISE</span></p>
+<p class="t" style="left:997.38px;top:6259.68px;width:103.33px;height:18.41px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">DETAILED</span></p>
+<p class="t" style="left:357.99px;top:6351.75px;width:99.23px;height:19.44px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">NUETRAL</span></p>
+<p class="t" style="left:997.38px;top:6351.75px;width:77.75px;height:19.44px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">CALM</span></p>
+<p class="t" style="left:312.97px;top:6444.85px;width:144.25px;height:18.41px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">LANDMARK-LED</span></p>
+<p class="t" style="left:997.38px;top:6444.85px;width:84.91px;height:15.35px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">ROAD-LED</span></p>
+<p class="t" style="left:332.41px;top:6536.92px;width:124.81px;height:18.41px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">CONTINUOUS</span></p>
+<p class="t" style="left:997px;top:6537.01px;width:154px;height:18px;"><span style="font-size:16px;color:#1a1a1a;font-weight:700;line-height:1.4;">CONTEXT AWARE</span></p>
+<p class="t" style="left:955.44px;top:6608.53px;width:54.22px;height:18.41px;"><span style="font-size:16px;color:#5f5f5f;line-height:1.4;">KAI</span></p>
+<p class="t" style="left:1041.37px;top:6608.53px;width:109.46px;height:18.41px;"><span style="font-size:16px;color:#5f5f5f;line-height:1.4;">Google Maps</span></p>
+<p class="t" style="left:118px;top:7289px;white-space:pre;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.35;">VUI Interaction Flow</span></p>
+<p class="t" style="left:95px;top:7456px;width:170px;"><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.35;"> Route Deviation</span></p>
+<p class="t" style="left:298px;top:7446px;width:138px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Rider leaves the route</span></p>
+<p class="t" style="left:518px;top:7435px;width:248px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Gives one useful direction</span></p>
+<p class="t" style="left:518px;top:7463px;width:248px;"><span style="font-size:14px;color:#5f5f5f;font-style:italic;line-height:1.35;">“Take the next left. </span></p>
+<p class="t" style="left:888.57px;top:7450px;width:100px;text-align:center;"><span style="font-size:13px;color:#1a1a1a;font-weight:600;line-height:1.35;">Keeps own
 way?</span></p>
-<p class="t" style="left:1053px;top:5478px;width:275px;"><span style="font-size:16px;color:#5f5f5f;font-weight:600;line-height:1.35;">Recalculates without repeated prompts</span></p>
-<p class="t" style="left:1053px;top:5528px;width:275px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">Never “You missed your turn”.</span></p>
-<p class="t" style="left:1053px;top:5624px;width:275px;"><span style="font-size:16px;color:#5f5f5f;font-weight:600;line-height:1.35;">Back on route</span></p>
-<p class="t" style="left:90px;top:5771px;width:170px;"><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.35;">Quiet mode</span></p>
-<p class="t" style="left:293px;top:5761px;width:138px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Says mute while KAI speaks</span></p>
-<p class="t" style="left:503px;top:5759.5px;width:138px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Confirms once</span></p>
-<p class="t" style="left:503px;top:5787.5px;width:138px;"><span style="font-size:14px;color:#5f5f5f;font-style:italic;line-height:1.35;">“Okay, quiet.”</span></p>
-<p class="t" style="left:713px;top:5750px;width:268px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Speaks only for</span></p>
-<p class="t" style="left:713px;top:5778px;width:268px;"><span style="font-size:14px;color:#5f5f5f;font-style:italic;line-height:1.35;">Blocked road · pickup side · arrival</span></p>
-<p class="t" style="left:1053px;top:5761px;width:275px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Stays quiet until pickup or guidance is resumed by the rider (“hello Kai”)</span></p>
-<p class="t" style="left:136px;top:6165px;white-space:pre;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">Rider</span></p>
-<p class="t" style="left:256px;top:6165px;white-space:pre;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">KAI speaks</span></p>
-<p class="t" style="left:413px;top:6165px;white-space:pre;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">KAI silent</span></p>
-<p class="t" style="left:560px;top:6165px;white-space:pre;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">KAI checks</span></p>
-<p class="t" style="left:941.57px;top:5491px;white-space:pre;"><span style="font-size:13px;color:#f45b4f;font-weight:600;">Yes</span></p>
-<p class="t" style="left:941.57px;top:5639px;white-space:pre;"><span style="font-size:13px;color:#f45b4f;font-weight:600;">No</span></p>
-<p class="t" style="left:90px;top:5505px;white-space:pre;"><span style="font-size:12px;color:#5f5f5f;font-weight:600;letter-spacing:0.08em;">02 / REROUTE WITHOUT PRESSURE</span></p>
-<p class="t" style="left:90px;top:5715px;white-space:pre;"><span style="font-size:12px;color:#5f5f5f;font-weight:600;letter-spacing:0.08em;">04 / LET RIDERS CONTROL GUIDANCE</span></p>
-<p class="t" style="left:90px;top:6003px;width:170px;"><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.35;">Road blocked ahead</span></p>
-<p class="t" style="left:293px;top:5993px;width:138px;"><span style="font-size:16px;color:#000000;font-weight:600;line-height:1.35;"> Rider encounters a roadblock</span></p>
-<p class="t" style="left:513px;top:5982px;width:248px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Problem and fix, in one line</span></p>
-<p class="t" style="left:513px;top:6010px;width:248px;"><span style="font-size:14px;color:#5f5f5f;font-style:italic;line-height:1.35;">“Road blocked ahead. Let’s take the next left.”</span></p>
-<p class="t" style="left:883.57px;top:5997px;width:100px;text-align:center;"><span style="font-size:13px;color:#1a1a1a;font-weight:600;line-height:1.35;">Takes the
+<p class="t" style="left:1058px;top:7373px;width:275px;"><span style="font-size:16px;color:#5f5f5f;font-weight:600;line-height:1.35;">Recalculates without repeated prompts</span></p>
+<p class="t" style="left:1058px;top:7423px;width:275px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">Never “You missed your turn”.</span></p>
+<p class="t" style="left:1058px;top:7519px;width:275px;"><span style="font-size:16px;color:#5f5f5f;font-weight:600;line-height:1.35;">Back on route</span></p>
+<p class="t" style="left:95px;top:7666px;width:170px;"><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.35;">Quiet mode</span></p>
+<p class="t" style="left:298px;top:7656px;width:138px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Says mute while KAI speaks</span></p>
+<p class="t" style="left:508px;top:7654.5px;width:138px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Confirms once</span></p>
+<p class="t" style="left:508px;top:7682.5px;width:138px;"><span style="font-size:14px;color:#5f5f5f;font-style:italic;line-height:1.35;">“Okay, quiet.”</span></p>
+<p class="t" style="left:718px;top:7645px;width:268px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Speaks only for</span></p>
+<p class="t" style="left:718px;top:7673px;width:268px;"><span style="font-size:14px;color:#5f5f5f;font-style:italic;line-height:1.35;">Blocked road · pickup side · arrival</span></p>
+<p class="t" style="left:1058px;top:7656px;width:275px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Stays quiet until pickup or guidance is resumed by the rider (“hello Kai”)</span></p>
+<p class="t" style="left:141px;top:8060px;white-space:pre;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">Rider</span></p>
+<p class="t" style="left:261px;top:8060px;white-space:pre;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">KAI speaks</span></p>
+<p class="t" style="left:418px;top:8060px;white-space:pre;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">KAI silent</span></p>
+<p class="t" style="left:565px;top:8060px;white-space:pre;"><span style="font-size:14px;color:#5f5f5f;line-height:1.35;">KAI checks</span></p>
+<p class="t" style="left:946.57px;top:7386px;white-space:pre;"><span style="font-size:13px;color:#f45b4f;font-weight:600;">Yes</span></p>
+<p class="t" style="left:946.57px;top:7534px;white-space:pre;"><span style="font-size:13px;color:#f45b4f;font-weight:600;">No</span></p>
+<p class="t" style="left:95px;top:7400px;white-space:pre;"><span style="font-size:12px;color:#5f5f5f;font-weight:600;letter-spacing:0.08em;">02 / REROUTE WITHOUT PRESSURE</span></p>
+<p class="t" style="left:95px;top:7610px;white-space:pre;"><span style="font-size:12px;color:#5f5f5f;font-weight:600;letter-spacing:0.08em;">04 / LET RIDERS CONTROL GUIDANCE</span></p>
+<p class="t" style="left:95px;top:7898px;width:170px;"><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.35;">Road blocked ahead</span></p>
+<p class="t" style="left:298px;top:7888px;width:138px;"><span style="font-size:16px;color:#000000;font-weight:600;line-height:1.35;"> Rider encounters a roadblock</span></p>
+<p class="t" style="left:518px;top:7877px;width:248px;"><span style="font-size:16px;color:#1a1a1a;font-weight:600;line-height:1.35;">Problem and fix, in one line</span></p>
+<p class="t" style="left:518px;top:7905px;width:248px;"><span style="font-size:14px;color:#5f5f5f;font-style:italic;line-height:1.35;">“Road blocked ahead. Let’s take the next left.”</span></p>
+<p class="t" style="left:888.57px;top:7892px;width:100px;text-align:center;"><span style="font-size:13px;color:#1a1a1a;font-weight:600;line-height:1.35;">Takes the
 left?</span></p>
-<p class="t" style="left:1053px;top:5931px;width:275px;"><span style="font-size:16px;color:#5f5f5f;font-weight:600;line-height:1.35;">Continues on new route. KAI stays silent.</span></p>
-<p class="t" style="left:1053px;top:6059px;width:304px;"><span style="font-size:16px;color:#5f5f5f;font-weight:600;line-height:1.35;">KAI recalculates silently. No repeated warning.</span></p>
-<p class="t" style="left:941.57px;top:5933px;white-space:pre;"><span style="font-size:13px;color:#f45b4f;font-weight:600;">Yes</span></p>
-<p class="t" style="left:941.57px;top:6081px;white-space:pre;"><span style="font-size:13px;color:#f45b4f;font-weight:600;">No</span></p>
-
-<!-- text layers 51-100 -->
-<p class="t" style="left:90px;top:5947px;white-space:pre;"><span style="font-size:12px;color:#5f5f5f;font-weight:600;letter-spacing:0.08em;">03 / WARMER WHEN STRESSED</span></p>
-<p class="t" style="left:92px;top:4164.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:700;letter-spacing:0.08em;line-height:1.4;">01</span><span style="font-size:15px;color:#1a1a1a;font-weight:700;letter-spacing:0.08em;line-height:1.4;"> / SYSTEM PERSONA</span></p>
-<p class="t" style="left:92px;top:4196.01px;width:620px;"><span style="font-size:36px;color:#1a1a1a;font-weight:600;line-height:1.4;">A co-pilot, not another source of pressure.</span></p>
-<p class="t" style="left:765px;top:4197.01px;width:600px;"><span style="font-size:20px;color:#5f5f5f;line-height:1.4;">Delivery riders work under constant time pressure. KAI provides calm, concise guidance without rushing, judging, or overwhelming them.</span></p>
-<p class="t" style="left:90px;top:4999px;white-space:pre;"><span style="font-size:36px;color:#1a1a1a;font-weight:600;line-height:1.4;">VOICE DESIGN DECISIONS - how KAI speaks.</span></p>
-<p class="t" style="left:90px;top:5117.01px;width:306px;"><span style="font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;">Speak only when it matters</span></p>
-<p class="t" style="left:90px;top:5156.01px;width:270px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Give timely directions. Stay silent when no instruction is needed.</span></p>
-<p class="t" style="left:411px;top:5117.01px;width:306px;"><span style="font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;">Reroute without pressure</span></p>
-<p class="t" style="left:411px;top:5156.01px;width:270px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Avoid repeated corrections when riders take a different route.</span></p>
-<p class="t" style="left:725px;top:5117.01px;width:306px;"><span style="font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;">Warmer when stressed</span></p>
-<p class="t" style="left:725px;top:5156.01px;width:270px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Use short, companion-like phrases in stressful situations.</span></p>
-<p class="t" style="left:1039px;top:5117.01px;width:306px;"><span style="font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;">Let riders control guidance</span></p>
-<p class="t" style="left:1039px;top:5156.01px;width:270px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Allow riders to mute guidance when they know the route.</span></p>
-<p class="t" style="left:90px;top:5087.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;letter-spacing:0.04em;line-height:1.4;">01</span></p>
-<p class="t" style="left:411px;top:5087.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;letter-spacing:0.04em;line-height:1.4;">02</span></p>
-<p class="t" style="left:725px;top:5087.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;letter-spacing:0.04em;line-height:1.4;">03</span></p>
-<p class="t" style="left:1039px;top:5087.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;letter-spacing:0.04em;line-height:1.4;">04</span></p>
-<p class="t" style="left:92px;top:2024px;white-space:pre;"><span style="font-size:17px;color:#f45b4f;font-weight:600;line-height:1.4;">01</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.4;">  Navigate to pickup</span></p>
-<p class="t" style="left:92px;top:2054px;width:353.96px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.4;">Zomato shows the restaurant pin and storefront photos. “Map” opens Google Maps.</span></p>
-<p class="t" style="left:475.96px;top:2024px;white-space:pre;"><span style="font-size:17px;color:#f45b4f;font-weight:600;line-height:1.4;">02</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.4;">  Arrive at pickup</span></p>
-<p class="t" style="left:475.96px;top:2054px;width:270.23px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.4;">Back in Zomato, the rider swipes “Reached pickup”. It only works near the pin.</span></p>
-<p class="t" style="left:776.2px;top:2024px;white-space:pre;"><span style="font-size:17px;color:#f45b4f;font-weight:600;line-height:1.4;">03</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.4;">  Navigate to the customer</span></p>
-<p class="t" style="left:776.2px;top:2054px;width:292.31px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.4;">Zomato shows the drop pin and the customer’s note. Google Maps ends at the pin, not the door.</span></p>
-<p class="t" style="left:1098.5px;top:2024px;white-space:pre;"><span style="font-size:17px;color:#f45b4f;font-weight:600;line-height:1.4;">04</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.4;">  Hand over</span></p>
-<p class="t" style="left:1098.5px;top:2054px;width:242.81px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.4;">Instructions and customer details appear. The rider swipes “Order delivered”.</span></p>
-<p class="t" style="left:1050px;top:1762px;white-space:pre;"><span style="font-size:14px;color:#f45b4f;font-weight:600;line-height:1.4;">Zomato</span></p>
-<p class="t" style="left:1144px;top:1762px;white-space:pre;"><span style="font-size:14px;color:#1f6fd1;font-weight:600;line-height:1.4;">Google Maps</span></p>
-<p class="t" style="left:1274px;top:1762px;white-space:pre;"><span style="font-size:14px;color:#5e5e5e;font-weight:600;line-height:1.4;">App switch</span></p>
-<p class="t" style="left:100px;top:7628.81px;width:174.34px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">Google Maps today</span></p>
-<p class="t" style="left:100px;top:7652.81px;width:174.34px;"><span style="font-size:12px;color:#5f5f5f;line-height:18px;">Road-name banner, five buttons on the right, ETA as the biggest text.</span></p>
-<p class="t" style="left:362.42px;top:7164px;width:174.34px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">Fewer labels</span></p>
-<p class="t" style="left:887.27px;top:7164px;width:174.34px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">Familiarity vs Accessibility</span></p>
-<p class="t" style="left:1149.69px;top:7628.75px;width:174.31px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">ETA reduced - Kai voice layer</span></p>
-<p class="t" style="left:624.84px;top:7628.81px;width:174.34px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">Left side icons - Thumb reach</span></p>
-<p class="t" style="left:362.42px;top:7188px;width:174.34px;"><span style="font-size:12px;color:#5f5f5f;line-height:18px;">Only the roads and the one landmark at the next turn stay on the map.</span></p>
-<p class="t" style="left:887.27px;top:7208px;width:174.34px;"><span style="font-size:12px;color:#5f5f5f;line-height:18px;">Volume and route preview only, on the right where riders already reach in Google Maps.</span></p>
-<p class="t" style="left:624.84px;top:7672.81px;width:174.34px;"><span style="font-size:12px;color:#5f5f5f;line-height:18px;">Phones  mounted usually on left side,</span></p>
-<p class="t nw" style="left:92px;top:762px;width:227px;"><span style="font-size:22px;color:#000000;">Product Designer</span></p>
-<p class="t nw" style="left:585px;top:734px;width:124px;"><span style="font-size:22px;color:#000000;text-transform:uppercase;">skills</span></p>
-<p class="t nw" style="left:348px;top:762px;width:152px;"><span style="font-size:22px;color:#000000;">2 weeks (2025)</span></p>
-<p class="t nw" style="left:585px;top:763px;width:910px;"><span style="font-size:22px;color:#000000;text-transform:capitalize;"> UX Research · Interaction Design · UI Design · VUI Design · Product Design</span></p>
-<p class="t nw" style="left:92px;top:733px;width:227px;"><span style="font-size:22px;color:#000000;text-transform:uppercase;">Role</span></p>
-<p class="t nw" style="left:348px;top:733px;width:124px;"><span style="font-size:22px;color:#000000;text-transform:uppercase;">Timeline</span></p>
-<p class="t" style="left:93px;top:2231px;white-space:pre;"><span style="font-size:44px;color:#1a1a1a;font-weight:600;line-height:1.4;">On-Road Rider Behaviour</span></p>
-<p class="t" style="left:93px;top:2297px;width:1100px;"><span style="font-size:22px;color:#5f5f5f;line-height:1.4;">Primary and secondary research into rider behaviour, and the demands it puts on navigation.</span></p>
-<p class="t" style="left:92px;top:2726px;width:300px;"><span style="font-size:19px;color:#f45b4f;font-weight:600;line-height:1.4;">01</span><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Repeated glances</span></p>
-<p class="t" style="left:1028px;top:3080px;width:316px;"><span style="font-size:19px;color:#f45b4f;font-weight:600;line-height:1.4;">04</span><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Repeated zoom adjustments</span></p>
-<p class="t" style="left:92px;top:3081px;width:300px;"><span style="font-size:19px;color:#f45b4f;font-weight:600;line-height:1.4;">03</span><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Adapting to audio needs </span></p>
-<p class="t" style="left:1028px;top:2722.91px;width:300px;"><span style="font-size:19px;color:#f45b4f;font-weight:600;line-height:1.4;">02</span><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Poor map visibility</span></p>
-<p class="t" style="left:92px;top:2757px;width:300px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Checking the map to understand the next move.</span></p>
-
-<!-- text layers 101-144 -->
-<p class="t" style="left:1028px;top:3120px;width:300px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Zooming in and out to inspect the route and due to uncertainity.</span></p>
-<p class="t" style="left:92px;top:3119px;width:300px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Riders juggle mounted phones, handheld use, and earbuds for navigation and calls.</span></p>
-<p class="t" style="left:1028px;top:2753.91px;width:300px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Hard to read in sunlight, rain and low light, or from a low mount.</span></p>
-<p class="t" style="left:208px;top:2384px;width:250px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;">Visual distraction</span></p>
-<p class="t" style="left:208px;top:2415px;width:250px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Repeated glances and cluttered map information divide attention.</span></p>
-<p class="t" style="left:648px;top:2384px;width:250px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;">Physical interaction</span></p>
-<p class="t" style="left:648px;top:2415px;width:250px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Riders tap, swipe and switch apps while riding.</span></p>
-<p class="t" style="left:1088px;top:2384px;width:250px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;">Navigation uncertainty</span></p>
-<p class="t" style="left:1088px;top:2415px;width:250px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Riders struggle to interpret the next manoeuvre or confirm route progress at critical moments.</span></p>
-<p class="t" style="left:92px;top:2809px;white-space:pre;"><span style="font-size:15px;color:#1f6fd1;font-weight:600;letter-spacing:0.02em;">Visual distraction</span></p>
-<p class="t" style="left:1028px;top:2805.91px;white-space:pre;"><span style="font-size:15px;color:#1f6fd1;font-weight:600;letter-spacing:0.02em;">Visual distraction</span></p>
-<p class="t" style="left:92px;top:3177px;white-space:pre;"><span style="font-size:15px;color:#1f6fd1;font-weight:600;letter-spacing:0.02em;">physical intercation</span></p>
-<p class="t" style="left:1028px;top:3172px;white-space:pre;"><span style="font-size:15px;color:#1f6fd1;font-weight:600;letter-spacing:0.02em;">Physical interaction · Navigation Uncertainty</span></p>
-<p class="t" style="left:108px;top:3886px;width:540px;"><span style="font-size:26px;color:#f45b4f;font-weight:600;line-height:1.4;">01</span><span style="font-size:26px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Reduce manual interaction</span></p>
-<p class="t" style="left:108px;top:3946px;width:520px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Use voice guidance to minimise the need to touch the phone while navigating.</span></p>
-<p class="t" style="left:708px;top:3886px;width:540px;"><span style="font-size:26px;color:#f45b4f;font-weight:600;line-height:1.4;">02</span><span style="font-size:26px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Simplify navigation information</span></p>
-<p class="t" style="left:708px;top:3946px;width:520px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Make the next manoeuvre clear through a less cluttered map and concise, well-timed voice instructions.</span></p>
-<p class="t" style="left:1028px;top:3579px;width:380px;"><span style="font-size:17px;color:#000000;line-height:1.4;">Evaluation Criteria</span></p>
-<p class="t" style="left:1028px;top:3603px;width:380px;"><span style="font-size:17px;color:#000000;font-weight:700;line-height:1.4;">Cost
+<p class="t" style="left:1058px;top:7826px;width:275px;"><span style="font-size:16px;color:#5f5f5f;font-weight:600;line-height:1.35;">Continues on new route. KAI stays silent.</span></p>
+<p class="t" style="left:1058px;top:7954px;width:304px;"><span style="font-size:16px;color:#5f5f5f;font-weight:600;line-height:1.35;">KAI recalculates silently. No repeated warning.</span></p>
+<p class="t" style="left:946.57px;top:7828px;white-space:pre;"><span style="font-size:13px;color:#f45b4f;font-weight:600;">Yes</span></p>
+<p class="t" style="left:946.57px;top:7976px;white-space:pre;"><span style="font-size:13px;color:#f45b4f;font-weight:600;">No</span></p>
+<p class="t" style="left:95px;top:7842px;white-space:pre;"><span style="font-size:12px;color:#5f5f5f;font-weight:600;letter-spacing:0.08em;">03 / WARMER WHEN STRESSED</span></p>
+<p class="t" style="left:113px;top:6025px;width:620px;"><span style="font-size:32px;color:#1a1a1a;font-weight:600;line-height:1.4;">SYSTEM PERSONA</span></p>
+<p class="t" style="left:786px;top:6026px;width:600px;"><span style="font-size:20px;color:#5f5f5f;line-height:1.4;">Delivery riders work under constant time pressure. KAI provides calm, concise guidance without rushing, judging, or overwhelming them.</span></p>
+<p class="t" style="left:113px;top:6945px;white-space:pre;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.4;">VOICE DESIGN DECISIONS - how KAI speaks.</span></p>
+<p class="t" style="left:90px;top:7062.01px;width:306px;"><span style="font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;">Speak only when it matters</span></p>
+<p class="t" style="left:90px;top:7101.01px;width:270px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Give timely directions. Stay silent when no instruction is needed.</span></p>
+<p class="t" style="left:411px;top:7062.01px;width:306px;"><span style="font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;">Reroute without pressure</span></p>
+<p class="t" style="left:411px;top:7101.01px;width:270px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Avoid repeated corrections when riders take a different route.</span></p>
+<p class="t" style="left:725px;top:7062.01px;width:306px;"><span style="font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;">Warmer when stressed</span></p>
+<p class="t" style="left:725px;top:7101.01px;width:270px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Use short, companion-like phrases in stressful situations.</span></p>
+<p class="t" style="left:1039px;top:7062.01px;width:306px;"><span style="font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;">Let riders control guidance</span></p>
+<p class="t" style="left:1039px;top:7101.01px;width:270px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Allow riders to mute guidance when they know the route.</span></p>
+<p class="t" style="left:90px;top:7032.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;letter-spacing:0.04em;line-height:1.4;">01</span></p>
+<p class="t" style="left:411px;top:7032.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;letter-spacing:0.04em;line-height:1.4;">02</span></p>
+<p class="t" style="left:725px;top:7032.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;letter-spacing:0.04em;line-height:1.4;">03</span></p>
+<p class="t" style="left:1039px;top:7032.01px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;letter-spacing:0.04em;line-height:1.4;">04</span></p>
+<p class="t" style="left:97px;top:2733px;white-space:pre;"><span style="font-size:17px;color:#f45b4f;font-weight:600;line-height:1.4;">01</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.4;">  Navigate to pickup</span></p>
+<p class="t" style="left:97px;top:2763px;width:353.96px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.4;">Zomato shows the restaurant pin and storefront photos. “Map” opens Google Maps.</span></p>
+<p class="t" style="left:484px;top:2733px;white-space:pre;"><span style="font-size:17px;color:#f45b4f;font-weight:600;line-height:1.4;">02</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.4;">  Arrive at pickup</span></p>
+<p class="t" style="left:484px;top:2763px;width:240px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.4;">Back in Zomato, the rider swipes “Reached pickup”. It only works near the pin.</span></p>
+<p class="t" style="left:792px;top:2733px;white-space:pre;"><span style="font-size:17px;color:#f45b4f;font-weight:600;line-height:1.4;">03</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.4;">  Navigate to the customer</span></p>
+<p class="t" style="left:792px;top:2763px;width:253px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.4;">Zomato shows the drop pin and the customer’s note. Google Maps ends at the pin, not the door.</span></p>
+<p class="t" style="left:1119px;top:2733px;white-space:pre;"><span style="font-size:17px;color:#f45b4f;font-weight:600;line-height:1.4;">04</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;line-height:1.4;">  Hand over</span></p>
+<p class="t" style="left:1119px;top:2763px;width:228px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.4;">Instructions and customer details appear. The rider swipes “Order delivered”.</span></p>
+<p class="t" style="left:1056px;top:2442px;white-space:pre;"><span style="font-size:14px;color:#f45b4f;font-weight:600;line-height:1.4;">Zomato</span></p>
+<p class="t" style="left:1150px;top:2442px;white-space:pre;"><span style="font-size:14px;color:#1f6fd1;font-weight:600;line-height:1.4;">Google Maps</span></p>
+<p class="t" style="left:1280px;top:2442px;white-space:pre;"><span style="font-size:14px;color:#5e5e5e;font-weight:600;line-height:1.4;">App switch</span></p>
+<p class="t" style="left:672px;top:10329px;width:280px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">07</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / One-Tap Zomato Access</span></p>
+<p class="t" style="left:672px;top:10355px;width:280px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Returns riders to their active order quickly.</span></p>
+<p class="t" style="left:1150px;top:10989.2px;width:255px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">05</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Purple Listening Cue</span></p>
+<p class="t" style="left:1150px;top:11015.2px;width:255px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Distinguishes KAI’s listening state from the cyan route.</span></p>
+<p class="t" style="left:325px;top:10668px;width:280px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">06</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / High-Contrast Cyan Route</span></p>
+<p class="t" style="left:325px;top:10694px;width:280px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Stands out against the dark map at night.</span></p>
+<p class="t" style="left:557px;top:11304px;width:255px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">01</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Landmark-Led Directions</span></p>
+<p class="t" style="left:557px;top:11330px;width:255px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Familiar landmarks help riders recognise upcoming turns.</span></p>
+<p class="t" style="left:1122px;top:10651px;width:260px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">02</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Fewer Map Labels</span></p>
+<p class="t" style="left:1122px;top:10677px;width:260px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Less clutter keeps attention on the route.</span></p>
+<p class="t" style="left:272px;top:11488px;width:255px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">03</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Familiar Control Positions</span></p>
+<p class="t" style="left:272px;top:11514px;width:255px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Consistent placement avoids disrupting learned habits.</span></p>
+<p class="t" style="left:746.8px;top:11010px;width:260px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">04</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Destination Over ETA</span></p>
+<p class="t" style="left:746.8px;top:11036px;width:260px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Keeps the delivery task in focus.</span></p>
+<p class="t" style="left:1133px;top:11464px;width:238px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">08</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Two Controls, Not Five</span></p>
+<p class="t" style="left:1133px;top:11490px;width:238px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Only volume and route preview stay on the map.</span></p>
+<p class="t" style="left:100px;top:9643.81px;width:174.34px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">Google Maps today</span></p>
+<p class="t" style="left:100px;top:9667.81px;width:174.34px;"><span style="font-size:12px;color:#5f5f5f;line-height:18px;">Road-name banner, five buttons on the right, ETA as the biggest text.</span></p>
+<p class="t" style="left:362.42px;top:9179px;width:174.34px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">Fewer labels</span></p>
+<p class="t" style="left:887.27px;top:9179px;width:174.34px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">Familiarity vs Accessibility</span></p>
+<p class="t" style="left:1149.69px;top:9643.75px;width:174.31px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">ETA reduced - Kai voice layer</span></p>
+<p class="t" style="left:624.84px;top:9643.81px;width:174.34px;"><span style="font-size:15px;color:#1a1a1a;font-weight:600;line-height:20px;">Left side icons - Thumb reach</span></p>
+<p class="t" style="left:362.42px;top:9203px;width:174.34px;"><span style="font-size:12px;color:#5f5f5f;line-height:18px;">Only the roads and the one landmark at the next turn stay on the map.</span></p>
+<p class="t" style="left:887.27px;top:9223px;width:174.34px;"><span style="font-size:12px;color:#5f5f5f;line-height:18px;">Volume and route preview only, on the right where riders already reach in Google Maps.</span></p>
+<p class="t" style="left:624.84px;top:9687.81px;width:174.34px;"><span style="font-size:12px;color:#5f5f5f;line-height:18px;">Phones  mounted usually on left side,</span></p>
+<p class="t" style="left:94px;top:884px;width:227px;"><span style="font-size:17px;color:#000000;">Product Designer</span></p>
+<p class="t" style="left:582px;top:856px;width:124px;"><span style="font-size:17px;color:#000000;text-transform:uppercase;">skills</span></p>
+<p class="t" style="left:345px;top:884px;width:152px;"><span style="font-size:17px;color:#000000;">2 weeks (2025)</span></p>
+<p class="t" style="left:582px;top:885px;width:910px;"><span style="font-size:17px;color:#000000;text-transform:capitalize;"> UX Research · Interaction Design · VUI Design </span></p>
+<p class="t" style="left:94px;top:855px;width:227px;"><span style="font-size:17px;color:#000000;text-transform:uppercase;">Role</span></p>
+<p class="t" style="left:345px;top:855px;width:124px;"><span style="font-size:17px;color:#000000;text-transform:uppercase;">Timeline</span></p>
+<p class="t" style="left:112px;top:2963px;white-space:pre;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.4;">On-Road Rider Behaviour</span></p>
+<p class="t" style="left:89px;top:3017px;width:1100px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.5;">Primary and secondary research into rider behaviour, and the demands it puts on navigation.</span></p>
+<p class="t" style="left:93px;top:3322px;width:300px;"><span style="font-size:19px;color:#f45b4f;font-weight:600;line-height:1.4;">01</span><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Repeated glances</span></p>
+<p class="t" style="left:1029px;top:3676px;width:316px;"><span style="font-size:19px;color:#f45b4f;font-weight:600;line-height:1.4;">04</span><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Repeated zoom adjustments</span></p>
+<p class="t" style="left:93px;top:3677px;width:300px;"><span style="font-size:19px;color:#f45b4f;font-weight:600;line-height:1.4;">03</span><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Adapting to audio needs </span></p>
+<p class="t" style="left:1029px;top:3318.91px;width:300px;"><span style="font-size:19px;color:#f45b4f;font-weight:600;line-height:1.4;">02</span><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Poor map visibility</span></p>
+<p class="t" style="left:93px;top:3353px;width:300px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Checking the map to understand the next move.</span></p>
+<p class="t" style="left:1029px;top:3716px;width:300px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Zooming in and out to inspect the route and due to uncertainity.</span></p>
+<p class="t" style="left:93px;top:3715px;width:300px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Riders juggle mounted phones, handheld use, and earbuds for navigation and calls.</span></p>
+<p class="t" style="left:1029px;top:3349.91px;width:300px;"><span style="font-size:15px;color:#5f5f5f;line-height:1.4;">Hard to read in sunlight, rain and low light, or from a low mount.</span></p>
+<p class="t" style="left:95px;top:4646px;width:540px;"><span style="font-size:26px;color:#f45b4f;font-weight:600;line-height:1.4;">01</span><span style="font-size:26px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Reduce manual interaction</span></p>
+<p class="t" style="left:94px;top:4694px;width:560px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Limit the need to tap, swipe, zoom and switch between apps while navigating. Use voice guidance to communicate key instructions when they’re needed.</span></p>
+<p class="t" style="left:735px;top:4646px;width:540px;"><span style="font-size:26px;color:#f45b4f;font-weight:600;line-height:1.4;">02</span><span style="font-size:26px;color:#1a1a1a;font-weight:600;line-height:1.4;"> / Simplify navigation information</span></p>
+<p class="t" style="left:735px;top:4694px;width:560px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">Make the next manoeuvre easier to identify by prioritising relevant route information, useful landmarks and a clearer map.</span></p>
+<p class="t" style="left:982px;top:5244px;width:380px;"><span style="font-size:17px;color:#000000;line-height:1.4;">Evaluation Criteria</span></p>
+<p class="t" style="left:982px;top:5268px;width:380px;"><span style="font-size:17px;color:#000000;font-weight:700;line-height:1.4;">Cost
 Safety
 Ease of use </span></p>
-<p class="t" style="left:678px;top:8468px;width:280px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">07</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / One-Tap Zomato Access</span></p>
-<p class="t" style="left:678px;top:8494px;width:280px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Returns riders to their active order quickly.</span></p>
-<p class="t" style="left:1166px;top:9268px;width:255px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">05</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Purple Listening Cue</span></p>
-<p class="t" style="left:1166px;top:9294px;width:255px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Distinguishes KAI’s listening state from the cyan route.</span></p>
-<p class="t" style="left:135px;top:8930px;width:280px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">06</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / High-Contrast Cyan Route</span></p>
-<p class="t" style="left:135px;top:8956px;width:280px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Stands out against the dark map at night.</span></p>
-<p class="t" style="left:551px;top:9637px;width:255px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">01</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Landmark-Led Directions</span></p>
-<p class="t" style="left:551px;top:9663px;width:255px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Familiar landmarks help riders recognise upcoming turns.</span></p>
-<p class="t" style="left:582px;top:8882px;width:260px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">02</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Fewer Map Labels</span></p>
-<p class="t" style="left:582px;top:8908px;width:260px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Less clutter keeps attention on the route.</span></p>
-<p class="t" style="left:209px;top:9897px;width:255px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">03</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Familiar Control Positions</span></p>
-<p class="t" style="left:209px;top:9923px;width:255px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Consistent placement avoids disrupting learned habits.</span></p>
-<p class="t" style="left:662px;top:9294px;width:260px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">04</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Destination Over ETA</span></p>
-<p class="t" style="left:662px;top:9320px;width:260px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Keeps the delivery task in focus.</span></p>
-<p class="t" style="left:1198px;top:9779px;width:238px;"><span style="font-size:17px;color:#f45b4f;font-weight:600;">08</span><span style="font-size:17px;color:#1a1a1a;font-weight:600;"> / Two Controls, Not Five</span></p>
-<p class="t" style="left:1198px;top:9805px;width:238px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Only volume and route preview stay on the map.</span></p>
-<p class="t" style="left:90px;top:10145px;width:447px;height:62px;"><span style="font-size:36px;color:#1a1a1a;font-weight:600;line-height:1.35;">Context-Aware Map Zoom</span></p>
-<p class="t" style="left:886px;top:11169.49px;white-space:pre;"><span style="font-size:26px;color:#1a1a1a;font-weight:600;">Before the ride — Route preview</span></p>
-<p class="t" style="left:886px;top:11208.49px;white-space:pre;"><span style="font-size:17px;color:#5f5f5f;">Zooms out to help riders anticipate upcoming turns.</span></p>
-<p class="t" style="left:313px;top:10873px;white-space:pre;"><span style="font-size:26px;color:#1a1a1a;font-weight:600;">During the ride — Auto-zoom</span></p>
-<p class="t" style="left:313px;top:10912px;white-space:pre;"><span style="font-size:17px;color:#5f5f5f;">Zooms out on long, straight stretches to reveal the next turn.</span></p>
-<p class="t" style="left:82px;top:7025px;width:447px;height:62px;"><span style="font-size:36px;color:#1a1a1a;font-weight:600;line-height:1.35;">Wireframes</span></p>
-<p class="t" style="left:90px;top:7971px;width:447px;height:62px;"><span style="font-size:36px;color:#1a1a1a;font-weight:600;line-height:1.35;">Final UI</span></p>
-<p class="t" style="left:93px;top:3758px;width:911px;height:114px;"><span style="font-size:22px;color:#000000;font-weight:600;line-height:1.4;">
-This led to two design priorities: </span></p>
-<p class="t" style="left:93px;top:3701px;width:1193px;height:114px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.4;">The concept exploration pointed towards a phone-based navigation experience supported by audio.</span></p>
+<p class="t" style="left:113px;top:11712px;width:447px;height:62px;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.35;">Context-aware map zoom</span></p>
+<p class="t" style="left:874px;top:12656.49px;white-space:pre;"><span style="font-size:26px;color:#1a1a1a;font-weight:600;">Before the ride — Route overview</span></p>
+<p class="t" style="left:874px;top:12695.49px;width:440px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.5;">The map starts zoomed out so riders can see the route and </span><span style="font-size:17px;color:#5f5f5f;font-weight:700;line-height:1.5;">build the mental model of the map </span><span style="font-size:17px;color:#5f5f5f;line-height:1.5;"> Once movement is detected, it zooms in for closer navigation.</span></p>
+<p class="t" style="left:222px;top:12458px;white-space:pre;"><span style="font-size:26px;color:#1a1a1a;font-weight:600;">During the ride — Upcoming turn</span></p>
+<p class="t" style="left:223px;top:12499px;width:440px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.5;">On long, straight roads, the map zooms out to bring the next turn into view, </span><span style="font-size:17px;color:#5f5f5f;font-weight:700;line-height:1.5;">helping riders anticipate where the route changes without manually adjusting the map.</span></p>
+<p class="t" style="left:113px;top:9033px;width:447px;height:62px;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.35;">Wireframes</span></p>
+<p class="t" style="left:113px;top:9896px;width:447px;height:62px;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.35;">Final UI</span></p>
+<p class="t" style="left:95px;top:718px;width:1262px;"><span style="font-size:25px;color:#2d2d2d;">KAI is a navigation concept combining voice guidance and simplified maps to reduce riders’ cognitive load while navigating and streamline food delivery.</span></p>
+<p class="t" style="left:115px;top:1747px;width:822px;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.4;">Understanding Delivery partners </span></p>
+<p class="t" style="left:662.9px;top:2135.97px;width:476.59px;"><span style="font-size:9.45px;color:#6b6b6b;font-weight:500;letter-spacing:0.08em;line-height:1.4;text-transform:uppercase;">Source: IDinsight phone survey of 2,547 two-wheeler delivery riders in India (2024) · Quote from my interview</span></p>
+<p class="t" style="left:226.67px;top:2093.03px;width:376.12px;"><span style="font-size:20.61px;color:#7e7e7e;font-weight:500;line-height:1.4;">“It took around two weeks to get familiar with the city.”</span></p>
+<p class="t" style="left:499.74px;top:2146.27px;width:138.25px;"><span style="font-size:12.88px;color:#555555;font-weight:500;line-height:1.4;">- Ex Swiggy Driver</span></p>
+<p class="t" style="left:954px;top:2454px;width:161px;"><span style="font-size:15px;color:#555555;font-weight:500;line-height:1.4;">-</span></p>
+<p class="t" style="left:246.42px;top:1923.86px;white-space:pre;"><span style="font-size:29.2px;color:#1f6fd1;font-weight:700;line-height:1;">%</span></p>
+<p class="t" style="left:122.76px;top:1957.35px;white-space:pre;"><span style="font-size:20.61px;color:#1a1a1a;font-weight:500;line-height:1.2;">Are migrants</span></p>
+<p class="t" style="left:611.37px;top:1920.43px;white-space:pre;"><span style="font-size:29.2px;color:#1f6fd1;font-weight:700;line-height:1;"> yrs</span></p>
+<p class="t" style="left:492.01px;top:1967.66px;white-space:pre;"><span style="font-size:20.61px;color:#1a1a1a;font-weight:500;line-height:1.2;">Average age</span></p>
+<p class="t" style="left:470.22px;top:1971.43px;width:299.69px;text-align:right;"><span style="font-size:14px;color:#5f5f5f;font-weight:500;line-height:1.4;">Predominantly
+young men</span></p>
+<p class="t" style="left:861.26px;top:1871.48px;white-space:pre;"><span style="font-size:89.31px;color:#1a1a1a;font-weight:700;letter-spacing:-0.03em;line-height:1;">3</span></p>
+<p class="t" style="left:919.66px;top:1923.86px;white-space:pre;"><span style="font-size:29.2px;color:#1f6fd1;font-weight:700;line-height:1;"> in 4</span></p>
+<p class="t" style="left:863.84px;top:1971.09px;white-space:pre;"><span style="font-size:20.61px;color:#1a1a1a;font-weight:500;line-height:1.2;">Work part-time</span></p>
+<p class="t" style="left:842.05px;top:1974.87px;width:299.69px;text-align:right;"><span style="font-size:14px;color:#5f5f5f;font-weight:500;line-height:1.4;">Work less than
+full-time hours</span></p>
+<p class="t" style="left:111px;top:3898px;white-space:pre;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.4;">Key insights</span></p>
+<p class="t" style="left:229px;top:4017px;width:236px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.45;">City unfamiliarity</span></p>
+<p class="t" style="left:229px;top:4049px;width:236px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Many delivery riders are migrants. Riders new to a city may not yet have a mental map of its roads and landmarks.</span></p>
+<p class="t" style="left:659px;top:4016px;width:236px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.45;">Physical interaction</span></p>
+<p class="t" style="left:659px;top:4048px;width:236px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Tapping, zooming and switching between apps mean riders have to keep operating the phone while navigating.</span></p>
+<p class="t" style="left:1089px;top:4015px;width:236px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.45;">Visual distraction</span></p>
+<p class="t" style="left:1089px;top:4048px;width:236px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Map clutter and poor screen visibility make it harder to pick out the information needed at a glance.</span></p>
+<p class="t" style="left:229px;top:4256px;width:236px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.45;">Navigation uncertainty</span></p>
+<p class="t" style="left:229px;top:4288px;width:236px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Riders need to interpret upcoming manoeuvres and confirm they are following the right route.</span></p>
+<p class="t" style="left:659px;top:4256px;width:236px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.45;">Audio limitations</span></p>
+<p class="t" style="left:659px;top:4288px;width:236px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Some riders use one earbud or phone vibration to catch turn cues when spoken directions are difficult to hear.</span></p>
+<p class="t" style="left:1089px;top:4266px;width:236px;"><span style="font-size:19px;color:#1a1a1a;font-weight:600;line-height:1.45;">Work pressure</span></p>
+<p class="t" style="left:1089px;top:4298px;width:236px;"><span style="font-size:14px;color:#5f5f5f;line-height:1.5;">Delivery targets and ratings create pressure to complete orders quickly.</span></p>
+<p class="t" style="left:113px;top:4529px;white-space:pre;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.4;">Design direction</span></p>
+<p class="t" style="left:95px;top:4583px;width:1025px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.5;">The research pointed to two areas to focus on: reducing the need to interact with the phone and making navigation easier to follow.</span></p>
+<p class="t" style="left:434px;top:5611px;width:819px;"><span style="font-size:17px;color:#4e4e4e;line-height:1.4;">
+Voice guidance reduces the need to look at the screen for every instruction. But at complex junctions, a spoken direction like “turn right” may not be enough to identify the correct road. The map still plays an important role as a visual reference.</span></p>
+<p class="t" style="left:90px;top:5899px;white-space:pre;"><span style="font-size:52px;color:#1a1a1a;font-weight:600;line-height:1.2;">Designing KAI’s voice</span></p>
+<p class="t" style="left:90px;top:8907px;white-space:pre;"><span style="font-size:52px;color:#1a1a1a;font-weight:600;line-height:1.2;">Designing the map</span></p>
+<p class="t" style="left:90px;top:11782px;width:832px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.5;">The map adjusts its zoom based on the rider’s situation, showing the wider route when they need an overview and bringing the next turn into view when they’re on long stretches of road.</span></p>
+<p class="t" style="left:113px;top:13772px;white-space:pre;"><span style="font-size:35px;color:#1a1a1a;font-weight:600;line-height:1.4;">What I learned</span></p>
+<p class="t" style="left:95px;top:13850px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;">01</span></p>
+<p class="t" style="left:95px;top:13880px;width:560px;"><span style="font-size:17px;color:#1a1a1a;line-height:1.5;">Riders’ workarounds can point to simple design changes that make a big difference.</span></p>
+<p class="t" style="left:725px;top:13850px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;">02</span></p>
+<p class="t" style="left:725px;top:13880px;width:560px;"><span style="font-size:17px;color:#1a1a1a;line-height:1.5;">The right design choice depends on the situation. What works in one context may not work in another.</span></p>
+<p class="t" style="left:95px;top:13969px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;">03</span></p>
+<p class="t" style="left:95px;top:13999px;width:560px;"><span style="font-size:17px;color:#1a1a1a;line-height:1.5;">Making something easier to use doesn’t always mean making it easier to interact with. Sometimes, the goal is to reduce the need to use the phone.</span></p>
+<p class="t" style="left:725px;top:13969px;white-space:pre;"><span style="font-size:15px;color:#f45b4f;font-weight:600;">04</span></p>
+<p class="t" style="left:725px;top:13999px;width:560px;"><span style="font-size:17px;color:#1a1a1a;line-height:1.5;">Good design considers what the user is dealing with in the moment, not just the task they need to complete.</span></p>
+<p class="t" style="left:90px;top:9966px;width:900px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.5;">The riding screen in day and night modes, and mounted on the bike. The labels mark the eight design decisions.</span></p>
+<p class="t" style="left:95px;top:9095px;width:900px;"><span style="font-size:17px;color:#5f5f5f;line-height:1.5;">Five steps from Google Maps as riders use it today to the KAI screen. Each step removes or moves one thing.</span></p>
+<p class="t" style="left:770px;top:194px;width:437px;"><span style="font-size:30px;color:#000000;">Voice-supported navigation for delivery riders</span></p>
+<p class="t" style="left:770px;top:112px;white-space:pre;"><span style="font-size:70px;color:#000000;font-weight:500;">KAI</span></p>
 </div>
 </div>
 </div>
