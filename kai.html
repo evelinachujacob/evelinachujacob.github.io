@@ -73,6 +73,16 @@ video{position:absolute;display:block;object-fit:cover;background:#fff}
 .k47{font-size:22px;color:#1a1a1a;font-weight:600;line-height:1.4;}
 .k48{font-size:25px;color:#000000;}
 .k49{font-size:70px;color:#000000;font-weight:500;}
+/* KAI listening cue: port of the Figma component 257:431 (aura + prism line, 4s flow, 3s breathe) */
+.cue{position:absolute;pointer-events:none}
+.cue i{position:absolute;display:block;left:-1.728%;width:103.704%}
+.cue .aura{top:51.56%;height:41.48%;opacity:.8;filter:blur(var(--b1));animation:kai-breathe 1.5s ease-in-out infinite alternate}
+.cue .aura b{position:absolute;inset:0;-webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.25) 20%,rgba(0,0,0,.85) 42%,#000 57%);mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.25) 20%,rgba(0,0,0,.85) 42%,#000 57%)}
+.cue .aura b,.cue .prism{background:linear-gradient(90deg,#3b82f6 0%,#7b2cbf 20%,#d946ef 40%,#ff5e7e 60%,#432c81 80%,#3b82f6 100%);background-size:350% 100%;animation:kai-flow 4s ease infinite}
+.cue .prism{top:71.99%;height:28.52%}
+@keyframes kai-flow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes kai-breathe{from{opacity:.8;filter:blur(var(--b1));transform:scale(1)}to{opacity:1;filter:blur(var(--b2));transform:scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.cue .aura,.cue .aura b,.cue .prism{animation:none}}
 </style>
 
 <div class="cv" id="cv">
@@ -83,14 +93,18 @@ video{position:absolute;display:block;object-fit:cover;background:#fff}
 <img class="tile" src="images/kai-figma/t3.jpg?v=1029" style="top:4500px;height:1500px" alt="" loading="lazy">
 <img class="tile" src="images/kai-figma/t4.jpg?v=1029" style="top:6000px;height:1500px" alt="" loading="lazy">
 <img class="tile" src="images/kai-figma/t5.jpg?v=1029" style="top:7500px;height:1500px" alt="" loading="lazy">
-<img class="tile" src="images/kai-figma/t6.jpg?v=1029" style="top:9000px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/kai-figma/t6.jpg?v=1029b" style="top:9000px;height:1500px" alt="" loading="lazy">
 <img class="tile" src="images/kai-figma/t7.jpg?v=1029" style="top:10500px;height:1399px" alt="" loading="lazy">
 <video src="images/kai-figma/kai-speaks.mp4" muted loop playsinline autoplay preload="metadata" style="left:261px;top:6551px;width:918px;height:516px;border-radius:14px;box-shadow:3px 4px 30.4px -11px rgba(0,0,0,0.25)" aria-label="KAI speaking and listening"></video>
-<div class="scr" style="left:229px;top:10110.2px;width:243.6px;height:530px;border-radius:33.7px"><video src="images/kai-figma/autozoom.mp4" muted loop playsinline autoplay preload="metadata"></video></div>
-<img class="ov" src="images/kai-figma/ui-az.png?v=1029" style="left:229px;top:10110.2px;width:243.6px;height:530px" alt="KAI map, zooming out on a long stretch during the ride">
-<div class="scr" style="left:881px;top:10110.2px;width:243.6px;height:530px;border-radius:33.7px"><video src="images/kai-figma/route-preview.mp4" muted loop playsinline autoplay preload="metadata"></video></div>
-<img class="ov" src="images/kai-figma/ui-pv.png?v=1029" style="left:881px;top:10110.2px;width:243.6px;height:530px" alt="KAI map, route overview before the ride">
+<div class="scr" style="left:229px;top:10110.2px;width:243.6px;height:530px;border-radius:33.7px"><video src="images/kai-figma/autozoom.mp4" muted loop playsinline autoplay preload="metadata"></video><div class="cue" style="left:-3.86px;top:360.1px;width:251.3px;height:124.1px;--b1:9.31px;--b2:12.41px"><i class="aura"><b></b></i><i class="prism"></i></div></div>
+<img class="ov" src="images/kai-figma/ui-az.png?v=1029b" style="left:229px;top:10110.2px;width:243.6px;height:530px" alt="KAI map, zooming out on a long stretch during the ride">
+<div class="scr" style="left:881px;top:10110.2px;width:243.6px;height:530px;border-radius:33.7px"><video src="images/kai-figma/route-preview.mp4" muted loop playsinline autoplay preload="metadata"></video><div class="cue" style="left:-3.86px;top:360.1px;width:252.46px;height:124.67px;--b1:9.35px;--b2:12.47px"><i class="aura"><b></b></i><i class="prism"></i></div></div>
+<img class="ov" src="images/kai-figma/ui-pv.png?v=1029b" style="left:881px;top:10110.2px;width:243.6px;height:530px" alt="KAI map, route overview before the ride">
 <video src="images/kai-figma/rider-film.mp4" muted loop playsinline autoplay preload="metadata" style="left:95px;top:10891px;width:1212px;height:611px" aria-label="Rider using KAI"></video>
+<div class="scr" style="left:846.8px;top:8679px;width:221.6px;height:480.8px;border-radius:31.04px"><div class="cue" style="left:-3.54px;top:327.62px;width:228.59px;height:112.88px;--b1:8.47px;--b2:11.29px"><i class="aura"><b></b></i><i class="prism"></i></div></div>
+<img class="ov" src="images/kai-figma/ui-day.png?v=1029b" style="left:846.8px;top:8679px;width:221.6px;height:480.8px" alt="KAI listening, day">
+<div class="scr" style="left:848px;top:9359.2px;width:225.7px;height:489.9px;border-radius:31.62px"><div class="cue" style="left:0.02px;top:335.49px;width:225.7px;height:111.46px;--b1:8.36px;--b2:11.15px"><i class="aura"><b></b></i><i class="prism"></i></div></div>
+<img class="ov" src="images/kai-figma/ui-night.png?v=1029b" style="left:848px;top:9359.2px;width:225.7px;height:489.9px" alt="KAI listening, night">
 <p class="t nw" style="left:770px;top:112px;width:112px;"><span class="k49">KAI</span></p>
 <p class="t" style="left:770px;top:194px;width:432px;"><span class="k48">Voice-supported navigation for delivery riders</span></p>
 <p class="t" style="left:95px;top:752px;width:227px;"><span class="k28">Role</span></p>
