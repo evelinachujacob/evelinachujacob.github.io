@@ -5,127 +5,180 @@
 <title>Evelin Achu Jacob</title>
 <script src="cursor.js"></script>
 <meta name="description" content="Evelin Achu Jacob, industrial and interaction designer at NID.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400&family=IBM+Plex+Sans:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap">
 <style>
+/* layout after poombloom.com: header row, big greeting, label/content rows split by hairlines */
 :root{
-  --ink:#1a1815; --mute:#8a857d; --soft:#6b665e; --faint:#b7b2aa; --line:#ebe8e3; --bg:#fff;
-  --serif:"Crimson Pro",Georgia,serif; --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --ink:#0d0d0d; --soft:#737373; --mute:#808080; --line:#ebebeb; --bg:#fff;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:86px}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--sans);letter-spacing:-.3px;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.4 var(--sans);font-optical-sizing:auto;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
+.pad{padding:0 40px}
 
 /* header */
-.head{position:sticky;top:0;z-index:20;height:70px;padding:0 20px;display:flex;align-items:center;justify-content:flex-end;background:var(--bg)}
-.clock{font-size:15px;color:var(--soft);font-variant-numeric:tabular-nums}
+.head{height:75px;display:flex;align-items:center;border-bottom:1px solid var(--line)}
+.head .name{font-size:20px;width:187px}
+.head .role{color:var(--soft)}
+.head nav{margin-left:auto;display:flex;gap:16px}
+.head nav a{transition:color .2s}
+.head nav a:hover{color:var(--soft)}
 
-/* layout: 312 sidebar, then two 514 columns (scale with the window) */
-.wrap{display:grid;grid-template-columns:312px 1fr;column-gap:32px;padding:70px 20px 80px}
-.side{position:sticky;top:82px;align-self:start}
-h1{font:300 34px/1.05 var(--serif);letter-spacing:-.34px;margin:-8px 0 8px}  /* cap height lines up with the top of the first card */
-.role{font-size:14px;line-height:1.35;color:var(--mute);margin:0 0 12px}
-.pov{font-size:13.5px;line-height:1.55;font-weight:300;color:var(--soft);margin:0 0 56px}
-.pov p{margin:0 0 14px}
-.pov p:last-child{margin:0}
-.quote{margin:0 0 14px;padding:0;font:italic 300 16px/1.4 var(--serif);color:var(--ink)}
-.quote cite{font:normal 400 12px/1.4 var(--sans);color:var(--mute);white-space:nowrap}
-.side hr{border:0;border-top:1px solid var(--line);margin:0 0 40px}
-.label{font-size:11px;font-weight:500;letter-spacing:.66px;text-transform:uppercase;color:var(--faint);margin:0 0 10px}
-.nav{list-style:none;margin:0 0 22px;padding:0}
-.nav li+li{margin-top:2px}
-.nav a{display:flex;align-items:center;font-size:13px;line-height:20px;color:var(--mute);padding:1px 0;transition:color .2s}
-.nav .num{width:28px}
-.nav .ar{margin-left:auto;transition:transform .2s}
-.nav a:hover{color:var(--ink)}
-.nav a:hover .ar{transform:translateX(3px)}
-.nav a.ext:hover .ar{transform:translate(2px,-2px)}
+/* greeting */
+.hero{padding-top:205px;padding-bottom:28px}
+.hero h1{margin:0;font-weight:400;font-size:48px;line-height:1.2;letter-spacing:-.02em}
 
-.work{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;align-items:start}
-.col{display:flex;flex-direction:column;gap:28px}
-.card .img{overflow:hidden;background:#f3f2ef;aspect-ratio:16/9}
-.card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
-.card:hover img{transform:scale(1.02)}
-.cap{display:flex;justify-content:flex-start;align-items:baseline;gap:10px;margin-top:14px}
-.cap .t{font-size:15px;line-height:1.4}
-.cap .y{font-size:14px;color:var(--soft);font-variant-numeric:tabular-nums}
+/* label / content rows */
+.row{border-top:1px solid var(--line)}
+.bar{display:flex;justify-content:space-between;align-items:baseline;padding:31px 0 33px}
+.label{color:var(--mute);margin:0}
+.split{display:grid;grid-template-columns:476px 1fr;padding:32px 0 96px}
+.split .label{line-height:1.5}
 
-footer{margin:0 20px;padding:20px 6px 40px;border-top:1px solid var(--line);font-size:11px;color:var(--faint)}
+/* work grid */
+.work{padding-bottom:96px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{position:relative;display:block}
+.card .img{aspect-ratio:16/10;overflow:hidden;border-radius:4px;background:#f3f3f3}
+.card img{width:100%;height:100%;object-fit:cover}
+.over{position:absolute;inset:0;padding:24px;border-radius:4px;background:rgba(255,255,255,.9);opacity:0;transition:opacity .4s var(--ease)}
+.over h2{margin:0;font-weight:400;font-size:24px;line-height:1.25}
+.over p{margin:4px 0 0;color:var(--soft)}
+.over h2,.over p{transform:translateY(20px);opacity:0;transition:transform .6s var(--ease),opacity .6s var(--ease)}
+.over p{transition-delay:.06s}
+.card:hover .over,.card:focus-visible .over{opacity:1}
+.card:hover .over h2,.card:hover .over p,.card:focus-visible .over h2,.card:focus-visible .over p{transform:none;opacity:1}
 
-@media (max-width:960px){
-  .wrap{grid-template-columns:1fr;padding-top:40px}
-  .side{position:static;margin-bottom:40px}
-  .pov{margin-bottom:32px}
+/* about + contact */
+.big{margin:0;max-width:620px;font-size:22px;line-height:1.24}
+.small{margin:24px 0 0;max-width:620px;color:var(--soft)}
+.quote{margin:24px 0 0;max-width:620px;color:var(--soft)}
+.quote cite{font-style:normal;white-space:nowrap}
+.more{display:inline-block;margin-top:54px;color:var(--mute);transition:color .2s}
+.more:hover{color:var(--ink)}
+
+/* footer */
+footer{display:flex;justify-content:space-between;align-items:baseline;padding:32px 0 72px}
+footer .links{display:flex;gap:20px}
+footer .links a{color:var(--mute);transition:color .2s}
+footer .links a:hover{color:var(--ink)}
+
+/* sections rise into view */
+.rise{opacity:0;transform:translateY(60px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+@media (max-width:1199px){
+  .split{grid-template-columns:1fr;row-gap:20px}
+  .head .role{display:none}
 }
-@media (max-width:640px){
-  .head{padding:0 16px}
-  .wrap{padding:32px 16px 64px}
-  .work{grid-template-columns:1fr}
-  .col{gap:32px}
-  .col+.col{margin-top:32px}
-  footer{margin:0 16px}
+/* no hover on touch: title sits under the picture instead */
+@media (max-width:809px),(hover:none){
+  .over{position:static;padding:14px 0 12px;background:none;opacity:1}
+  .over h2,.over p{transform:none;opacity:1}
+  .over h2{font-size:18px}
+}
+@media (max-width:809px){
+  .pad{padding:0 20px}
+  .head .name{width:auto;font-size:17px}
+  .head nav{gap:14px}
+  .head .nav-work{display:none}
+  .hero{padding-top:110px}
+  .hero h1{font-size:34px}
+  .grid{grid-template-columns:1fr;gap:20px}
+  .split,.work{padding-bottom:64px}
+  footer{flex-direction:column;gap:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;transform:none;transition:none}
 }
 </style>
 
-<header class="head">
-  <span class="clock" id="clock">India</span>
+<header class="head pad">
+  <a class="name" href="./">Evelin Achu Jacob</a>
+  <span class="role">Industrial &amp; Interaction Designer</span>
+  <nav>
+    <a class="nav-work" href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="resume.pdf" target="_blank" rel="noopener" data-cursor-text="Open resume">Resume</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
-<main class="wrap">
-  <aside class="side">
-    <h1>Evelin Achu Jacob</h1>
-    <p class="role">Industrial &amp; Interaction Designer</p>
-    <div class="pov">
-      <p>I&rsquo;m interested in how people interact with products and the experiences they take away.</p>
-      <blockquote class="quote">&ldquo;People will never forget how you made them feel.&rdquo; <cite>&mdash; Maya Angelou</cite></blockquote>
-      <p>I believe products work the same way. Beyond what they do, it&rsquo;s how they make people feel that makes them memorable.</p>
-    </div>
-    <hr>
-    <p class="label">Sections</p>
-    <ul class="nav">
-      <li><a href="#work"><span class="num">01.</span><span>Work</span><span class="ar">→</span></a></li>
-    </ul>
-    <p class="label">Links</p>
-    <ul class="nav">
-      <li><a class="ext" href="mailto:jacobevelyn009@gmail.com"><span class="num">02.</span><span>Email</span><span class="ar">↗</span></a></li>
-      <li><a class="ext" href="https://www.linkedin.com/in/evelin-achu-jacob-a696622b6/" target="_blank" rel="noopener"><span class="num">03.</span><span>LinkedIn</span><span class="ar">↗</span></a></li>
-      <li><a class="ext" href="resume.pdf" target="_blank" rel="noopener" data-cursor-text="Open resume"><span class="num">04.</span><span>Resume</span><span class="ar">↗</span></a></li>
-    </ul>
-  </aside>
+<main>
+  <section class="hero pad rise">
+    <h1>Hi there! I&rsquo;m Evelin,<br>an industrial &amp; interaction<br>designer at NID.</h1>
+  </section>
 
-  <section class="work" id="work" aria-label="Work">
-    <!-- reading order across the rows: SPD, KAI, TCP, CMF -->
-    <div class="col">
-      <a class="card" href="mamalap.html">
-        <div class="img"><img src="images/home/spd-mamalap-hero-v2.jpg" width="1420" height="799" alt="MamaLap, a light blue two-part breastfeeding lap pillow, with the MamaLap wordmark"></div>
-        <div class="cap"><span class="t">MamaLap: Breastfeeding support for new mothers</span><span class="y">2025</span></div>
-      </a>
-      <a class="card" href="calbre.html">
-        <div class="img"><img style="object-position:28% 50%" src="images/home/tcp-calbre.jpg" width="1300" height="578" alt="Calbre, a handheld breath device"></div>
-        <div class="cap"><span class="t">Calbre: A breath companion for weight maintenance</span><span class="y">2026</span></div>
-      </a>
+  <section class="work pad rise" id="work">
+    <div class="row bar">
+      <p class="label">Featured works</p>
     </div>
-    <div class="col">
+    <!-- reading order across the rows: SPD, KAI, TCP, CMF -->
+    <div class="grid">
+      <a class="card" href="mamalap.html">
+        <div class="img"><img style="object-position:69% 50%" src="images/home/spd-mamalap-hero-v2.jpg" width="1420" height="799" alt="MamaLap, a light blue two-part breastfeeding lap pillow, with the MamaLap wordmark"></div>
+        <div class="over"><h2>MamaLap</h2><p>Breastfeeding support for new mothers &middot; 2025</p></div>
+      </a>
       <a class="card" href="kai.html">
         <div class="img"><img src="images/home/kai.jpg" width="1300" height="931" alt="Delivery rider with a voice navigation device on the helmet"></div>
-        <div class="cap"><span class="t">KAI: Voice navigation for delivery riders</span><span class="y">2026</span></div>
+        <div class="over"><h2>KAI</h2><p>Voice navigation for delivery riders &middot; 2026</p></div>
+      </a>
+      <a class="card" href="calbre.html">
+        <div class="img"><img style="object-position:31% 50%" src="images/home/tcp-calbre.jpg" width="1300" height="578" alt="Calbre, a handheld breath device"></div>
+        <div class="over"><h2>Calbre</h2><p>A breath companion for weight maintenance &middot; 2026</p></div>
       </a>
       <a class="card" href="cmf.html">
         <div class="img"><img src="images/home/cmf-ev6.jpg" width="1300" height="644" alt="Kia EV6 rear lights at night"></div>
-        <div class="cap"><span class="t">KIA EV6: Colour, material and finish</span><span class="y">2025</span></div>
+        <div class="over"><h2>KIA EV6</h2><p>Colour, material and finish &middot; 2025</p></div>
       </a>
+    </div>
+  </section>
+
+  <section class="pad rise" id="about">
+    <div class="row split">
+      <p class="label">About</p>
+      <div>
+        <p class="big">I&rsquo;m interested in how people interact with products and the experiences they take away.</p>
+        <p class="quote">&ldquo;People will never forget how you made them feel.&rdquo; <cite>&mdash; Maya Angelou</cite></p>
+        <p class="small">I believe products work the same way. Beyond what they do, it&rsquo;s how they make people feel that makes them memorable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad rise" id="contact">
+    <div class="row split">
+      <p class="label">Contact me</p>
+      <div>
+        <p class="big">If you&rsquo;d like to talk about a project, a role, or anything in these case studies, write to me.</p>
+        <a class="more" href="mailto:jacobevelyn009@gmail.com">Get in touch</a>
+      </div>
     </div>
   </section>
 </main>
 
-<footer>© 2026 Evelin Achu Jacob</footer>
+<div class="pad">
+  <footer class="row">
+    <span>&copy; 2026 Evelin Achu Jacob</span>
+    <span class="links">
+      <a href="mailto:jacobevelyn009@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/evelin-achu-jacob-a696622b6/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="resume.pdf" target="_blank" rel="noopener" data-cursor-text="Open resume">Resume</a>
+    </span>
+  </footer>
+</div>
 
 <script>
 (function(){
-  var el=document.getElementById('clock');
-  function tick(){ el.textContent='India, '+new Date().toLocaleTimeString('en-US',{timeZone:'Asia/Kolkata',hour:'numeric',minute:'2-digit',second:'2-digit'}); }
-  tick(); setInterval(tick,1000);
+  var els=document.querySelectorAll('.rise');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){ io.observe(e); });
 })();
 </script>
 </html>
