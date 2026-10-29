@@ -41,17 +41,19 @@ img{display:block;max-width:100%}
 
 /* work grid */
 .work{padding-bottom:96px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;row-gap:72px}
 .card{position:relative;display:block}
-.card .img{aspect-ratio:16/10;overflow:hidden;border-radius:4px;background:#f3f3f3}
-.card img{width:100%;height:100%;object-fit:cover}
-.over{position:absolute;inset:0;padding:24px;border-radius:4px;background:rgba(255,255,255,.9);opacity:0;transition:opacity .4s var(--ease)}
-.over h2{margin:0;font-weight:400;font-size:24px;line-height:1.25}
-.over p{margin:4px 0 0;color:var(--soft)}
-.over h2,.over p{transform:translateY(20px);opacity:0;transition:transform .6s var(--ease),opacity .6s var(--ease)}
-.over p{transition-delay:.06s}
-.card:hover .over,.card:focus-visible .over{opacity:1}
-.card:hover .over h2,.card:hover .over p,.card:focus-visible .over h2,.card:focus-visible .over p{transform:none;opacity:1}
+.card .img{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:4px;background:#f3f3f3}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+/* hover: a slight zoom and a one-line description on a soft dark fade (no white wash) */
+.hint{position:absolute;left:0;right:0;bottom:0;margin:0;padding:56px 24px 20px;color:#fff;line-height:1.35;background:linear-gradient(to top,rgba(13,13,13,.55),rgba(13,13,13,0));opacity:0;transform:translateY(8px);transition:opacity .45s var(--ease),transform .6s var(--ease)}
+.card:hover img,.card:focus-visible img{transform:scale(1.03)}
+.card:hover .hint,.card:focus-visible .hint{opacity:1;transform:none}
+/* title + tags under each picture, after poombloom.com/work */
+.meta{padding-top:16px}
+.meta h2{margin:0;font-weight:500;font-size:22px;line-height:1.2;letter-spacing:-.02em}
+.tags{margin:8px 0 0;color:var(--soft);font-weight:500}
+.tags span+span::before{content:"/";margin:0 8px}
 
 /* about + contact */
 .big{margin:0;max-width:620px;font-size:22px;line-height:1.24}
@@ -75,12 +77,6 @@ footer .links a:hover{color:var(--ink)}
   .split{grid-template-columns:1fr;row-gap:20px}
   .head .role{display:none}
 }
-/* no hover on touch: title sits under the picture instead */
-@media (max-width:809px),(hover:none){
-  .over{position:static;padding:14px 0 12px;background:none;opacity:1}
-  .over h2,.over p{transform:none;opacity:1}
-  .over h2{font-size:18px}
-}
 @media (max-width:809px){
   .pad{padding:0 20px}
   .head .name{width:auto;font-size:17px}
@@ -88,12 +84,14 @@ footer .links a:hover{color:var(--ink)}
   .head .nav-work{display:none}
   .hero{padding-top:110px}
   .hero h1{font-size:34px}
-  .grid{grid-template-columns:1fr;gap:20px}
+  .grid{grid-template-columns:1fr;row-gap:48px}
+  .meta h2{font-size:19px}
   .split,.work{padding-bottom:64px}
   footer{flex-direction:column;gap:14px}
 }
 @media (prefers-reduced-motion:reduce){
   .rise{opacity:1;transform:none;transition:none}
+  .card img,.hint{transition:none}
 }
 </style>
 
@@ -120,20 +118,20 @@ footer .links a:hover{color:var(--ink)}
     <!-- reading order across the rows: SPD, KAI, TCP, CMF -->
     <div class="grid">
       <a class="card" href="mamalap.html">
-        <div class="img"><img style="object-position:69% 50%" src="images/home/spd-mamalap-hero-v2.jpg" width="1420" height="799" alt="MamaLap, a light blue two-part breastfeeding lap pillow, with the MamaLap wordmark"></div>
-        <div class="over"><h2>MamaLap</h2><p>Breastfeeding support for new mothers &middot; 2025</p></div>
+        <div class="img"><img style="object-position:69% 50%" src="images/home/spd-mamalap-hero-v2.jpg" width="1420" height="799" alt="MamaLap, a light blue two-part breastfeeding lap pillow, with the MamaLap wordmark"><p class="hint">Breastfeeding support for new mothers &middot; 2025</p></div>
+        <div class="meta"><h2>MamaLap</h2><p class="tags"><span>Product Design</span><span>Ergonomic Design</span><span>Prototyping</span></p></div>
       </a>
       <a class="card" href="kai.html">
-        <div class="img"><img src="images/home/kai.jpg?v=1029" width="1600" height="1000" alt="Delivery rider with a voice navigation device on the helmet"></div>
-        <div class="over"><h2>KAI</h2><p>Voice navigation for delivery riders &middot; 2026</p></div>
+        <div class="img"><img src="images/home/kai.jpg?v=1030" width="1600" height="1000" alt="Delivery rider with a voice navigation device on the helmet"><p class="hint">Voice navigation for delivery riders &middot; 2026</p></div>
+        <div class="meta"><h2>KAI</h2><p class="tags"><span>UX Research</span><span>Interaction Design</span><span>VUI Design</span></p></div>
       </a>
       <a class="card" href="calbre.html">
-        <div class="img"><img src="images/home/tcp-calbre.jpg?v=1029" width="1600" height="1000" alt="Calbre, a handheld breath device"></div>
-        <div class="over"><h2>Calbre</h2><p>A breath companion for weight maintenance &middot; 2026</p></div>
+        <div class="img"><img src="images/home/tcp-calbre.jpg?v=1029" width="1600" height="1000" alt="Calbre, a handheld breath device"><p class="hint">A breath companion for weight maintenance &middot; 2026</p></div>
+        <div class="meta"><h2>Calbre</h2><p class="tags"><span>Product Design</span><span>Interaction Design</span><span>Electronics</span></p></div>
       </a>
       <a class="card" href="cmf.html">
-        <div class="img"><img src="images/home/cmf-ev6.jpg" width="1300" height="644" alt="Kia EV6 rear lights at night"></div>
-        <div class="over"><h2>KIA EV6</h2><p>Colour, material and finish &middot; 2025</p></div>
+        <div class="img"><img src="images/home/cmf-ev6.jpg" width="1300" height="644" alt="Kia EV6 rear lights at night"><p class="hint">Colour, material and finish &middot; 2025</p></div>
+        <div class="meta"><h2>KIA EV6</h2><p class="tags"><span>CMF Design</span><span>Automotive</span></p></div>
       </a>
     </div>
   </section>
