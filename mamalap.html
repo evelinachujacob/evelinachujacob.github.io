@@ -10,13 +10,13 @@
    Background tiles = every non-text layer, exported from Figma at 2x.
    Every text layer is live HTML at its Figma position, font, size and colour.
    The product animation plays over its spot in the tiles.
-   On screens narrower than 1440 the whole canvas scales down; nothing reflows. */
+   The canvas scales to the full window width (up or down); nothing reflows. */
 html,body{margin:0;background:#fff}
 body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
-.cv{max-width:1440px;margin:0 auto}
-.canvas{position:relative;width:1440px;height:9423px;margin:0 auto;overflow:hidden;background:#fff}
+.cv{position:relative;width:100%;overflow:hidden}
+.canvas{position:absolute;left:0;top:0;width:1440px;height:9423px;overflow:hidden;background:#fff;transform-origin:0 0}
 .tile{position:absolute;left:0;width:1440px;display:block}
-.vid{position:absolute;left:152px;top:8416px;width:1148px;height:646px;object-fit:cover;display:block;background:#f4f4f4}
+.vid{position:absolute;left:152px;top:8416px;width:1148px;height:646px;object-fit:cover;display:block;background:transparent}
 .t{position:absolute;margin:0;line-height:normal;white-space:pre-wrap;overflow-wrap:normal}
 .t.nw{white-space:nowrap}
 .li{display:block;position:relative;padding-left:1.25em}
@@ -62,7 +62,7 @@ body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .k34{font-size:16px;font-weight:400;color:#6d6d6d;line-height:1.174;}
 </style>
 
-<div class="cv">
+<div class="cv" id="cv">
 <div class="canvas" id="canvas">
 <img class="tile" src="images/mamalap-figma/t0.jpg" style="top:0px;height:1500px" alt="MamaLap breastfeeding lap pillow, hero render">
 <img class="tile" src="images/mamalap-figma/t1.jpg" style="top:1500px;height:1500px" alt="">
@@ -239,9 +239,13 @@ body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
 <script>
 (function(){
-  // Scale the 1440-wide canvas down on narrower screens; layout never changes.
-  var c = document.getElementById('canvas');
-  function fit(){ c.style.zoom = Math.min(1, c.parentNode.clientWidth / 1440); }
+  // Scale the 1440-wide canvas to the full window width; layout never changes.
+  var c = document.getElementById('canvas'), w = document.getElementById('cv');
+  function fit(){
+    var k = w.clientWidth / 1440;
+    c.style.transform = 'scale(' + k + ')';
+    w.style.height = (9423 * k) + 'px';
+  }
   fit(); addEventListener('resize', fit);
 })();
 </script>
