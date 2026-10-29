@@ -4,16 +4,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KAI · Evelin Achu Jacob</title>
 <script src="cursor.js"></script>
-<link rel="stylesheet" href="rail.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
 <style>
 /* Exact copy of Figma "Desktop - 7" (TJdzXFw3OL2XGe9txX3lkp, node 60:94), 1440 x 11899, rebuilt 2026-10-29.
    Background tiles = every non-text layer, exported from Figma at 2x.
    Every Raleway text layer is live HTML at its Figma position, font, size and colour.
-   On screens narrower than 1440 the whole canvas scales down; nothing reflows. */
+   The whole canvas scales to the window width; nothing reflows. */
 html,body{margin:0;background:#fff}
 body{font-family:"Raleway",sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;overflow-x:hidden}
-.canvas{position:relative;width:1440px;height:11899px;margin:0 auto;overflow:hidden;background:#fff}
+.cv{position:relative;width:100%;overflow:hidden}
+.canvas{position:absolute;left:0;top:0;width:1440px;height:11899px;overflow:hidden;background:#fff;transform-origin:0 0}
 .tile{position:absolute;left:0;width:1440px;display:block}
 .t{position:absolute;margin:0;line-height:normal;font-weight:400;color:#000;white-space:pre-wrap;overflow-wrap:normal}
 .t span{font-family:inherit}
@@ -75,41 +75,8 @@ video{position:absolute;display:block;object-fit:cover;background:#fff}
 .k49{font-size:70px;color:#000000;font-weight:500;}
 </style>
 
-<div class="pw" style="--r-ink:#1a1a1a;--r-acc:#f45b4f">
-<aside class="rail" aria-label="Sections">
-  <ol>
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#riders">Riders</a></li>
-    <li><a href="#two-apps">Delivery workflow</a></li>
-    <li><a href="#behaviour">Rider behaviour</a></li>
-    <li><a href="#insights">Key insights</a></li>
-    <li><a href="#direction">Design direction</a></li>
-    <li><a href="#exploring">Exploring</a></li>
-    <li><a href="#voice">KAI’s voice</a></li>
-    <li><a href="#flow">Interaction flow</a></li>
-    <li><a href="#wireframes">Designing the map</a></li>
-    <li><a href="#final-ui">Final UI</a></li>
-    <li><a href="#map-zoom">Map zoom</a></li>
-    <li><a href="#in-use">In use</a></li>
-    <li><a href="#learned">What I learned</a></li>
-  </ol>
-</aside>
-<div class="cv">
+<div class="cv" id="cv">
 <div class="canvas" id="canvas">
-<span class="anc" id="overview" style="top:0px"></span>
-<span class="anc" id="riders" style="top:1595px"></span>
-<span class="anc" id="two-apps" style="top:1851px"></span>
-<span class="anc" id="behaviour" style="top:2525px"></span>
-<span class="anc" id="insights" style="top:3404px"></span>
-<span class="anc" id="direction" style="top:4022px"></span>
-<span class="anc" id="exploring" style="top:4425px"></span>
-<span class="anc" id="voice" style="top:5101px"></span>
-<span class="anc" id="flow" style="top:5814px"></span>
-<span class="anc" id="wireframes" style="top:7163px"></span>
-<span class="anc" id="final-ui" style="top:8091px"></span>
-<span class="anc" id="map-zoom" style="top:9914px"></span>
-<span class="anc" id="in-use" style="top:10831px"></span>
-<span class="anc" id="learned" style="top:11533px"></span>
 <img class="tile" src="images/kai-figma/t0.jpg?v=1029" style="top:0px;height:1500px" alt="">
 <img class="tile" src="images/kai-figma/t1.jpg?v=1029" style="top:1500px;height:1500px" alt="">
 <img class="tile" src="images/kai-figma/t2.jpg?v=1029" style="top:3000px;height:1500px" alt="" loading="lazy">
@@ -291,15 +258,15 @@ left?</span></p>
 <p class="t nw" style="left:735px;top:11760px;width:18px;"><span class="k44">04</span></p>
 </div>
 </div>
-</div>
 
 <script>
 (function(){
-  // Scale the 1440-wide canvas down on narrower screens; layout never changes.
-  var c = document.getElementById('canvas');
+  // Scale the 1440-wide canvas to the full window width; layout never changes.
+  var c = document.getElementById('canvas'), w = document.getElementById('cv');
   function fit(){
-    var k = Math.min(1, c.parentNode.clientWidth / 1440);
-    c.style.zoom = k;
+    var k = w.clientWidth / 1440;
+    c.style.transform = 'scale(' + k + ')';
+    w.style.height = (11899 * k) + 'px';
   }
   fit(); addEventListener('resize', fit);
 
@@ -316,5 +283,4 @@ left?</span></p>
   }
 })();
 </script>
-<script src="rail.js"></script>
 </html>
