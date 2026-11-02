@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Disha · Evelin Achu Jacob</title>
+<meta name="description" content="Disha: a hospital wayfinding system for first-time rural visitors, with a wall-mounted kiosk, a colour-coded ceiling path and Telugu audio.">
+<script src="cursor.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap">
+<link rel="stylesheet" href="next.css">
+<style>
+/* Exact copy of Figma "Desktop - 1" (Disha, xYWEw85M0W0UBylJfN6U1G, node 1:3), 1440 x 10500, built 2026-11-03.
+   Background tiles = every non-text layer, exported from Figma at 2x.
+   Every text layer is live HTML at its Figma position, font, size and colour.
+   SF Pro is used where the visitor has it (Apple devices); elsewhere Inter stands in.
+   The canvas scales to the full window width; nothing reflows. */
+html,body{margin:0;background:#fff}
+body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.cv{position:relative;width:100%;overflow:hidden}
+.canvas{position:absolute;left:0;top:0;width:1440px;height:10500px;overflow:hidden;background:#fff;transform-origin:0 0}
+.tile{position:absolute;left:0;width:1440px;display:block}
+.t{position:absolute;margin:0;line-height:normal;white-space:pre-wrap;overflow-wrap:normal}
+.t.nw{white-space:pre}
+.ln{display:block}
+.li{display:block;position:relative;padding-left:1.25em}
+.li::before{content:"\2022";position:absolute;left:.4em}
+.k0{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:120px;color:#525252;line-height:1.193;}
+.k1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:24px;color:#6d6d6d;line-height:1.193;}
+.k2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:20px;color:#6d6d6d;line-height:1.193;}
+.k3{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:16px;color:rgba(82,82,82,0.497);line-height:1.193;text-transform:uppercase;}
+.k4{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:16px;color:#797979;line-height:1.193;}
+.k5{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:32px;color:#525252;font-weight:500;line-height:1.193;}
+.k6{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:16px;color:#525252;font-weight:500;line-height:1.193;}
+.k7{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:14px;color:#9a9a9a;line-height:1.193;}
+.k8{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:20px;color:#2b2b2b;font-weight:500;line-height:1.193;}
+.k9{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:14px;color:#6d6d6d;line-height:22px;}
+.k10{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:17px;color:rgba(92,92,92,0.75);font-weight:700;line-height:1.193;letter-spacing:-0.02em;}
+.k11{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:17px;color:rgba(0,0,0,0.75);line-height:1.193;letter-spacing:-0.02em;}
+.k12{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:20px;color:#2b2b2b;font-weight:700;line-height:26px;letter-spacing:-0.01em;}
+.k13{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#6d6d6d;line-height:22px;}
+.k14{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:18px;color:#2b2b2b;font-weight:500;line-height:1.193;}
+.k15{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#525252;line-height:21px;}
+.k16{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:24px;color:#525252;font-weight:500;line-height:1.193;}
+.k17{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:18px;color:#525252;font-weight:500;line-height:24px;}
+.k18{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:14px;color:#00797b;font-weight:500;line-height:1.193;}
+.k19{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:18px;color:#2b2b2b;line-height:1.193;}
+.k20{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:rgba(71,71,71,0.77);font-weight:700;line-height:1.193;}
+.k21{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:rgba(11,11,11,0.77);line-height:22px;}
+.k22{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:rgba(11,11,11,0.77);font-weight:300;line-height:22px;}
+.k23{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:rgba(11,11,11,0.77);font-weight:700;line-height:22px;}
+.k24{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:18px;color:rgba(71,71,71,0.77);font-weight:700;line-height:1.193;}
+.k25{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#525252;line-height:22px;}
+.k26{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#050505;font-weight:500;line-height:1.193;}
+.k27{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#050505;font-weight:500;line-height:22px;}
+.k28{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:19px;color:#1f1f1f;font-weight:500;line-height:1.193;}
+.k29{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:19px;color:#525252;line-height:1.193;}
+.k30{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:17px;color:#525252;line-height:1.193;}
+.k31{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:18px;color:#2b2b2b;font-weight:500;line-height:23px;}
+.k32{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#525252;line-height:23px;}
+.k33{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#9a9a9a;line-height:20px;}
+.k34{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#2b2b2b;font-weight:500;line-height:20px;}
+.k35{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:14px;color:#9a9a9a;line-height:21px;}
+.k36{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#2b2b2b;font-weight:500;line-height:21px;}
+.k37{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:14px;color:#2b2b2b;font-weight:500;line-height:20px;}
+.k38{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:14px;color:#525252;line-height:20px;}
+.k39{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:12px;color:#00aaa0;font-weight:500;line-height:17px;}
+.k40{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:13px;color:#6d6d6d;font-weight:500;line-height:18px;}
+.k41{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:18px;color:#2b2b2b;font-weight:500;line-height:24px;}
+.k42{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:13px;color:#787878;line-height:18px;}
+.k43{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:13px;color:#2b2b2b;font-weight:500;line-height:18px;}
+.k44{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:13px;color:#525252;line-height:18px;}
+.k45{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:24px;color:#8c8c8c;font-weight:500;line-height:30px;}
+.k46{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:24px;color:#2b2b2b;font-weight:500;line-height:30px;}
+.k47{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:18px;color:#8c8c8c;font-weight:500;line-height:24px;}
+.k48{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:12px;color:#2b2b2b;font-weight:500;line-height:16px;}
+.k49{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:13px;color:#8c8c8c;font-weight:500;line-height:18px;}
+.k50{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;font-size:15px;color:#2b2b2b;font-weight:500;line-height:22px;}
+</style>
+
+<div class="cv" id="cv">
+<div class="canvas" id="canvas">
+<img class="tile" src="images/disha-figma/t0.jpg?v=1103" style="top:0px;height:1500px" alt="Disha, a wall-mounted wayfinding kiosk with a colour-coded ceiling path">
+<img class="tile" src="images/disha-figma/t1.jpg?v=1103" style="top:1500px;height:1500px" alt="">
+<img class="tile" src="images/disha-figma/t2.jpg?v=1103" style="top:3000px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/disha-figma/t3.jpg?v=1103" style="top:4500px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/disha-figma/t4.jpg?v=1103" style="top:6000px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/disha-figma/t5.jpg?v=1103" style="top:7500px;height:1500px" alt="" loading="lazy">
+<img class="tile" src="images/disha-figma/t6.jpg?v=1103" style="top:9000px;height:1500px" alt="" loading="lazy">
+<p class="t nw" data-id="3:8" style="left:185px;top:227px;width:340px;"><span class="k0">DISHA</span></p>
+<p class="t" data-id="9:5" style="left:192px;top:370px;width:433px;"><span class="k1">A hospital wayfinding system for first-time rural visitors in Indian public hospitals.</span></p>
+<p class="t nw" data-id="14:2" style="left:77px;top:714px;width:45px;"><span class="k3">Team</span></p>
+<p class="t nw" data-id="14:4" style="left:288px;top:714px;width:82px;"><span class="k3">Duration</span></p>
+<p class="t nw" data-id="14:6" style="left:424px;top:714px;width:73px;"><span class="k3">Project</span></p>
+<p class="t nw" data-id="14:8" style="left:687px;top:714px;width:54px;"><span class="k3">Skills</span></p>
+<p class="t nw" data-id="14:3" style="left:77px;top:743px;width:153px;"><span class="k4">Anushree and Evelin</span></p>
+<p class="t nw" data-id="14:5" style="left:288px;top:743px;width:62px;"><span class="k4">6 weeks</span></p>
+<p class="t nw" data-id="14:7" style="left:424px;top:743px;width:202px;"><span class="k4">Interaction Product Design</span></p>
+<p class="t nw" data-id="14:9" style="left:687px;top:743px;width:375px;"><span class="k4">UX Research · Interaction Design · System Design  </span></p>
+<p class="t" data-id="9:16" style="left:77px;top:840px;width:1248px;text-align:justify;"><span class="k2">A wayfinding system that helps visitors find their departments through a colour-coded ceiling path, a simple kiosk interaction and audio instructions without relying on text heavy signage or repeatedly asking for directions.</span></p>
+<p class="t nw" data-id="25:73" style="left:77px;top:1584px;width:115px;"><span class="k5">Problem</span></p>
+<p class="t" data-id="47:104" style="left:738px;top:1606px;width:252.5px;"><span class="k10">Setting:
+</span><span class="k11">
+Large public hospital campus, multiple blocks, floors, corridors, departments</span></p>
+<p class="t" data-id="47:105" style="left:1052.5px;top:1606px;width:252.5px;"><span class="k10">Primary user:
+</span><span class="k11">
+First-time rural visitor, semi-literate, no smartphone, often accompanied by family</span></p>
+<p class="t" data-id="17:22" style="left:77px;top:1698px;width:466px;"><span class="k1">First-time visitors often struggle to locate departments across multiple blocks, floors and corridors. With unclear directions and limited guidance, they end up asking strangers, following other patients or looking for security staff.</span></p>
+<p class="t" data-id="47:106" style="left:738px;top:1772px;width:252.5px;"><span class="k10">Task:
+</span><span class="k11">
+Navigate from entry gate to a specific department, lab, or pharmacy in a different block</span></p>
+<p class="t" data-id="47:107" style="left:1052.5px;top:1772px;width:252.5px;"><span class="k10">Current fallback:
+</span><span class="k11">
+Ask a stranger, follow another patient, find a security guard, or give up</span></p>
+<p class="t nw" data-id="46:3" style="left:68px;top:1966px;width:16px;"><span class="k7">01</span></p>
+<p class="t nw" data-id="46:8" style="left:315px;top:1966px;width:18px;"><span class="k7">02</span></p>
+<p class="t nw" data-id="46:18" style="left:802px;top:1966px;width:18px;"><span class="k7">04</span></p>
+<p class="t nw" data-id="46:23" style="left:1045px;top:1966px;width:18px;"><span class="k7">05</span></p>
+<p class="t nw" data-id="46:13" style="left:559px;top:1967px;width:18px;"><span class="k7">03</span></p>
+<p class="t nw" data-id="46:4" style="left:129px;top:2010px;width:88px;"><span class="k8">Research</span></p>
+<p class="t nw" data-id="46:9" style="left:373px;top:2010px;width:93px;"><span class="k8">Synthesis</span></p>
+<p class="t nw" data-id="46:14" style="left:616px;top:2010px;width:77px;"><span class="k8">Ideation</span></p>
+<p class="t nw" data-id="46:19" style="left:860px;top:2010px;width:111px;"><span class="k8">Prototyping</span></p>
+<p class="t nw" data-id="46:24" style="left:1103px;top:2010px;width:69px;"><span class="k8">Testing</span></p>
+<p class="t nw" data-id="46:6" style="left:97px;top:2070px;width:194px;"><span class="k9">Field visit, AIIMS Mangalagiri
+First-time visitor interviews
+Standards and benchmarking</span></p>
+<p class="t nw" data-id="46:11" style="left:341px;top:2070px;width:174px;"><span class="k9">Affinity mapping
+Three insights
+Fears to design responses</span></p>
+<p class="t nw" data-id="46:16" style="left:584px;top:2070px;width:160px;"><span class="k9">Three directions
+Colour bridge chosen
+Colour system and rules</span></p>
+<p class="t nw" data-id="46:21" style="left:828px;top:2070px;width:169px;"><span class="k9">ESP32 + NFC card reader
+Kiosk UI, 10+ iterations
+TFT → laptop → iPad</span></p>
+<p class="t nw" data-id="46:26" style="left:1071px;top:2070px;width:194px;"><span class="k9">Thread test, 3 staff
+Prototype test, 3 participants
+Wall unit, appearance model</span></p>
+<p class="t nw" data-id="20:2" style="left:77px;top:2208px;width:230px;"><span class="k5">Discovery Phase</span></p>
+<p class="t" data-id="20:3" style="left:91px;top:2438px;width:778px;"><span class="k6">Visitors constantly asking security guards for directions.</span></p>
+<p class="t" data-id="20:4" style="left:913px;top:2438px;width:368px;"><span class="k6">Floor directories list departments and room numbers but offer no navigational flow.</span></p>
+<p class="t" data-id="20:5" style="left:91px;top:2672px;width:367px;"><span class="k6">No contextual signage to guide visitors from their current location.</span></p>
+<p class="t" data-id="20:6" style="left:502px;top:2672px;width:367px;"><span class="k6">Help desks are often unmanned or difficult to locate.</span></p>
+<p class="t" data-id="20:8" style="left:913px;top:2672px;width:368px;"><span class="k6">Heavy footfall adds to the confusion.</span></p>
+<p class="t nw" data-id="47:130" style="left:77px;top:2794px;width:228px;"><span class="k5">Affinity Mapping</span></p>
+<p class="t" data-id="47:136" style="left:678px;top:2875px;width:655px;"><span class="k12">Information breakdown in the navigation system</span></p>
+<p class="t" data-id="57:2" style="left:678px;top:2907px;width:547px;"><span class="k13">Signs assume English literacy. Announcements are in Telugu only. Colour lines get lost in crowds. Kiosks are hidden in corners.</span></p>
+<p class="t" data-id="47:137" style="left:678px;top:3010.7px;width:655px;"><span class="k12">Socially mediated navigation</span></p>
+<p class="t" data-id="57:3" style="left:678px;top:3043px;width:500px;"><span class="k13">Most people are directed by other patients or security staff. They reconfirm at every turn, so finding a room becomes an anxious loop.</span></p>
+<p class="t" data-id="47:138" style="left:678px;top:3144.3px;width:655px;"><span class="k12">Spatial disorientation and navigation stress</span></p>
+<p class="t" data-id="57:4" style="left:678px;top:3176px;width:500px;"><span class="k13">Long, repetitive corridors. Junctions cause wrong turns even on repeat visits. Every wrong turn adds to staff workload.</span></p>
+<p class="t nw" data-id="76:2" style="left:77px;top:3312px;width:183px;"><span class="k5">Core Insights</span></p>
+<p class="t nw" data-id="76:6" style="left:95px;top:3408px;width:140px;"><span class="k14">Unclear signage</span></p>
+<p class="t nw" data-id="76:12" style="left:913px;top:3408px;width:227px;"><span class="k14">Language-free wayfinding</span></p>
+<p class="t" data-id="76:7" style="left:95px;top:3432px;width:364px;"><span class="k15">Text fails non-literate visitors</span></p>
+<p class="t" data-id="76:13" style="left:913px;top:3432px;width:364px;"><span class="k15">Icons, colour, floor cues</span></p>
+<p class="t nw" data-id="76:24" style="left:564px;top:3468px;width:188px;"><span class="k8">Core design tension</span></p>
+<p class="t nw" data-id="76:8" style="left:95px;top:3491px;width:184px;"><span class="k14">Spatial disorientation</span></p>
+<p class="t nw" data-id="76:14" style="left:913px;top:3491px;width:257px;"><span class="k14">Spatial anchoring at junctions</span></p>
+<p class="t" data-id="76:25" style="left:564px;top:3496px;width:244px;"><span class="k15">Hospital built for literate, confident visitors only. Everyone else is excluded.</span></p>
+<p class="t" data-id="76:9" style="left:95px;top:3515px;width:364px;"><span class="k15">Similar corridors and no spatial cues at junctions</span></p>
+<p class="t" data-id="76:15" style="left:913px;top:3515px;width:364px;"><span class="k15">Clarity at every decision point</span></p>
+<p class="t nw" data-id="76:10" style="left:95px;top:3574px;width:196px;"><span class="k14">Dependence on others</span></p>
+<p class="t nw" data-id="76:16" style="left:913px;top:3574px;width:219px;"><span class="k14">Self-sufficient navigation</span></p>
+<p class="t" data-id="76:11" style="left:95px;top:3598px;width:364px;"><span class="k15">Staff absorb navigation burden</span></p>
+<p class="t" data-id="76:17" style="left:913px;top:3598px;width:364px;"><span class="k15">Reduce reliance on staff</span></p>
+<p class="t nw" data-id="77:2" style="left:77px;top:3705px;width:239px;"><span class="k5">Design Principles</span></p>
+<p class="t nw" data-id="78:5" style="left:483px;top:3722.5px;width:656px;"><span class="k19">Provide continuous and predictable guidance throughout the visitor's journey.</span></p>
+<p class="t nw" data-id="78:4" style="left:447.5px;top:3724.5px;width:7px;"><span class="k18">1</span></p>
+<p class="t nw" data-id="78:9" style="left:483px;top:3778.5px;width:542px;"><span class="k19">Make navigation cues easy to notice, recognise and understand.</span></p>
+<p class="t nw" data-id="78:8" style="left:446.5px;top:3780.5px;width:9px;"><span class="k18">2</span></p>
+<p class="t nw" data-id="78:13" style="left:483px;top:3834.5px;width:572px;"><span class="k19">Confirm each step so visitors feel confident about where to go next.</span></p>
+<p class="t nw" data-id="78:12" style="left:446.5px;top:3836.5px;width:9px;"><span class="k18">3</span></p>
+<p class="t nw" data-id="78:17" style="left:483px;top:3890.5px;width:663px;"><span class="k19">Keep the system accessible to visitors with different levels of digital familiarity.</span></p>
+<p class="t nw" data-id="78:16" style="left:446px;top:3892.5px;width:10px;"><span class="k18">4</span></p>
+<p class="t nw" data-id="78:21" style="left:483px;top:3946.5px;width:515px;"><span class="k19">Prioritise essential information through clear visual hierarchy.</span></p>
+<p class="t nw" data-id="79:186" style="left:446px;top:3948px;width:10px;"><span class="k18">4</span></p>
+<p class="t nw" data-id="83:2" style="left:77px;top:4057px;width:165px;"><span class="k5">User Funnel</span></p>
+<p class="t nw" data-id="84:3" style="left:336.6px;top:4134.2px;width:147px;"><span class="k28">Hospital visitors</span></p>
+<p class="t nw" data-id="84:6" style="left:750.1px;top:4134.2px;width:382px;"><span class="k29">All ages, backgrounds and familiarity levels</span></p>
+<p class="t nw" data-id="84:8" style="left:329.6px;top:4192.5px;width:160px;"><span class="k28">First-time visitors</span></p>
+<p class="t nw" data-id="84:11" style="left:750.1px;top:4192.5px;width:301px;"><span class="k29">Unfamiliar with the hospital layout</span></p>
+<p class="t nw" data-id="84:13" style="left:270.1px;top:4250.7px;width:279px;"><span class="k28">Rural and semi-literate visitors</span></p>
+<p class="t nw" data-id="84:16" style="left:750.1px;top:4250.7px;width:494px;"><span class="k29">Limited digital familiarity and possible language barriers</span></p>
+<p class="t nw" data-id="84:18" style="left:346.7px;top:4309px;width:126px;"><span class="k28">Primary focus</span></p>
+<p class="t nw" data-id="84:21" style="left:750.1px;top:4309px;width:552px;"><span class="k29">Middle-aged and elderly visitors, often accompanied by family</span></p>
+<p class="t nw" data-id="79:184" style="left:77px;top:4459px;width:185px;"><span class="k5">User Persona</span></p>
+<p class="t nw" data-id="79:173" style="left:417px;top:4521px;width:44px;"><span class="k26">About</span></p>
+<p class="t nw" data-id="79:174" style="left:777px;top:4521px;width:62px;"><span class="k26">Lifestyle</span></p>
+<p class="t" data-id="79:172" style="left:417px;top:4545px;width:320px;"><span class="k25">A first-time visitor to a large hospital, unfamiliar with its layout and often unsure where to go.</span></p>
+<p class="t" data-id="79:177" style="left:417px;top:4663px;width:320px;"><span class="ln"><span class="k27">Behaviour</span></span><span class="li"><span class="k25">Carries his hospital token or referral slip to check the department details.</span></span><span class="li"><span class="k25">Stops to ask security guards or other visitors for directions.</span></span><span class="li"><span class="k25">Looks at where other patients are going when he is unsure.</span></span></p>
+<p class="t nw" data-id="79:170" style="left:183px;top:4823px;width:88px;text-align:center;"><span class="k24">RAMAIAH</span></p>
+<p class="t nw" data-id="79:163" style="left:195px;top:4846px;width:64px;text-align:center;"><span class="k20">FARMER</span></p>
+<p class="t nw" data-id="79:175" style="left:777px;top:4859px;width:66px;"><span class="k26">Products</span></p>
+<p class="t" data-id="79:188" style="left:416px;top:4866px;width:320px;"><span class="ln"><span class="k27">Goals</span></span><span class="li"><span class="k25">Find the department mentioned on his referral slip.</span></span><span class="li"><span class="k25">Reach the right place without getting lost.</span></span></p>
+<p class="t" data-id="79:164" style="left:99px;top:4878px;width:256px;"><span class="k21">AGE:</span><span class="k22"> </span><span class="k23">40-50 yrs old
+</span><span class="k21">LOCATION:</span><span class="k23"> Guntur, Andhra Pradesh
+</span><span class="k21">FAMILY-</span><span class="k22"> </span><span class="k23">son. daughter and wife</span></p>
+<p class="t" data-id="79:149" style="left:235px;top:5120px;width:1030px;text-align:center;"><span class="k5">How might we help a first-time rural visitor feel confident and keep moving correctly through a crowded government hospital  without relying on reading staff or prior knowledge?</span></p>
+<p class="t nw" data-id="189:212" style="left:77px;top:5280px;width:248px;"><span class="k5">Developing Phase</span></p>
+<p class="t" data-id="96:48" style="left:504px;top:5930px;width:824px;text-align:justify;"><span class="k17">Design Rationale</span></p>
+<p class="t" data-id="96:38" style="left:504px;top:5996px;width:684px;"><span class="k16">At the hospital, visitors often followed others when unsure of the route. Studies show people imitate those ahead. We created a colour-coded ceiling path, letting visitors follow a clear visual trail instead of others.</span></p>
+<p class="t nw" data-id="108:75" style="left:77px;top:6244px;width:242px;"><span class="k5">System Overview</span></p>
+<p class="t" data-id="108:76" style="left:77px;top:6292px;width:1152px;"><span class="k30">A hospital wayfinding system that combines kiosk-based interaction with continuous colour-coded navigation.</span></p>
+<p class="t" data-id="108:79" style="left:77px;top:6704px;width:625px;"><span class="k31">01. Wall-mounted Kiosk 
+</span><span class="k32">Placed at key locations such as entrances, lobbies and lift areas. Visitors scan their hospital card to receive department information and route direction</span></p>
+<p class="t" data-id="108:80" style="left:726px;top:6704px;width:569px;"><span class="k31">02. Colour-coded Ceiling Path 
+</span><span class="k32">A continuous colour-coded path guides visitors through corridors and junctions towards their destination.</span></p>
+<p class="t nw" data-id="111:88" style="left:77px;top:6853px;width:348px;"><span class="k5">How They Work Together</span></p>
+<p class="t nw" data-id="130:2" style="left:78.9px;top:7114.9px;width:117px;"><span class="k33">01</span><span class="k34">   Registration</span></p>
+<p class="t nw" data-id="130:3" style="left:384.3px;top:7114.9px;width:127px;"><span class="k33">02</span><span class="k34">   Scan at kiosk</span></p>
+<p class="t nw" data-id="130:4" style="left:689.7px;top:7114.9px;width:195px;"><span class="k33">03</span><span class="k34">   Get colour and look up</span></p>
+<p class="t nw" data-id="130:5" style="left:996.1px;top:7114.9px;width:143px;"><span class="k33">04</span><span class="k34">   Follow the path</span></p>
+<p class="t nw" data-id="130:6" style="left:78.9px;top:7362px;width:137px;"><span class="k33">05</span><span class="k34">   At the junction</span></p>
+<p class="t nw" data-id="130:7" style="left:488.4px;top:7362px;width:220px;"><span class="k33">06</span><span class="k34">   Re-scan for next direction</span></p>
+<p class="t nw" data-id="130:8" style="left:896px;top:7362px;width:188px;"><span class="k33">07</span><span class="k34">   Reach the destination</span></p>
+<p class="t nw" data-id="137:2" style="left:77px;top:7454px;width:431px;"><span class="k5">Kiosk Dimensions and Features</span></p>
+<p class="t nw" data-id="151:2" style="left:374px;top:7606px;width:89px;"><span class="k41">Light strip</span></p>
+<p class="t" data-id="151:3" style="left:374px;top:7632px;width:300px;"><span class="k25">Lights up in the department colour</span></p>
+<p class="t nw" data-id="151:4" style="left:374px;top:7678px;width:61px;"><span class="k41">Screen</span></p>
+<p class="t" data-id="151:5" style="left:374px;top:7704px;width:300px;"><span class="k25">Department icon, room, floor and the path</span></p>
+<p class="t nw" data-id="151:6" style="left:374px;top:7750px;width:50px;"><span class="k41">Audio</span></p>
+<p class="t" data-id="151:7" style="left:374px;top:7776px;width:300px;"><span class="k25">Telugu voice instructions</span></p>
+<p class="t nw" data-id="151:8" style="left:374px;top:7822px;width:116px;"><span class="k41">Card scanner</span></p>
+<p class="t nw" data-id="153:2" style="left:77px;top:8008px;width:412px;"><span class="k5">Colour System &amp; Accessibility</span></p>
+<p class="t" data-id="153:3" style="left:77px;top:8054px;width:1218px;"><span class="k25">The colour palette was selected to make ceiling routes easy to identify, distinguish and follow.</span></p>
+<p class="t nw" data-id="163:3" style="left:109px;top:8128px;width:154px;"><span class="k41">Colour distinction</span></p>
+<p class="t nw" data-id="163:5" style="left:407.5px;top:8128px;width:117px;"><span class="k41">High visibility</span></p>
+<p class="t nw" data-id="163:7" style="left:706px;top:8128px;width:90px;"><span class="k41">Familiarity</span></p>
+<p class="t nw" data-id="163:9" style="left:1004.5px;top:8128px;width:134px;"><span class="k41">Additional cues</span></p>
+<p class="t" data-id="163:4" style="left:109px;top:8156px;width:258.5px;"><span class="k25">Colours should remain distinguishable for people with colour-vision deficiencies.</span></p>
+<p class="t" data-id="163:6" style="left:407.5px;top:8156px;width:258.5px;"><span class="k25">Strips should contrast clearly against the ceiling.</span></p>
+<p class="t" data-id="163:8" style="left:706px;top:8156px;width:258.5px;"><span class="k25">Colours were chosen with reference to familiar everyday visual cues.</span></p>
+<p class="t" data-id="163:10" style="left:1004.5px;top:8156px;width:258.5px;"><span class="k25">Different line patterns and department labels ensure navigation does not rely on colour alone.</span></p>
+<p class="t nw" data-id="163:12" style="left:109px;top:8298px;width:58px;"><span class="k42">#00B5B8</span></p>
+<p class="t nw" data-id="163:14" style="left:301.3px;top:8298px;width:59px;"><span class="k42">#7B2D8B</span></p>
+<p class="t nw" data-id="163:16" style="left:493.7px;top:8298px;width:56px;"><span class="k42">#F26522</span></p>
+<p class="t nw" data-id="163:18" style="left:686px;top:8298px;width:60px;"><span class="k42">#6DC72B</span></p>
+<p class="t nw" data-id="163:20" style="left:878.3px;top:8298px;width:56px;"><span class="k42">#F0047F</span></p>
+<p class="t nw" data-id="163:22" style="left:1070.7px;top:8298px;width:54px;"><span class="k42">#E52F21</span></p>
+<p class="t nw" data-id="163:23" style="left:109px;top:8332px;width:337px;"><span class="k43">Ceiling strip specification:</span><span class="k44"> 150 mm width · Matte finish</span></p>
+<p class="t nw" data-id="141:2" style="left:77px;top:8454px;width:576px;"><span class="k5">Interaction Flow &amp; Action-Feedback Logic</span></p>
+<p class="t nw" data-id="141:9" style="left:450px;top:8522px;width:100px;text-align:center;"><span class="k35">02</span><span class="k36">   Approach</span></p>
+<p class="t nw" data-id="141:4" style="left:236px;top:8523px;width:78px;text-align:center;"><span class="k35">01</span><span class="k36">   Attract</span></p>
+<p class="t nw" data-id="141:14" style="left:686px;top:8523px;width:91px;text-align:center;"><span class="k35">03</span><span class="k36">   NFC Tap</span></p>
+<p class="t nw" data-id="141:19" style="left:914px;top:8523px;width:95px;text-align:center;"><span class="k35">04</span><span class="k36">   Navigate</span></p>
+<p class="t nw" data-id="141:24" style="left:1137px;top:8523px;width:99px;text-align:center;"><span class="k35">05</span><span class="k36">   Reinforce</span></p>
+<p class="t" data-id="141:5" style="left:191px;top:8578px;width:179.6px;text-align:center;"><span class="k37">Sees the kiosk from a distance</span></p>
+<p class="t" data-id="141:25" style="left:1101.4px;top:8578px;width:179.6px;text-align:center;"><span class="k37">Taps card at the next kiosk</span></p>
+<p class="t nw" data-id="141:54" style="left:77px;top:8580px;width:45px;text-align:center;"><span class="k40">Patient
+action</span></p>
+<p class="t" data-id="141:10" style="left:418.6px;top:8588px;width:179.6px;text-align:center;"><span class="k37">Walks into range</span></p>
+<p class="t" data-id="141:15" style="left:646.2px;top:8588px;width:179.6px;text-align:center;"><span class="k37">Taps card</span></p>
+<p class="t" data-id="141:20" style="left:873.8px;top:8588px;width:179.6px;text-align:center;"><span class="k37">Follows ceiling trail</span></p>
+<p class="t nw" data-id="141:30" style="left:285px;top:8641.5px;width:44px;text-align:center;"><span class="k39">Passive</span></p>
+<p class="t nw" data-id="141:35" style="left:511.6px;top:8641.5px;width:56px;text-align:center;"><span class="k39">IR Sensor</span></p>
+<p class="t nw" data-id="141:40" style="left:739.2px;top:8641.5px;width:68px;text-align:center;"><span class="k39">User Action</span></p>
+<p class="t nw" data-id="141:45" style="left:966.8px;top:8641.5px;width:85px;text-align:center;"><span class="k39">System output</span></p>
+<p class="t nw" data-id="141:50" style="left:1194.4px;top:8641.5px;width:65px;text-align:center;"><span class="k39">Distributed</span></p>
+<p class="t" data-id="141:6" style="left:191px;top:8684px;width:179.6px;text-align:center;"><span class="k36">Ambient Glow</span></p>
+<p class="t" data-id="141:11" style="left:418.6px;top:8684px;width:179.6px;text-align:center;"><span class="k36">Avatar Activates</span></p>
+<p class="t" data-id="141:16" style="left:646.2px;top:8684px;width:179.6px;text-align:center;"><span class="k36">Green tick + chime</span></p>
+<p class="t" data-id="141:21" style="left:873.8px;top:8684px;width:179.6px;text-align:center;"><span class="k36">Colour on ceiling</span></p>
+<p class="t" data-id="141:26" style="left:1101.4px;top:8684px;width:179.6px;text-align:center;"><span class="k36">Next kiosk</span></p>
+<p class="t nw" data-id="141:55" style="left:77px;top:8708.5px;width:59px;text-align:center;"><span class="k40">Kiosk
+feedback</span></p>
+<p class="t" data-id="141:7" style="left:191px;top:8709px;width:179.6px;text-align:center;"><span class="k38">Kiosk light emits passively. Idle video loop runs</span></p>
+<p class="t" data-id="141:12" style="left:418.6px;top:8709px;width:179.6px;text-align:center;"><span class="k38">IR sensor detects presence. Lady avatar video plays</span></p>
+<p class="t" data-id="141:17" style="left:646.2px;top:8709px;width:179.6px;text-align:center;"><span class="k38">Audio + visual confirmation.</span></p>
+<p class="t" data-id="141:22" style="left:873.8px;top:8709px;width:179.6px;text-align:center;"><span class="k38">Screen shows dept + colour.</span></p>
+<p class="t" data-id="141:27" style="left:1101.4px;top:8709px;width:179.6px;text-align:center;"><span class="k38">Kiosk confirms path at every decision pt.</span></p>
+<p class="t nw" data-id="169:2" style="left:77px;top:8855px;width:437px;"><span class="k5">Prototyping, Testing &amp; Iterations</span></p>
+<p class="t nw" data-id="183:2" style="left:77px;top:8917px;width:252px;"><span class="k45">01.</span><span class="k46">  Kiosk Screen States</span></p>
+<p class="t" data-id="183:3" style="left:77px;top:8955px;width:1218px;"><span class="k25">Five interface states guide visitors through the scanning process and provide clear feedback at each step.</span></p>
+<p class="t" data-id="183:5" style="left:77px;top:9229px;width:230.8px;"><span class="k47">01.</span><span class="k41"> Idle / Attract</span></p>
+<p class="t" data-id="183:8" style="left:323.8px;top:9229px;width:230.8px;"><span class="k47">02.</span><span class="k41"> Scan Prompt</span></p>
+<p class="t" data-id="183:11" style="left:570.6px;top:9229px;width:230.8px;"><span class="k47">03.</span><span class="k41"> Scan Confirmed</span></p>
+<p class="t" data-id="183:16" style="left:817.4px;top:9229px;width:230.8px;"><span class="k47">04.</span><span class="k41"> Error State</span></p>
+<p class="t" data-id="183:19" style="left:1064.2px;top:9229px;width:230.8px;"><span class="k47">05.</span><span class="k41"> Information Display</span></p>
+<p class="t" data-id="183:6" style="left:77px;top:9257px;width:230.8px;"><span class="k25">Idle video introduces the kiosk.</span></p>
+<p class="t" data-id="183:9" style="left:323.8px;top:9257px;width:230.8px;"><span class="k25">IR sensor detects the visitor and prompts them to scan their card.</span></p>
+<p class="t" data-id="183:12" style="left:570.6px;top:9257px;width:230.8px;"><span class="k25">Green tick and audio chime confirm a successful scan.</span></p>
+<p class="t" data-id="183:17" style="left:817.4px;top:9257px;width:230.8px;"><span class="k25">Red visual cue and audio prompt indicate an unsuccessful scan.</span></p>
+<p class="t" data-id="183:20" style="left:1064.2px;top:9257px;width:230.8px;"><span class="k25">Department, room, floor and assigned route colour are displayed.</span></p>
+<p class="t nw" data-id="183:21" style="left:77px;top:9371px;width:168px;"><span class="k45">02.</span><span class="k46">  Prototyping</span></p>
+<p class="t" data-id="183:22" style="left:77px;top:9409px;width:1218px;"><span class="k25">Building and testing the interaction before developing the final appearance model.</span></p>
+<p class="t nw" data-id="183:29" style="left:167px;top:9466px;width:100px;"><span class="k48">RFID Card reader</span></p>
+<p class="t nw" data-id="183:27" style="left:97px;top:9660px;width:67px;"><span class="k48">TFT Screen</span></p>
+<p class="t" data-id="183:31" style="left:77px;top:9703px;width:424px;"><span class="k47">Stage 1 –</span><span class="k41"> Working Prototype</span></p>
+<p class="t" data-id="183:33" style="left:525px;top:9703px;width:490px;"><span class="k47">Stage 2 –</span><span class="k41"> Screen Upgrade</span></p>
+<p class="t" data-id="183:35" style="left:1039px;top:9703px;width:256px;"><span class="k47">Stage 3 –</span><span class="k41"> Appearance Model</span></p>
+<p class="t" data-id="183:32" style="left:77px;top:9731px;width:424px;"><span class="k25">ESP32, TFT display and RFID reader to test card scanning and department mapping.</span></p>
+<p class="t" data-id="183:34" style="left:525px;top:9731px;width:490px;"><span class="k25">Moved from TFT to laptop and then iPad for better readability.</span></p>
+<p class="t" data-id="183:36" style="left:1039px;top:9731px;width:256px;"><span class="k25">Foam-board kiosk with integrated screen, scanner and LED strip.</span></p>
+<p class="t nw" data-id="183:37" style="left:77px;top:9823px;width:177px;"><span class="k45">03.</span><span class="k46">  User Testing</span></p>
+<p class="t" data-id="183:38" style="left:77px;top:9861px;width:1218px;"><span class="k25">Three participants tested the kiosk interaction and colour-coded navigation.</span></p>
+<p class="t" data-id="183:39" style="left:90px;top:10063px;width:273.5px;"><span class="k25">Users followed the colour paths without prior instruction.</span></p>
+<p class="t" data-id="183:41" style="left:400.5px;top:10063px;width:273.5px;"><span class="k25">Telugu audio and visual confirmation were understood.</span></p>
+<p class="t" data-id="183:43" style="left:711px;top:10063px;width:273.5px;"><span class="k25">Some colours were difficult to distinguish.</span></p>
+<p class="t" data-id="183:45" style="left:1021.5px;top:10063px;width:273.5px;"><span class="k25">Users held the card against the scanner for too long.</span></p>
+<p class="t nw" data-id="183:47" style="left:77px;top:10155px;width:262px;"><span class="k45">04.</span><span class="k46">  Findings &amp; Iterations</span></p>
+<p class="t nw" data-id="183:49" style="left:109px;top:10233px;width:95px;"><span class="k49">What we learnt</span></p>
+<p class="t nw" data-id="183:50" style="left:710px;top:10233px;width:113px;"><span class="k49">What we changed</span></p>
+<p class="t" data-id="183:52" style="left:109px;top:10275px;width:521px;"><span class="k25">Similar colours caused confusion.</span></p>
+<p class="t" data-id="183:53" style="left:710px;top:10275px;width:553px;"><span class="k50">Revised the colour palette.</span></p>
+<p class="t" data-id="183:56" style="left:109px;top:10321px;width:521px;"><span class="k25">Standalone kiosk felt intimidating.</span></p>
+<p class="t" data-id="183:57" style="left:710px;top:10321px;width:553px;"><span class="k50">Switched to a wall-mounted kiosk.</span></p>
+<p class="t" data-id="183:60" style="left:109px;top:10367px;width:521px;"><span class="k25">Users needed simple instructions.</span></p>
+<p class="t" data-id="183:61" style="left:710px;top:10367px;width:553px;"><span class="k50">Retained visual and audio guidance.</span></p>
+</div>
+</div>
+
+<section class="nx">
+  <a class="nx-card" href="mamalap.html" data-cursor-text="Explore">
+    <div><p class="nx-label">Next project</p><p class="nx-title">MamaLap</p></div>
+    <div class="nx-img"><img src="images/home/spd-mamalap-hero-v2.jpg" style="object-position:69% 50%" alt="MamaLap" loading="lazy"></div>
+  </a>
+  <footer class="nx-ft">
+    <span>&copy; 2026 Evelin Achu Jacob</span>
+    <span class="links">
+      <a href="mailto:jacobevelyn009@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/evelin-achu-jacob-a696622b6/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="resume.pdf" target="_blank" rel="noopener" data-cursor-text="Open resume">Resume</a>
+    </span>
+  </footer>
+</section>
+
+<script>
+(function(){
+  // Scale the 1440-wide canvas to the full window width; layout never changes.
+  var c = document.getElementById('canvas'), w = document.getElementById('cv');
+  function fit(){
+    var k = w.clientWidth / 1440;
+    c.style.transform = 'scale(' + k + ')';
+    w.style.height = (10500 * k) + 'px';
+  }
+  fit(); addEventListener('resize', fit);
+})();
+</script>
+</html>
