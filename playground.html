@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Playground &middot; Evelin Achu Jacob</title>
+<script src="cursor.js"></script>
+<meta name="description" content="Playground: small experiments by Evelin Achu Jacob, like Calbre in your palm, a hand- and breath-controlled prototype.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap">
+<style>
+/* layout after poombloom.com: header row, big greeting, label/content rows split by hairlines */
+:root{
+  --ink:#0d0d0d; --soft:#737373; --mute:#808080; --line:#ebebeb; --bg:#fff;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.4 var(--sans);font-optical-sizing:auto;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.pad{padding:0 40px}
+
+/* header */
+.head{height:75px;display:flex;align-items:center;border-bottom:1px solid var(--line)}
+.head .name{font-size:20px;width:187px}
+.head .role{color:var(--soft)}
+.head nav{margin-left:auto;display:flex;gap:16px}
+.head nav a{transition:color .2s}
+.head nav a:hover{color:var(--soft)}
+
+/* greeting */
+.hero{padding-top:205px;padding-bottom:28px}
+.hero h1{margin:0;font-weight:400;font-size:48px;line-height:1.2;letter-spacing:-.02em}
+
+/* label / content rows */
+.row{border-top:1px solid var(--line)}
+.bar{display:flex;justify-content:space-between;align-items:baseline;padding:31px 0 33px}
+.label{color:var(--mute);margin:0}
+.split{display:grid;grid-template-columns:476px 1fr;padding:32px 0 96px}
+.split .label{line-height:1.5}
+
+/* work grid */
+.work{padding-bottom:96px}
+.grid{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;row-gap:72px}
+.card{position:relative;display:block}
+.card .img{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:4px;background:#f3f3f3}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+/* hover: a slight zoom and a one-line description on a soft dark fade (no white wash) */
+.hint{position:absolute;left:0;right:0;bottom:0;margin:0;padding:56px 24px 20px;color:#fff;line-height:1.35;background:linear-gradient(to top,rgba(13,13,13,.55),rgba(13,13,13,0));opacity:0;transform:translateY(8px);transition:opacity .45s var(--ease),transform .6s var(--ease)}
+.card:hover img,.card:focus-visible img{transform:scale(1.03)}
+.card:hover .hint,.card:focus-visible .hint{opacity:1;transform:none}
+/* title + tags under each picture, after poombloom.com/work */
+.meta{padding-top:16px}
+.meta h2{margin:0;font-weight:500;font-size:22px;line-height:1.2;letter-spacing:-.02em}
+.tags{margin:8px 0 0;color:var(--soft);font-weight:500}
+.tags span+span::before{content:"/";margin:0 8px}
+
+/* about + contact */
+.big{margin:0;max-width:620px;font-size:22px;line-height:1.24}
+.small{margin:24px 0 0;max-width:620px;color:var(--soft)}
+.quote{margin:24px 0 0;max-width:620px;color:var(--soft)}
+.quote cite{font-style:normal;white-space:nowrap}
+.more{display:inline-block;margin-top:54px;color:var(--mute);transition:color .2s}
+.more:hover{color:var(--ink)}
+
+/* footer */
+footer{display:flex;justify-content:space-between;align-items:baseline;padding:32px 0 72px}
+footer .links{display:flex;gap:20px}
+footer .links a{color:var(--mute);transition:color .2s}
+footer .links a:hover{color:var(--ink)}
+
+/* sections rise into view */
+.rise{opacity:0;transform:translateY(60px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+@media (max-width:1199px){
+  .split{grid-template-columns:1fr;row-gap:20px}
+  .head .role{display:none}
+}
+@media (max-width:809px){
+  .pad{padding:0 20px}
+  .head .name{width:auto;font-size:17px}
+  .head nav{gap:14px}
+  .head .nav-work{display:none}
+  .hero{padding-top:110px}
+  .hero h1{font-size:34px}
+  .hero h1 br{display:none}
+  .grid{grid-template-columns:1fr;row-gap:48px}
+  .meta h2{font-size:19px}
+  .split,.work{padding-bottom:64px}
+  footer{flex-direction:column;gap:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;transform:none;transition:none}
+  .card img,.hint{transition:none}
+}
+
+/* about page, after poombloom.com/about */
+.ab-quote{margin:0 0 48px;max-width:720px}
+.ab-quote p{margin:0;font-size:32px;line-height:1.25;letter-spacing:-.02em}
+.ab-quote cite{display:block;margin-top:16px;font-style:normal;color:var(--soft)}
+@media (max-width:809px){.ab-quote p{font-size:24px}}
+
+.ab-hero{padding-top:205px;padding-bottom:28px;display:grid;grid-template-columns:476px 1fr}
+.ab-hero h1{grid-column:2;margin:0;font-weight:500;font-size:72px;line-height:1.1;letter-spacing:-.03em}
+.ab .split{padding:32px 0 96px}
+.ab .big+.big{margin-top:16px}
+.it{display:grid;grid-template-columns:1fr 1fr 120px;gap:24px;padding:18px 0 19px;border-bottom:1px solid var(--line)}
+.it:first-child{padding-top:0}
+.it span:nth-child(2){color:var(--soft)}
+.it span:nth-child(3){color:var(--soft);text-align:right}
+.it.two{grid-template-columns:200px 1fr}
+@media (max-width:1199px){.ab-hero{grid-template-columns:1fr}.ab-hero h1{grid-column:1}}
+@media (max-width:809px){
+  .ab-hero{padding-top:110px}.ab-hero h1{font-size:44px}
+  .it,.it.two{grid-template-columns:1fr;gap:4px}
+  .it span:nth-child(3){text-align:left}
+}
+
+/* playground */
+.pg-video{position:relative;overflow:hidden;border-radius:4px;background:#f3f3f3;margin:0 0 28px}
+.pg-video video{display:block;width:100%;height:auto}
+.pg-title{margin:0;font-weight:500;font-size:22px;line-height:1.2;letter-spacing:-.02em}
+.pg .tags{margin:8px 0 24px}
+.it.three{grid-template-columns:1fr 1fr 1fr}
+.it.three span:nth-child(3){text-align:left;color:var(--ink)}
+.it.three.hd span{color:var(--mute);font-size:14px}
+.pg .credit{margin:32px 0 0;color:var(--soft);font-size:14px}
+@media (max-width:809px){.it.three{grid-template-columns:1fr}}
+</style>
+
+<header class="head pad">
+  <a class="name" href="./">Evelin Achu Jacob</a>
+  <span class="role">Industrial &amp; Interaction Designer</span>
+  <nav>
+    <a class="nav-work" href="index.html#work">Work</a>
+    <a href="playground.html" aria-current="page">Playground</a>
+    <a href="about.html">About</a>
+    <a href="resume.pdf" target="_blank" rel="noopener" data-cursor-text="Open resume">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="pad ab-hero rise"><h1>Playground</h1></section>
+  <section class="pad ab pg rise">
+    <div class="row split">
+      <p class="label">For fun</p>
+      <div>
+        <div class="pg-video"><video src="media/calbre-palm.mp4?v=1108" poster="media/calbre-palm-poster.jpg?v=1108" width="1280" height="696" autoplay muted loop playsinline preload="metadata" aria-label="Video: Calbre sitting on a hand, reading a breath, and coming apart between two hands"></video></div>
+        <h2 class="pg-title">Calbre in your palm</h2>
+        <p class="tags"><span>Interaction prototype</span><span>Hand tracking</span><span>Breath input</span><span>2026</span></p>
+        <p class="big">A 3D prototype of Calbre that you hold and use with your own hand and breath, running in the browser with a webcam and a mic.</p>
+        <p class="small">Hold up a hand and Calbre sits on it, blower towards your fingertips. Blow, and the screen reads your breath and shows a result. Pull both hands apart to see what is inside.</p>
+        <div class="list" style="margin-top:40px">
+          <div class="it three"><span>See-through hologram</span><span>Looked like a toy</span><span>Solid, in Calbre&rsquo;s real colour</span></div>
+          <div class="it three"><span>Ring filled with breath strength</span><span>Felt like a game meter</span><span>Reads while you blow, shows a result after</span></div>
+          <div class="it three"><span>Spread fingers to open it</span><span>Came apart while holding it</span><span>Pull two hands apart</span></div>
+        </div>
+        <p class="credit">Inspired by a hand-tracking demo I came across online. Built with MediaPipe and Three.js, prototyped with AI-assisted coding.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="pad">
+  <footer class="row">
+    <span>&copy; 2026 Evelin Achu Jacob</span>
+    <span class="links">
+      <a href="mailto:jacobevelyn009@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/evelin-achu-jacob-a696622b6/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="resume.pdf" target="_blank" rel="noopener" data-cursor-text="Open resume">Resume</a>
+    </span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.rise');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+</html>
