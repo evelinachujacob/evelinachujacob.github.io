@@ -1,0 +1,1104 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bhimavaram Shrimp System — stakeholder map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* palette: #F7D2B4 peach · #FF6C28 orange · #FFCB30 yellow · #100B7B navy · #7194C9 blue */
+  --paper:#FFFFFF; --paper2:#FDF2EA; --ink:#100B7B; --soft:#7C79B6;
+  --bund:#D4D3E7; --process:#100B7B; --actor:#7194C9; --inst:#FF6C28; --alert:#FF6C28;
+  --peach:#F7D2B4; --blue:#7194C9; --orange:#FF6C28; --yellow:#FFCB30;
+  --disp:'Archivo',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--paper);color:var(--ink);
+  font-family:var(--disp);-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;cursor:grab}
+#stage.drag{cursor:grabbing}
+svg{width:100%;height:100%;display:block;touch-action:none}
+
+/* ---------- chrome ---------- */
+.hd{position:fixed;top:0;left:0;right:0;padding:16px 22px 14px;
+  background:linear-gradient(var(--paper) 62%,transparent);pointer-events:none;z-index:5}
+.hd h1{font-size:17px;font-weight:800;letter-spacing:-.01em;margin:0}
+.hd p{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--soft);margin:5px 0 0}
+/* the way back to the story - in the title row, so the header keeps its height */
+.hd-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.back{pointer-events:auto;display:inline-flex;align-items:center;gap:5px;flex:none;
+  padding:5px 12px 5px 8px;border-radius:999px;border:1.5px solid var(--ink,#100B7B);
+  background:#fff;color:var(--ink,#100B7B);text-decoration:none;
+  font-size:12px;font-weight:600;letter-spacing:.01em;line-height:1.2;
+  transition:background-color .2s,color .2s}
+.back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.back:hover{background:var(--ink,#100B7B);color:#fff}
+.back:focus-visible{outline:2px solid var(--ink,#100B7B);outline-offset:3px}
+
+.panelbtn{position:fixed;top:14px;right:16px;z-index:20;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);
+  border:none;padding:9px 13px;cursor:pointer}
+.ctl{position:fixed;left:18px;bottom:18px;z-index:12;background:var(--paper2);
+  border:1px solid var(--bund);padding:14px 16px;max-width:250px}
+.ctl.hide{display:none}
+.ctl h2{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);margin:0 0 9px;font-weight:500}
+.ctl h2+h2{margin-top:16px}
+label{display:flex;align-items:center;gap:8px;font-size:12.5px;margin-bottom:5px;cursor:pointer;line-height:1.3}
+input[type=checkbox]{accent-color:var(--ink);margin:0;flex:none}
+.sw{width:11px;height:11px;border-radius:50%;flex:none}
+.row{display:flex;gap:7px;margin-top:13px;flex-wrap:wrap}
+button.mini{font-family:var(--mono);font-size:10px;letter-spacing:.07em;background:transparent;
+  border:1px solid var(--bund);color:var(--ink);padding:6px 9px;cursor:pointer}
+button.mini:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+#q{width:100%;font-family:var(--mono);font-size:11.5px;padding:7px 9px;margin-bottom:14px;
+  border:1px solid var(--bund);background:var(--paper);color:var(--ink)}
+#q:focus{outline:none;border-color:var(--ink)}
+
+/* ---------- detail ---------- */
+#info{position:fixed;top:0;right:0;bottom:0;width:330px;background:var(--paper2);
+  border-left:1px solid var(--bund);padding:58px 22px 22px;overflow-y:auto;z-index:15;
+  transform:translateX(100%);transition:transform .22s ease}
+#info.on{transform:none}
+#info .kind{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px}
+#info h3{font-size:20px;font-weight:700;line-height:1.15;margin:0 0 12px;letter-spacing:-.01em}
+#info .meta{font-family:var(--mono);font-size:10.5px;color:var(--soft);margin-bottom:16px;line-height:1.7}
+#info .note{background:var(--paper);border-left:2px solid var(--alert);padding:10px 12px;
+  font-size:13px;line-height:1.45;margin-bottom:18px}
+#info h4{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);margin:18px 0 8px;font-weight:500}
+#info ul{list-style:none;padding:0;margin:0}
+#info li{font-size:13px;line-height:1.4;padding:6px 0;border-bottom:1px solid var(--bund);cursor:pointer}
+#info li:hover{color:var(--inst)}
+#info li em{font-family:var(--mono);font-size:10px;color:var(--soft);font-style:normal;display:block;margin-top:1px;padding-left:17px}
+#info li .ar{font-family:var(--mono);color:var(--soft);margin-right:6px}
+#info .none{font-size:12.5px;color:var(--soft);margin:2px 0 0}
+#close{position:absolute;top:14px;right:18px;font-size:22px;line-height:1;background:none;
+  border:none;cursor:pointer;color:var(--soft)}
+
+/* ---------- graph ---------- */
+.edge{fill:none;transition:opacity .15s}
+.edge.hot{stroke:var(--ink)!important;stroke-width:2!important;
+  stroke-dasharray:none!important;stroke-opacity:1!important}
+.halo{pointer-events:none}
+.node circle{stroke:var(--ink);stroke-width:.7;stroke-opacity:.55;transition:opacity .15s}
+.node{cursor:pointer}
+.lbl{font-size:10.5px;fill:var(--ink);pointer-events:none;transition:opacity .15s}
+.lbl.big{font-size:13.5px;font-weight:700;letter-spacing:-.01em}
+.dim{opacity:.12}
+.rring{fill:none;stroke-width:3;pointer-events:none}
+.rdim{opacity:.07;transition:opacity .2s}
+.lbl.rbig{font-size:16.5px;font-weight:700;letter-spacing:-.01em;fill:var(--ink)}
+.rring.hi{animation:rpulse 1.6s ease-in-out infinite}
+@keyframes rpulse{0%,100%{stroke-width:2.6;stroke-opacity:.95}
+                  50%{stroke-width:9;stroke-opacity:.22}}
+.spoke{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:9 7;
+  animation:rflow 1.05s linear infinite;pointer-events:none}
+@keyframes rflow{to{stroke-dashoffset:-30}}
+#riskpanel{position:fixed;left:18px;bottom:18px;z-index:13;background:var(--paper2);
+  border:1px solid var(--bund);padding:14px 16px;width:268px;max-height:82vh;
+  overflow-y:auto;display:none}
+#riskpanel.on{display:block}
+#riskpanel h2{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);margin:0 0 4px;font-weight:500}
+#riskpanel p.hint{font-size:11px;line-height:1.45;color:var(--soft);margin:0 0 11px}
+.sevkey{display:flex;gap:6px;align-items:center;font-family:var(--mono);font-size:9px;
+  color:var(--soft);margin:0 0 12px}
+.sevkey i{width:13px;height:9px;display:inline-block}
+.rlist button{display:block;width:100%;text-align:left;font-family:var(--disp);
+  font-size:11.5px;line-height:1.3;background:transparent;border:none;
+  border-left:2px solid transparent;color:var(--ink);padding:5px 0 5px 9px;cursor:pointer}
+.rlist button:hover{border-left-color:var(--bund)}
+.rlist button.on{border-left-color:#96070F;font-weight:700;background:rgba(150,7,15,.06)}
+.rlist button em{font-family:var(--mono);font-size:9px;font-style:normal;color:var(--soft);
+  float:right;padding-left:6px}
+#i-sev{margin:0 0 4px;font-size:12.5px}
+#i-sev div{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--bund)}
+#i-sev b{width:11px;height:11px;flex:none;border-radius:50%}
+#i-sev span{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--soft);
+  text-transform:uppercase;letter-spacing:.08em}
+.node circle.pop{transform-box:fill-box;transform-origin:center;
+  animation:pop .55s cubic-bezier(.2,1.25,.35,1) both}
+.lbl.fade,.halo.fade{animation:fade .6s ease both}
+@keyframes pop{from{opacity:0;transform:scale(.15)}to{opacity:1;transform:scale(1)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.elbl{font-family:var(--mono);font-size:8.5px;fill:var(--soft);pointer-events:none}
+.ring{fill:none;stroke:var(--bund);stroke-width:1;stroke-dasharray:3 6;opacity:.75}
+.core{fill:var(--process);stroke:var(--paper);stroke-width:2}
+.clbl{font-family:var(--disp);font-size:12px;font-weight:700;fill:var(--paper);
+  text-anchor:middle;pointer-events:none;letter-spacing:-.01em}
+.rlbl{font-family:var(--mono);font-size:10px;fill:var(--soft);letter-spacing:.16em;
+  text-transform:uppercase;pointer-events:none;text-anchor:middle}
+.mode{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;z-index:12;display:flex;
+  border:1px solid var(--bund);background:var(--paper2)}
+.stages{position:fixed;left:50%;transform:translateX(-50%);bottom:64px;z-index:12;
+  display:none;gap:6px;align-items:center}
+.stages.on{display:flex}
+.stages button{font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  background:var(--paper);border:1px solid var(--bund);color:var(--soft);
+  padding:6px 10px;cursor:pointer;white-space:nowrap}
+.stages button:hover{color:var(--ink);border-color:var(--ink)}
+.stages button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.mode button{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;border:none;color:var(--soft);padding:10px 18px;cursor:pointer}
+.mode button.on{background:var(--ink);color:var(--paper)}
+.busy{position:fixed;inset:0;display:none;place-items:center;z-index:30;background:rgba(255,255,255,.8);
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.busy.on{display:grid}
+@media(max-width:760px){#info{width:100%}.ctl{max-width:190px;padding:11px 12px}}
+</style>
+
+<div class="hd">
+  <div class="hd-row"><a class="back" href="shrimp_story/index.html"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Back to the story</a><h1>Bhimavaram shrimp system</h1></div>
+  <p>87 actors · 119 links · hand-drawn map, corrected against the Andhra social-ecological assessment (2025)</p>
+</div>
+
+<button class="panelbtn" id="toggle">Filters</button>
+
+<div id="stage"><svg id="svg"><g id="cam"></g></svg></div>
+
+<div class="ctl" id="ctl">
+  <input id="q" placeholder="search…" autocomplete="off">
+  <h2>Node type</h2><div id="kinds"></div>
+  <h2>Cluster</h2><div id="clusters"></div>
+  <div class="row">
+    <button class="mini" id="fit">Fit</button>
+    <button class="mini" id="elab">Link labels</button>
+    <button class="mini" id="lbls">All labels</button>
+    <button class="mini" id="reset">Reset</button>
+  </div>
+</div>
+
+<div id="info">
+  <button id="close">×</button>
+  <div class="kind" id="i-kind"></div>
+  <h3 id="i-name"></h3>
+  <div class="meta" id="i-meta"></div>
+  <div id="i-note"></div>
+  <div id="i-sev"></div>
+  <div id="i-links"></div>
+</div>
+
+<div id="riskpanel">
+  <h2>Risk</h2>
+  <p class="hint">Pick a risk to see who it reaches. Deep red is a severe hit; the
+     flowing lines are the paths where the risk carries from one party to the next.</p>
+  <div class="sevkey"><i style="background:#96070F"></i>high
+    <i style="background:#E8590C"></i>medium <i style="background:#E2A312"></i>low</div>
+  <div class="rlist" id="rlist"></div>
+</div>
+<div class="stages" id="stages"></div>
+<div class="mode">
+  <button id="m-grow">Unfold</button>
+  <button id="m-flow" class="on">Flow</button>
+  <button id="m-org">Communities</button>
+  <button id="m-onion">Onion</button>
+  <button id="m-risk">Risk</button>
+</div>
+<div class="busy" id="busy">calculating layout…</div>
+
+<script>
+const COL=300, ROW=118;
+// id, label, kind, cluster, [stage,lane], note
+const RAW=[
+/* ---- broodstock: import + multiplication ---- */
+["nbc","Nucleus Breeding Centre","Process","Broodstock",[-3,0],"Where the genetics actually live. India has none of these for vannamei."],
+["aqf","Quarantine (AQF)","Process","Broodstock",[-2,0],"Aquatic Quarantine Facility. Imported stock is held and tested, not cleared at the airport."],
+["bmc","Broodstock Multiplication (BMC)","Process","Broodstock",[-1,0],"Rears imported parental post-larvae into mature brooders. Multiplication, not breeding."],
+["geneticists","Geneticists & Pathologists","Actor","Broodstock",[-3,-1.5],""],
+["spf_cert","SPF Certification","Actor","Broodstock",[-3,-2.5],"SPF is a facility status, not a trait — lose biosecurity and you lose it"],
+["brood_feed","Broodstock Maturation Feed","Actor","Broodstock",[-3,-3.5],"Polychaete worms, squid, bivalves — a specialised trade"],
+["konabay","Kona Bay, Hawaii","Actor","Broodstock",[-3.5,1.7],"Part of Hendrix Genetics. Owns the Srikakulam BMC."],
+["sis","Shrimp Improvement Systems","Actor","Broodstock",[-3.5,2.8],"Hawaii, Florida and Singapore units all CAA-approved"],
+["bluegen","Blue Genetics, Mexico","Actor","Broodstock",[-3.5,3.9],"Linked to BMR Blue Genetics BMC in Nellore"],
+["air_freight","Live-animal Air Freight","Actor","Broodstock",[-2,-1.5],""],
+["aqcs","AQCS / Customs","Actor","Broodstock",[-2,-2.5],""],
+["pcr_quarantine","PCR Screening Lab","Actor","Broodstock",[-2,-3.5],""],
+["bmc_tech","BMC Technicians","Actor","Broodstock",[-1,-1.5],""],
+["bmc_equip","Chillers & RAS Equipment","Actor","Broodstock",[-1,-2.5],""],
+["bmc_rgca","RGCA BMC, Visakhapatnam","Actor","Broodstock",[-1.2,1.7],"Public. First BMC in India, est. 2012. Run by RGCA, which is MPEDA's R&D arm."],
+["bmc_konabay","Kona Bay India, Srikakulam","Actor","Broodstock",[-1.2,2.8],"Private. Appears to have been the sole supplier for a recent five-month period"],
+["bmc_bmr","BMR Blue Genetics, Nellore","Actor","Broodstock",[-1.2,3.9],"Private"],
+
+/* ---- seed ---- */
+["hatcheries","Hatcheries","Process","Seed",[0,0],"CAA-registered. District collectors also register and regularise unregistered hatcheries (report, Local Bodies table)."],
+["broodstock_supplier","Broodstock Supplier","Actor","Seed",[-0.35,-1.5],"Where hatcheries buy brooders. A hatchery-side seller — the stock reaches them from a BMC, not straight out of quarantine"],
+["equipment_supplier","Equipment Supplier","Actor","Seed",[-0.35,-2.5],"Drawn with NO connecting line on your sheet — I linked it to Hatcheries"],
+["hatch_owner","Owner","Actor","Seed",[0.35,-1.5],""],
+["hatch_technician","Technician","Actor","Seed",[0.35,-2.5],""],
+["hatch_feed_supplier","Feed Supplier","Actor","Seed",[0.35,-3.5],""],
+["inspection","Inspection","Actor","Seed",[-0.35,-3.5],""],
+["seed_distributor","Seed Distributor","Actor","Seed",[0.7,1.7],"Written along the arrow on your sheet, not as a bubble. Report: farmers tend to buy from one trusted hatchery — that trust is flagged as a leverage point for collectivisation."],
+
+/* ---- farm ---- */
+["farm_prep","Farm Preparation","Process","Farm",[1,0],""],
+["stocking","Stocking","Process","Farm",[2,0],"Report: farmers overstock to hedge crop loss, which stagnates growth — harvests come in at 100–80 count instead of 30–40."],
+["feeding_mgmt","Feeding & Farm Management","Process","Farm",[3,0],""],
+["harvesting","Harvesting","Process","Farm",[4,0],""],
+["polyculture","Polyculture (shrimp + fish)","Process","Farm",[3.5,1.15],"Second crop in the same pond, July–December. Report: the fish covers input costs, so shrimp income is upside — but there is no market incentive for it, which pushes farmers back to high-intensity monoculture."],
+["shrimp_farmers","Shrimp Farmers","Actor","Farm",[2,1.7],"The hub of your map — everything routes through here. Report splits them small / medium / large; the small ones are the majority and carry the most risk."],
+["farm_owners","Farm Owners","Actor","Farm",[1.2,2.8],""],
+["landowners","Landowners","Actor","Farm",[0.85,-3.5],"Customary, government-allotted and private. Report treats them as a distinct actor group — they gate expansion and compliance."],
+["agri_farmers","Agriculture Farmers (paddy / coconut)","Actor","Farm",[0.85,-4.5],"Most of this land was paddy. Falling yields plus government support for aquaculture drove the conversion."],
+["capture_fishers","Capture Fishers","Actor","Farm",[3.1,-5.5],"Marine, freshwater and estuarine. They absorb the effluent and habitat loss, and their catch feeds the fishmeal plants."],
+["farm_workers","Farm Workers","Actor","Farm services",[3,2.8],"Works across four stages. Locals and seasonal migrants; largely informal, no contracts."],
+
+/* ---- farm services ---- */
+["machinery_rentals","Machinery Owners / Rentals","Actor","Farm services",[0.85,-1.5],""],
+["technicians_mach","Technicians","Actor","Farm services",[0.85,-2.5],"The grey one, attached to machinery"],
+["labour_suppliers","Labour Suppliers","Actor","Farm services",[1.4,-1.5],""],
+["vet","Disease & Water-Quality Technician","Actor","Farm services",[1.4,-2.5],"Your sheet said 'Vet'. The Andhra report lists no veterinarians anywhere in the chain — the field role is an aqua technician doing disease and water-quality troubleshooting (Annexure III)."],
+["input_dealers","Feed-Additive Dealers (probiotics, medicines)","Actor","Farm services",[1.4,-3.5],"Your sheet said 'pesticides'. The report calls these feed additives: probiotics, minerals, medicines, aqua chemicals."],
+["utility_providers","Utility Providers (electricity etc.)","Actor","Farm services",[2,-1.5],""],
+["farmer_assoc","Farmers' Associations","Actor","Farm services",[2,-2.5],"District Fishermen Youth Welfare Association and the like. The report's core finding: every group has one, and none of them talk to each other."],
+["consultancies","Private Consultancies","Actor","Farm services",[3.7,-3.5],"e.g. Seafood Solutions — certification and environmental compliance work"],
+["water_soil_labs","Water / Soil Testing Labs","Actor","Farm services",[2.4,-2.7],"Serves two stages"],
+["ngos","Environmental NGOs","Actor","Farm services",[2.4,-4],"Dakshin Foundation, MSSRF, Democratic Traditional Fishworkers Forum. Monitoring and advocacy, not service delivery."],
+["testing_labs","Govt. Testing Labs","Actor","Farm services",[2.4,-5],"State-accredited. Disease diagnostics, residue testing, water quality."],
+["technicians_feed","Technicians","Actor","Farm services",[3.1,-1.5],"The orange one, attached to feeding"],
+["feed_dealers","Feed Dealers","Actor","Farm services",[3.1,-2.5],""],
+["feed_factories","Feed Factories","Actor","Farm services",[3.1,-3.5],"Report: high protein, nitrogen and phosphorus load drives eutrophication; antibiotics in 'antibiotic-free' feed drive resistance; heavy metals turn up downstream."],
+["fmfo","Fishmeal & Fish Oil (FMFO)","Actor","Farm services",[3.1,-4.5],"About a fifth of the world's wild catch ends up here, much of it from bottom trawling. The report calls this the disconnect nobody has closed."],
+["feed_additive_factories","Feed-Additive Factories","Actor","Farm services",[1.4,-4.5],"Probiotics, minerals, medicines. APSADA is supposed to certify all of it."],
+
+/* ---- post-harvest ---- */
+["processing","Processing","Process","Post-harvest",[5,0],""],
+["trader_buyer","Trader / Buyer","Actor","Post-harvest",[4.5,1.5],"Also appears as Traders in your Financial cluster — same person?"],
+["quality_check","Quality Check","Actor","Post-harvest",[5.2,1.5],""],
+["aggregator","Aggregator","Actor","Post-harvest",[4.6,2.2],"The report's supply chain puts the aggregator on the small-scale route only. Large farms go straight to the plant."],
+["ice_supplier","Ice Supplier","Actor","Post-harvest",[4.6,-1.5],""],
+["transport","Transport","Actor","Post-harvest",[4.6,-2.5],""],
+["broker","Broker","Actor","Post-harvest",[4.6,-3.5],""],
+["processing_workers","Processing Workers","Actor","Post-harvest",[5.3,-1.5],""],
+["quality_team","Quality Checking Team","Actor","Post-harvest",[5.3,-2.5],""],
+["packaging_workers","Packaging Workers","Actor","Post-harvest",[5.3,-3.5],""],
+
+/* ---- export house ---- */
+["export_house","Processing & Export House (e.g. Suryamitra)","Actor","Export house",[5.5,1.6],"The firm that owns the plant and holds the export registration"],
+["proc_peeling","Grading & Peeling","Process","Export house",[4.9,2.8],""],
+["proc_freezing","IQF Freezing","Process","Export house",[5.5,2.8],""],
+["proc_packing","Packing & Labelling","Process","Export house",[6.1,2.8],""],
+["peeling_workers","Peeling Shed Workers","Actor","Export house",[4.3,2.8],"Predominantly women, local and migrant. Report: frostbite and skin inflammation from brine and chemicals, long shifts, no sanitation or rest facilities, mostly no contracts."],
+["qc_lab","In-house QC / HACCP Lab","Actor","Export house",[4.9,3.9],""],
+["residue_lab","Antibiotic Residue Testing","Actor","Export house",[5.5,3.9],"Failure here is what triggers import rejections. EU shipments have been rejected over residues and hygiene."],
+["export_docs","Export Documentation / CHA","Actor","Export house",[6.1,3.9],""],
+
+/* ---- export ---- */
+["trade_export","Trade / Export","Process","Export",[6,0],""],
+["cold_storage","Cold Storage","Actor","Export",[6,-1.5],""],
+["shipping_companies","Shipping Companies","Actor","Export",[6,-2.5],""],
+["export_inspection","Export Inspection","Actor","Export",[6,-3.5],""],
+["cert_schemes","Certification (ASC / BAP)","Institution","Export",[6,-4.5],"The report's whole recommendation hangs on this: a meso-level platform to actually implement ASC standards so Andhra shrimp can compete on sustainability."],
+["international_buyers","International Buyers","Actor","Export",[7,0],"Majorly USA and China"],
+["retail_food_service","Retail / Food Service Buyers","Actor","Export",[7.7,0],""],
+
+/* ---- domestic market ---- */
+["domestic_transport","Domestic Transport","Actor","Domestic",[5.9,2.2],""],
+["wholesale_markets","Wholesale Markets","Actor","Domestic",[6.7,2.2],"Bulk distribution inside India. Report: the fish goes majorly to West Bengal."],
+["retail_markets","Retail / Local Markets","Actor","Domestic",[7.5,2.2],"Local and regional vendors, supermarkets, online"],
+
+/* ---- governance: central ---- */
+["gov_central","Central Government","Institution","Governance",[0.2,4.5],"Ministry of Fisheries, AH &amp; Dairying — infrastructure and the FIDF. CAA — registers coastal farms, sets construction and operation rules, can order a farm shut; but its ETP mandate only bites at 5 hectares and above, so most small farms have no obligation to treat what they discharge. MPEDA — export promotion; brought brackishwater shrimp to Andhra in the early 1980s. RGCA — MPEDA's R&amp;D arm; runs the quarantine facility and the public BMC. NaCSA — MPEDA's small-farmer outreach, est. 2007. CIBA — ICAR's brackishwater institute, 1997. NGT — took suo-motu action over mangrove destruction near the Visakhapatnam port area. SIFT — training and extension."],
+
+/* ---- governance: state ---- */
+["gov_state","State Government (AP)","Institution","Governance",[2.4,4.5],"APSADA — certifies every input: seed, feed, ingredients, supplements, aqua chemicals, medicines. APPCB — effluent and discharge enforcement, which the report calls weak on the ground. State Dept. of Fisheries — licensing and extension. Forest Dept — unauthorised ponds in protected wetlands like Kolleru Lake, and CRZ compliance; this was your 'DFO'. Revenue Dept — grants the paddy-to-aquaculture land conversion under the AP Agricultural Land (Conversion for Non-Agricultural Purposes) Act, 2006. Irrigation Dept — canal water and allocation. Labour Dept — wages and welfare, the thinnest line in this whole system."],
+
+/* ---- governance: local ---- */
+["gov_local","Local Bodies","Institution","Governance",[4.3,4.5],"District Administration — collectors notify the 'Aquaculture Zone' and regularise unregistered farms and hatcheries. Village Panchayats — common land and water, monitoring illegal conversion from agriculture, dispute resolution. The report argues these elicit more compliance than the formal regulators do, and should be federated into cluster-level platforms."],
+
+/* ---- finance ---- */
+["financial","Financial","Actor","Finance",[1.4,5.6],"The report flags this as under-mapped — capital, loans and debt were too sensitive to probe properly"],
+["traders_fin","Traders","Actor","Finance",[0.7,6.5],"Also appears as Trader / Buyer near Processing"],
+["private_lenders","Private Lenders","Actor","Finance",[1.4,6.5],""],
+["banks","Banks","Actor","Finance",[2.1,6.5],""]
+];
+
+const EDG=[
+/* broodstock */
+["geneticists","nbc","runs breeding at"],["spf_cert","nbc","certifies"],["brood_feed","nbc","supplies"],
+["konabay","nbc","operates"],["sis","nbc","operates"],["bluegen","nbc","operates"],
+["nbc","aqf","ships parental post-larvae to"],
+["air_freight","aqf","transports to"],["aqcs","aqf","inspects at"],["pcr_quarantine","aqf","screens at"],
+["aqf","bmc","releases cleared stock to"],
+["bmc_rgca","bmc","operates"],["bmc_konabay","bmc","operates"],["bmc_bmr","bmc","operates"],
+["bmc_tech","bmc","works in"],["bmc_equip","bmc","supplies"],
+["bmc","hatcheries","supplies adult broodstock to"],
+["bmc","broodstock_supplier","sells brooders through"],
+/* seed */
+["broodstock_supplier","hatcheries","supplies"],["equipment_supplier","hatcheries","supplies"],
+["hatch_owner","hatcheries","operates"],["hatch_technician","hatcheries","works in"],
+["hatch_feed_supplier","hatcheries","supplies"],["inspection","hatcheries","regulates"],
+["hatcheries","seed_distributor","sells seed to"],["seed_distributor","shrimp_farmers","delivers seed to"],
+/* farm */
+["shrimp_farmers","farm_owners","includes"],["shrimp_farmers","farm_prep","carries out"],
+["shrimp_farmers","stocking","carries out"],["shrimp_farmers","feeding_mgmt","carries out"],
+["shrimp_farmers","harvesting","carries out"],
+["landowners","farm_prep","leases land for"],["agri_farmers","farm_prep","land converted from paddy for"],
+["machinery_rentals","farm_prep","serves"],["technicians_mach","machinery_rentals","works for"],
+["labour_suppliers","farm_prep","serves"],["farm_workers","farm_prep","works in"],
+["vet","farm_prep","serves"],["input_dealers","farm_prep","supplies"],
+["utility_providers","farm_prep","supplies"],["water_soil_labs","farm_prep","tests for"],
+["farm_prep","stocking","precedes"],["farm_workers","stocking","works in"],
+["stocking","feeding_mgmt","precedes"],["farm_workers","feeding_mgmt","works in"],
+["technicians_feed","feeding_mgmt","advises"],["feed_dealers","feeding_mgmt","supplies"],
+["water_soil_labs","feeding_mgmt","tests for"],
+["feeding_mgmt","harvesting","precedes"],["farm_workers","harvesting","works in"],
+["feeding_mgmt","polyculture","second crop runs as"],["polyculture","harvesting","precedes"],
+/* feed and additives, upstream */
+["capture_fishers","fmfo","landings diverted into"],["fmfo","feed_factories","supplies fishmeal & oil to"],
+["feed_factories","feed_dealers","supplies"],
+["feed_additive_factories","input_dealers","supplies"],
+/* services and civil society */
+["farmer_assoc","shrimp_farmers","organises"],["ngos","shrimp_farmers","monitors impacts of"],
+["ngos","capture_fishers","advocates for"],["consultancies","shrimp_farmers","advises"],
+["testing_labs","shrimp_farmers","screens disease & residues for"],
+["consultancies","export_house","runs compliance audits for"],
+/* three harvest routes, and they are not the same route */
+["harvesting","trader_buyer","sold to"],
+["harvesting","aggregator","small-scale lots pooled by"],
+["harvesting","processing","large-scale, direct to plant"],
+["trader_buyer","processing","supplies"],["aggregator","processing","supplies"],
+["quality_check","trader_buyer","checks"],
+["ice_supplier","harvesting","supplies"],["transport","processing","serves"],
+["broker","aggregator","supplies"],
+["processing_workers","processing","works in"],["quality_team","processing","works in"],
+["packaging_workers","processing","works in"],
+/* domestic outflow */
+["polyculture","aggregator","fish sold to"],
+["aggregator","domestic_transport","ships via"],
+["domestic_transport","wholesale_markets","delivers to"],
+["wholesale_markets","retail_markets","distributes to"],
+/* export house */
+["trader_buyer","export_house","sells raw material to"],
+["export_house","processing","operates"],["export_house","trade_export","operates"],
+["processing","proc_peeling","includes"],["proc_peeling","proc_freezing","precedes"],
+["proc_freezing","proc_packing","precedes"],["proc_packing","cold_storage","feeds"],
+["peeling_workers","proc_peeling","works in"],["qc_lab","proc_freezing","checks"],
+["residue_lab","export_house","tests for"],["export_docs","trade_export","files for"],
+/* export */
+["processing","trade_export","feeds"],["cold_storage","trade_export","serves"],
+["shipping_companies","trade_export","serves"],["export_inspection","trade_export","certifies"],
+["cert_schemes","export_house","certifies"],
+["trade_export","international_buyers","sells to"],
+["international_buyers","retail_food_service","sells to"],
+/* governance: the three tiers */
+
+
+
+
+/* governance: what each body actually touches */
+
+/* governance: three tiers, each standing in for its bodies (see the note on each) */
+["gov_central","gov_state","devolves to"],["gov_state","gov_local","devolves to"],
+["gov_central","aqf","runs the quarantine facility (RGCA)"],
+["gov_central","bmc_rgca","operates (RGCA)"],["gov_central","bmc","authorises (CAA)"],
+["gov_central","hatcheries","registers (CAA)"],
+["gov_central","shrimp_farmers","registers, trains and regulates"],
+["gov_central","export_house","registers (MPEDA)"],
+["gov_state","hatcheries","certifies seed from (APSADA)"],
+["gov_state","feed_factories","certifies (APSADA)"],
+["gov_state","feed_additive_factories","certifies (APSADA)"],
+["gov_state","shrimp_farmers","effluent rules, licensing, extension"],
+["gov_state","farm_prep","land conversion, canal water, CRZ"],
+["gov_state","farm_workers","regulates wages for"],
+["gov_state","peeling_workers","regulates conditions for"],
+["gov_state","testing_labs","accredits"],
+["gov_local","shrimp_farmers","notifies Aquaculture Zone, resolves disputes"],
+["gov_local","hatcheries","registers"],
+["gov_local","farm_prep","allots common land & water for"],
+
+/* finance */
+["traders_fin","financial","lends via"],["private_lenders","financial","lends via"],
+["banks","financial","lends via"],["financial","shrimp_farmers","finances"]
+];
+
+const CL={Broodstock:"#100B7B",Seed:"#3B4E9E","Farm services":"#7194C9",Farm:"#CAA140",
+  Domestic:"#E8B23A","Post-harvest":"#FF8A4A","Export house":"#FF6C28",Export:"#C94A12",
+  Governance:"#FF6C28",Finance:"#E0A878"};
+const HUB=new Set(["shrimp_farmers","financial","farm_workers","export_house","aggregator","gov_central","gov_state","gov_local"]);
+
+const N={},adj={};
+RAW.forEach(r=>{N[r[0]]={id:r[0],label:r[1],kind:r[2],cluster:r[3],
+  x:r[4][0]*COL, y:r[4][1]*ROW, note:r[5], on:true}; adj[r[0]]=[];});
+EDG.forEach(([s,t,r])=>{adj[s].push({o:t,r,dir:"out"});adj[t].push({o:s,r,dir:"in"});});
+
+const NS="http://www.w3.org/2000/svg";
+const cam=document.getElementById("cam"), svg=document.getElementById("svg");
+const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+const gR=el("g",{}), gH=el("g",{}), gE=el("g",{}), gL=el("g",{}), gN=el("g",{}), gC=el("g",{});
+cam.append(gR,gH,gE,gL,gN,gC);
+
+const colFlow=n=>n.kind==="Process"?"#100B7B":(n.kind==="Institution"?"#FF6C28":(CL[n.cluster]||"#7194C9"));
+const col=n=>mode==="org"&&comN?PAL[comOf[n.id]%PAL.length]
+           :(mode==="risk"&&riskSev[n.id])?SEV[riskSev[n.id]]
+           :colFlow(n);
+const deg={}; Object.keys(N).forEach(i=>deg[i]=adj[i].length);
+
+let mode="flow";
+/* Unfold shows the chain first and grows outward from it:
+   0 the process spine · 1 the hubs · 2 what hangs off them · 3 everything else */
+let stage=3;
+const growLvl = n => n.kind==="Process" ? 0 : (HUB.has(n.id) ? 1 : (n.lvl<=1 ? 2 : 3));
+const radFlow=n=>n.kind==="Process"?18:(HUB.has(n.id)?11:6.5);
+const radOrg =n=>5.5+Math.sqrt(deg[n.id])*5.2;
+const rad=n=>mode==="org"?radOrg(n)
+            :mode==="onion"?7
+            :(mode==="risk"&&riskSev[n.id]) ? 13+riskSev[n.id]*5
+            :radFlow(n);
+
+Object.values(N).forEach(n=>{n.sx=n.x;n.sy=n.y;n.ox=null;n.oy=null;});
+
+/* ---------- florets ----------
+   The anchors — the process spine plus the few hubs — keep the positions she drew,
+   so the chain still reads left to right. Everything hanging off them is fanned
+   radially outward instead of stacked in columns. */
+const ANCHOR = n => n.kind==="Process" || HUB.has(n.id);
+function computeFlorets(){
+  const anchors=Object.values(N).filter(ANCHOR);
+  const par={}, lvl={}, kids={};
+  anchors.forEach(a=>{ lvl[a.id]=0; kids[a.id]=[]; });
+  let frontier=anchors.map(a=>a.id), depth=0;
+  while(frontier.length && depth<5){
+    const next=[];
+    frontier.forEach(id=>adj[id].forEach(({o})=>{
+      if(lvl[o]!==undefined) return;
+      lvl[o]=depth+1; par[o]=id; kids[o]=[]; kids[id].push(o); next.push(o);
+    }));
+    frontier=next; depth++;
+  }
+  for(let d=1; d<=4; d++){
+    Object.keys(kids).forEach(pid=>{
+      const cs=kids[pid].filter(c=>lvl[c]===d);
+      if(!cs.length) return;
+      const p=N[pid];
+      let base;
+      if(lvl[pid]===0){ base = p.sy<=0 ? -Math.PI/2 : Math.PI/2; }   // away from the spine
+      else { const g=N[par[pid]]; base=Math.atan2(p.sy-g.sy, p.sx-g.sx); }
+      const span=Math.min(Math.PI*1.15, 0.40*cs.length+0.55);
+      const R=(lvl[pid]===0?170:115)+cs.length*8;
+      cs.sort((a,b)=> N[a].cluster===N[b].cluster
+        ? N[a].label.localeCompare(N[b].label)
+        : N[a].cluster.localeCompare(N[b].cluster));
+      cs.forEach((c,i)=>{
+        const t=cs.length===1?0.5:i/(cs.length-1);
+        const ang=base-span/2+t*span;
+        N[c].sx=p.sx+Math.cos(ang)*R; N[c].sy=p.sy+Math.sin(ang)*R;
+      });
+    });
+  }
+  Object.values(N).forEach(n=>{ n.lvl = lvl[n.id]===undefined ? 3 : lvl[n.id]; });
+  // nudge overlapping petals apart; anchors stay put
+  const fixed=new Set(anchors.map(a=>a.id)), ns=Object.values(N);
+  for(let it=0; it<140; it++){
+    for(let i=0;i<ns.length;i++) for(let j=i+1;j<ns.length;j++){
+      const a=ns[i], b=ns[j];
+      const dx=b.sx-a.sx, dy=b.sy-a.sy; const dd=Math.hypot(dx,dy);
+      const min=(fixed.has(a.id)||fixed.has(b.id))?92:78;
+      if(dd>=min||dd<0.01) continue;
+      const push=(min-dd)/2, ux=dx/dd, uy=dy/dd;
+      if(!fixed.has(a.id)){ a.sx-=ux*push; a.sy-=uy*push; }
+      if(!fixed.has(b.id)){ b.sx+=ux*push; b.sy+=uy*push; }
+    }
+  }
+  Object.values(N).forEach(n=>{ n.x=n.sx; n.y=n.sy; });
+}
+
+/* ---------- community detection (Louvain local-moving) ---------- */
+const PAL=["#100B7B","#FF6C28","#CAA140","#7194C9","#3B4E9E","#C94A12",
+           "#E0A878","#4A6FB5","#8A3A0C","#9A93D0","#FFCB30","#5A6FA8"];
+let comOf={}, comQ=0, comN=0;
+
+function detectCommunities(){
+  const ids=Object.keys(N), nb={};
+  ids.forEach(i=>nb[i]={});
+  EDG.forEach(([a,b])=>{ if(a===b)return;
+    nb[a][b]=(nb[a][b]||0)+1; nb[b][a]=(nb[b][a]||0)+1; });
+  const k={}; ids.forEach(i=>k[i]=Object.values(nb[i]).reduce((x,y)=>x+y,0));
+  const m=ids.reduce((x,i)=>x+k[i],0)/2;
+  const com={}, tot={};
+  ids.forEach(i=>{com[i]=i; tot[i]=k[i];});
+  let moved=true, guard=0;
+  while(moved && guard++<40){
+    moved=false;
+    for(const i of ids){
+      const ci=com[i]; tot[ci]-=k[i];
+      const w={}; for(const j in nb[i]){ const cj=com[j]; w[cj]=(w[cj]||0)+nb[i][j]; }
+      let best=ci, gain=(w[ci]||0)-tot[ci]*k[i]/(2*m);
+      for(const c in w){ const g=w[c]-tot[c]*k[i]/(2*m);
+        if(g>gain+1e-9){gain=g;best=c;} }
+      tot[best]+=k[i];
+      if(best!==ci){com[i]=best; moved=true;}
+    }
+  }
+  // modularity score
+  let intra=0; EDG.forEach(([a,b])=>{ if(com[a]===com[b]) intra++; });
+  const ct={}; ids.forEach(i=>ct[com[i]]=(ct[com[i]]||0)+k[i]);
+  let Q=intra/m; Object.values(ct).forEach(v=>Q-=Math.pow(v/(2*m),2));
+  // relabel 0..n-1, biggest first
+  const size={}; ids.forEach(i=>size[com[i]]=(size[com[i]]||0)+1);
+  const order=Object.keys(size).sort((a,b)=>size[b]-size[a]);
+  const map={}; order.forEach((c,x)=>map[c]=x);
+  ids.forEach(i=>comOf[i]=map[com[i]]);
+  comQ=Q; comN=order.length;
+}
+
+/* ---------- onion layout ----------
+   Rings follow the report's own onion-peel diagram (p.9): distance from the
+   pond, not position in the flow. Ring 0 is the culture itself. */
+const RING_NAMES=["","who farms it","inputs & seed","market & services","governance & finance"];
+const R1=new Set(["shrimp_farmers","farm_owners","farm_workers","landowners","agri_farmers","capture_fishers"]);
+const R2=new Set(["feed_factories","feed_additive_factories","fmfo","feed_dealers","input_dealers"]);
+const R4=new Set(["farmer_assoc","ngos","testing_labs","consultancies","cert_schemes"]);
+/* an onion is a stakeholder diagram. A process is the activity, not a party to it,
+   so every process collapses into the single core at the centre. */
+const inOnion = n => n.kind!=="Process";
+function ringOf(n){
+  if(R1.has(n.id))return 1;
+  if(R4.has(n.id))return 4;
+  if(n.kind==="Institution"||n.cluster==="Governance"||n.cluster==="Finance")return 4;
+  if(R2.has(n.id)||n.cluster==="Seed"||n.cluster==="Broodstock")return 2;
+  return 3;
+}
+const RAD=[0,220,460,660,850];
+let onionDone=false;
+function computeOnion(){
+  const rings=[[],[],[],[],[]];
+  Object.values(N).forEach(n=>{ if(inOnion(n)) rings[ringOf(n)].push(n); else {n.px=0;n.py=0;} });
+  rings.forEach((rs,r)=>{
+    rs.sort((a,b)=> a.cluster===b.cluster ? a.label.localeCompare(b.label)
+                                          : a.cluster.localeCompare(b.cluster));
+    rs.forEach((n,i)=>{
+      const a=-Math.PI/2 + i/rs.length*Math.PI*2;
+      n.px=Math.cos(a)*RAD[r]; n.py=Math.sin(a)*RAD[r];
+    });
+  });
+  RAD.forEach((r,i)=>{
+    if(!i)return;
+    gR.append(el("circle",{class:"ring",cx:0,cy:0,r}));
+    const t=el("text",{class:"rlbl",x:0,y:-r-9}); t.textContent=RING_NAMES[i]; gR.append(t);
+  });
+  gC.append(el("circle",{class:"core",cx:0,cy:0,r:52}));
+  const c1=el("text",{class:"clbl",x:0,y:-4}); c1.textContent="Shrimp";
+  const c2=el("text",{class:"clbl",x:0,y:11}); c2.textContent="Aquaculture";
+  gC.append(c1,c2);
+  onionDone=true;
+}
+
+/* ---------- force layout ---------- */
+function computeOrganic(){
+  if(!comN) detectCommunities();
+  const ns=Object.values(N), E2=EDG.map(([a,b])=>[N[a],N[b]]);
+  ns.forEach(n=>{const a=Math.random()*Math.PI*2, r=Math.random()*260;
+    n.ox=Math.cos(a)*r; n.oy=Math.sin(a)*r;});
+  const k=Math.sqrt(2000*1400/ns.length)*0.50;   // ~96px target edge length
+  let temp=130;
+  for(let it=0; it<600; it++){
+    ns.forEach(n=>{n.dx=0;n.dy=0;});
+    for(let i=0;i<ns.length;i++)for(let j=i+1;j<ns.length;j++){
+      const a=ns[i],b=ns[j]; const dx=a.ox-b.ox, dy=a.oy-b.oy;
+      let d=Math.hypot(dx,dy); if(d>520)continue; if(d<0.01)d=0.01;
+      const f=k*k/d, ux=dx/d, uy=dy/d;
+      a.dx+=ux*f; a.dy+=uy*f; b.dx-=ux*f; b.dy-=uy*f;
+    }
+    E2.forEach(([a,b])=>{
+      const dx=a.ox-b.ox, dy=a.oy-b.oy; const d=Math.hypot(dx,dy)||0.01;
+      const f=d*d/k, ux=dx/d, uy=dy/d;
+      a.dx-=ux*f; a.dy-=uy*f; b.dx+=ux*f; b.dy+=uy*f;
+    });
+    // community cohesion — centroid is EMERGENT, computed from members each pass
+    const cx={},cy={},cc={};
+    ns.forEach(n=>{const c=comOf[n.id];
+      cx[c]=(cx[c]||0)+n.ox; cy[c]=(cy[c]||0)+n.oy; cc[c]=(cc[c]||0)+1;});
+    ns.forEach(n=>{
+      const c=comOf[n.id], mx=cx[c]/cc[c], my=cy[c]/cc[c];
+      n.dx+=(mx-n.ox)*0.06; n.dy+=(my-n.oy)*0.06;
+      n.dx+=(0-n.ox)*0.006; n.dy+=(0-n.oy)*0.006;      // gentle centring
+      const d=Math.hypot(n.dx,n.dy)||0.01, mv=Math.min(d,temp);
+      n.ox+=n.dx/d*mv; n.oy+=n.dy/d*mv;
+    });
+    temp*=0.988;
+  }
+}
+
+/* ---------- draw ---------- */
+const defs=el("defs",{}); cam.append(defs);
+const eEls=[],eLbl=[],eGrad=[];
+EDG.forEach(([s,t,r],i)=>{
+  const lg=el("linearGradient",{id:"eg"+i,gradientUnits:"userSpaceOnUse"});
+  const s0=el("stop",{offset:"0"}), s1=el("stop",{offset:"1"});
+  lg.append(s0,s1); defs.append(lg); eGrad.push([lg,s0,s1]);
+  const p=el("path",{class:"edge"});
+  p.dataset.s=s;p.dataset.t=t; gE.append(p); eEls.push(p);
+  const tx=el("text",{class:"elbl","text-anchor":"middle"}); tx.textContent=r;
+  tx.style.display="none"; gL.append(tx); eLbl.push(tx);
+});
+
+const nEls={}, halo={}, haloStop={};
+Object.values(N).forEach(n=>{
+  if(n.kind==="Process"||HUB.has(n.id)){
+    const rg=el("radialGradient",{id:"hg_"+n.id});
+    const a=el("stop",{offset:"0","stop-opacity":.34}),
+          b=el("stop",{offset:"0.45","stop-opacity":.15}),
+          c=el("stop",{offset:"1","stop-opacity":0});
+    rg.append(a,b,c); defs.append(rg); haloStop[n.id]=[a,b,c];
+    const h=el("circle",{class:"halo",fill:"url(#hg_"+n.id+")"});
+    gH.append(h); halo[n.id]=h;
+  }
+  const g=el("g",{class:"node"}); g.dataset.id=n.id;
+  const c=el("circle",{fill:col(n)});
+  const t=el("text",{class:"lbl"+(n.kind==="Process"?" big":""),"text-anchor":"middle"});
+  t.textContent=n.label;
+  g.append(c,t); gN.append(g); nEls[n.id]={g,c,t};
+  g.addEventListener("click",e=>{e.stopPropagation();sel=n.id;show(n.id);});
+  g.addEventListener("mouseenter",()=>{if(!sel)show(n.id);});
+  g.addEventListener("mouseleave",()=>{if(!sel){clr();document.getElementById("info").classList.remove("on");}});
+});
+
+function redraw(){
+  Object.values(N).forEach(n=>{
+    const o=nEls[n.id], r=rad(n);
+    o.c.setAttribute("cx",n.x); o.c.setAttribute("cy",n.y); o.c.setAttribute("r",r);
+    if(mode==="onion"){
+      const L=Math.hypot(n.x,n.y)||1, ux=n.x/L, uy=n.y/L, off=r+9;
+      o.t.setAttribute("x", n.x+ux*off);
+      o.t.setAttribute("y", n.y+uy*off+(uy>0?8:0));
+      o.t.setAttribute("text-anchor", ux>0.25?"start":(ux<-0.25?"end":"middle"));
+    }else{
+      o.t.setAttribute("x",n.x);
+      o.t.setAttribute("y", n.kind==="Process" ? n.y+r+16 : n.y-r-6);
+      o.t.setAttribute("text-anchor","middle");
+    }
+    const h=halo[n.id];
+    if(h){ h.setAttribute("cx",n.x); h.setAttribute("cy",n.y); h.setAttribute("r",r*3.6); }
+    const rr=rRing[n.id];
+    if(rr){ rr.setAttribute("cx",n.x); rr.setAttribute("cy",n.y); rr.setAttribute("r",r+6); }
+  });
+  layoutSpokes();
+  eEls.forEach((p,i)=>{
+    const a=N[EDG[i][0]], b=N[EDG[i][1]];
+    const dx=b.x-a.x, dy=b.y-a.y, L=Math.hypot(dx,dy)||1;
+    const bend = mode==="flow" ? (Math.abs(dy)<4?0:Math.min(40,L*0.11)) : L*0.13;
+    const cx=(a.x+b.x)/2-dy/L*bend, cy=(a.y+b.y)/2+dx/L*bend;
+    p.setAttribute("d",`M${a.x},${a.y} Q${cx},${cy} ${b.x},${b.y}`);
+    const lg=eGrad[i][0];
+    lg.setAttribute("x1",a.x); lg.setAttribute("y1",a.y);
+    lg.setAttribute("x2",b.x); lg.setAttribute("y2",b.y);
+    eLbl[i].setAttribute("x",cx); eLbl[i].setAttribute("y",cy-3);
+  });
+}
+
+function style(){
+  const org = mode==="org";
+  eEls.forEach((p,i)=>{
+    const src=N[EDG[i][0]], tgt=N[EDG[i][1]];
+    const reg=src.kind==="Institution";
+    const [lg,s0,s1]=eGrad[i];
+    if(reg && !org){
+      // regulation stays a flat dashed line — a gradient here would read as flow
+      p.style.stroke="var(--ink)"; p.style.strokeDasharray="4 5";
+      p.style.strokeOpacity=.32; p.style.strokeWidth="1";
+    }else{
+      s0.setAttribute("stop-color",col(src)); s0.setAttribute("stop-opacity",org?.55:.9);
+      s1.setAttribute("stop-color",col(tgt)); s1.setAttribute("stop-opacity",org?.3:.14);
+      p.style.stroke="url(#eg"+i+")"; p.style.strokeDasharray="none";
+      p.style.strokeOpacity=1; p.style.strokeWidth=org?"1.5":".95";
+    }
+  });
+  Object.values(N).forEach(n=>{
+    const o=nEls[n.id];
+    o.c.setAttribute("fill", col(n));
+    o.c.setAttribute("stroke", "var(--ink)");
+    o.c.setAttribute("stroke-width", org?1:.7);
+    o.c.setAttribute("opacity", (!org && mode!=="onion" && !spine(n)) ? .62 : 1);
+    if(halo[n.id]) haloStop[n.id].forEach(st=>st.setAttribute("stop-color", col(n)));
+    o.t.style.fontSize = org ? (n.kind==="Process"?"14px":"11px") : "";
+  });
+  labels();
+}
+
+/* ---------- label density ----------
+   75 labels at once is unreadable. Only the spine is labelled at rest;
+   satellites name themselves when you touch their process, or when you
+   zoom in far enough to have room for them. */
+let zoomK=1, focusSet=null, labelMode="key";
+const spine = n => n.kind==="Process" || HUB.has(n.id);
+function labels(){
+  const org = mode==="org";
+  Object.values(N).forEach(n=>{
+    const o=nEls[n.id]; let vis;
+    if(org)                    vis = n.kind==="Process"||HUB.has(n.id)||deg[n.id]>=4;
+    else if(mode==="onion")    vis = true;
+    else if(mode==="risk")     vis = risk===null ? spine(n) : !!riskSev[n.id];
+    else if(labelMode==="all") vis = true;
+    else                       vis = spine(n) || (focusSet&&focusSet.has(n.id)) || zoomK>=1.55;
+    o.t.style.display = vis?"":"none";
+    o.t.style.opacity = (!org && mode!=="onion" && !spine(n) && !(focusSet&&focusSet.has(n.id))) ? .72 : 1;
+  });
+}
+
+/* ---------- tween between modes ---------- */
+let anim=null;
+function goto(target){
+  if(anim)cancelAnimationFrame(anim);
+  const from=Object.values(N).map(n=>[n.x,n.y]);
+  const to=Object.values(N).map(n=> (target==="flow"||target==="grow"||target==="risk")?[n.sx,n.sy]
+                                 : target==="onion"?[n.px,n.py]:[n.ox,n.oy]);
+  const ns=Object.values(N); const t0=performance.now(), D=780;
+  (function step(now){
+    const u=Math.min(1,(now-t0)/D), e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;
+    ns.forEach((n,i)=>{n.x=from[i][0]+(to[i][0]-from[i][0])*e;
+                       n.y=from[i][1]+(to[i][1]-from[i][1])*e;});
+    redraw();
+    if(u<1) anim=requestAnimationFrame(step); else {anim=null; fit();}
+  })(performance.now());
+}
+function setMode(m){
+  if(m===mode)return;
+  const go=()=>{mode=m; style(); apply(); goto(m);
+    gR.style.display = gC.style.display = m==="onion" ? "" : "none";
+    ["flow","org","onion","grow","risk"].forEach(k=>
+      document.getElementById("m-"+k).classList.toggle("on",m===k));
+    document.getElementById("riskpanel").classList.toggle("on",m==="risk");
+    document.getElementById("ctl").classList.toggle("hide",m==="risk");
+    if(m!=="risk") clearRisk(); else paintRisk();
+    document.getElementById("stages").classList.toggle("on",m==="grow");
+    if(m==="grow") setTimeout(unfold,820);
+    else {growTimers.forEach(clearTimeout); growTimers=[]; clearAnim(); stage=3; apply(); labels();}};
+  if(m==="onion" && !onionDone){ computeOnion(); }
+  if(m==="org" && N[Object.keys(N)[0]].ox===null){
+    const b=document.getElementById("busy"); b.classList.add("on");
+    setTimeout(()=>{computeOrganic(); b.classList.remove("on"); go();},30);
+  } else go();
+}
+document.getElementById("m-flow").onclick=()=>setMode("flow");
+document.getElementById("m-org").onclick=()=>setMode("org");
+document.getElementById("m-onion").onclick=()=>setMode("onion");
+document.getElementById("m-risk").onclick=()=>setMode("risk");
+// clicking Unfold again replays it
+document.getElementById("m-grow").onclick=()=>mode==="grow"?unfold():setMode("grow");
+gR.style.display=gC.style.display="none";
+
+/* ---------- unfold ---------- */
+const STAGE_LABELS=["the chain","+ hubs","+ what hangs off them","everything"];
+function markStage(){
+  document.querySelectorAll("#stages button[data-st]").forEach(b=>
+    b.classList.toggle("on", +b.dataset.st===stage));
+}
+function holdAt(st){
+  growTimers.forEach(clearTimeout); growTimers=[]; clearAnim();
+  eEls.forEach(el=>{el.style.transition="";el.style.strokeDashoffset="";
+    el.removeAttribute("pathLength");});
+  const up=st>stage;
+  stage=st; apply(); style();
+  if(up) popIn(st);
+  markStage();
+}
+const STAGGER=26;
+let growTimers=[];
+function clearAnim(){
+  Object.values(N).forEach(n=>{
+    const o=nEls[n.id];
+    [o.c,o.t,halo[n.id]].forEach(el=>{
+      if(!el) return;
+      el.classList.remove("pop","fade");
+      el.style.animationDelay="";
+    });
+  });
+}
+function popIn(s){
+  Object.values(N).filter(n=>growLvl(n)===s && shown(n))
+    .sort((a,b)=>a.x-b.x)
+    .forEach((n,i)=>{
+      const o=nEls[n.id], d=(i*STAGGER)+"ms";
+      [[o.c,"pop"],[o.t,"fade"],[halo[n.id],"fade"]].forEach(([el,cls])=>{
+        if(!el || el.style.display==="none") return;   // a hidden element can never run it
+        el.classList.remove(cls); void el.getBoundingClientRect();
+        el.style.animationDelay=d; el.classList.add(cls);
+        // take it back off, or fill-mode:both keeps holding the "from" frame
+        growTimers.push(setTimeout(()=>{el.classList.remove(cls);el.style.animationDelay="";},
+                                  i*STAGGER+760));
+      });
+    });
+  // branches draw themselves outward
+  eEls.forEach((el,k)=>{
+    if(el.style.display==="none") return;
+    const a=N[EDG[k][0]], b=N[EDG[k][1]];
+    if(Math.max(growLvl(a),growLvl(b))!==s) return;
+    if(a.kind==="Institution") return;              // regulation stays a flat dash
+    el.setAttribute("pathLength","1");
+    el.style.transition="none";
+    el.style.strokeDasharray="1 1"; el.style.strokeDashoffset="1";
+    void el.getBoundingClientRect();
+    el.style.transition="stroke-dashoffset .62s ease-out";
+    el.style.strokeDashoffset="0";
+  });
+}
+function unfold(){
+  growTimers.forEach(clearTimeout); growTimers=[];
+  clearAnim(); markStage();
+  eEls.forEach(el=>{el.style.transition="";el.removeAttribute("pathLength");});
+  stage=3; apply(); fit();                 // frame the finished map, then empty it
+  stage=0; apply(); popIn(0);
+  // each wave waits for the previous one to finish sweeping, so nothing overlaps
+  const count=st=>Object.values(N).filter(n=>growLvl(n)===st).length;
+  let t=0;
+  [1,2,3].forEach(st=>{
+    t += 520 + count(st-1)*STAGGER;
+    growTimers.push(setTimeout(()=>{stage=st; apply(); popIn(st); markStage();}, t));
+  });
+  growTimers.push(setTimeout(()=>{
+    eEls.forEach(el=>{el.style.transition="";el.style.strokeDashoffset="";
+      el.removeAttribute("pathLength");});
+    style();
+  }, t + 760 + count(3)*STAGGER));
+}
+
+/* ---------- risk mode ----------
+   Severity is Evelin's table, 12 risks x 8 actor groups, unchanged.
+   The node lists below are my mapping of her 8 groups onto this map. */
+const SEV=["","#E2A312","#E8590C","#96070F"], SEVN=["","low","medium","high"];
+const RGROUP=[
+ ["Hatchery","hatcheries"],
+ ["Feed / input supplier","feed_dealers"],
+ ["Shrimp farmer","shrimp_farmers"],
+ ["Middleman / trader","trader_buyer"],
+ ["Processor / exporter","export_house"],
+ ["Workers","farm_workers"],
+ ["Government / regulators","gov_central"],
+ ["Local community / fishers","capture_fishers"]
+];
+const RISKS=[
+ ["Disease outbreaks",                    [3,2,3,2,3,1,2,2]],
+ ["Poor biosecurity",                     [2,2,3,2,3,0,2,2]],
+ ["Overstocking / intensive farming",     [2,2,3,2,3,0,2,3]],
+ ["Water pollution / effluents",          [1,2,3,1,3,2,3,3]],
+ ["Antimicrobial resistance / chemicals", [2,3,3,2,3,2,3,2]],
+ ["Market / price volatility",            [1,2,3,3,3,2,2,1]],
+ ["Weak farmer bargaining power",         [0,2,3,3,2,0,2,1]],
+ ["Labour / human-rights violations",     [0,0,2,2,3,3,3,2]],
+ ["Land-use / illegal aquaculture",       [0,0,3,2,2,0,3,3]],
+ ["Mangrove / habitat degradation",       [0,0,3,2,2,0,3,3]],
+ ["Climate / coastal vulnerability",      [1,1,3,2,2,2,3,3]],
+ ["Traceability / compliance failure",    [2,2,3,3,3,1,3,1]]
+];
+
+const gRisk=el("g",{}); cam.append(gRisk);
+const rRing={};
+Object.values(N).forEach(n=>{
+  const c=el("circle",{class:"rring"}); c.style.display="none"; gRisk.append(c); rRing[n.id]=c;
+});
+
+let risk=null, riskSev={};
+/* No routing through the graph any more. Her table says which actors a risk hits,
+   not how it travels, so the only honest line is a direct one: a spoke from the
+   farmer — hit in all twelve risks — out to each other actor the risk reaches. */
+const gThread=el("g",{}); cam.append(gThread);
+const HUB_ID="shrimp_farmers";
+let spokes=[];
+function buildSpokes(){
+  spokes.forEach(p=>p.remove()); spokes=[];
+  if(risk===null) return;
+  const hub = riskSev[HUB_ID] ? HUB_ID
+            : Object.keys(riskSev).sort((a,b)=>riskSev[b]-riskSev[a])[0];
+  if(!hub) return;
+  Object.keys(riskSev).filter(id=>id!==hub).forEach(id=>{
+    const pth=el("path",{class:"spoke"});
+    pth.dataset.a=hub; pth.dataset.b=id;
+    pth.setAttribute("stroke",SEV[riskSev[id]]);
+    gThread.append(pth); spokes.push(pth);
+  });
+  layoutSpokes();
+}
+function layoutSpokes(){
+  spokes.forEach(pth=>{
+    const a=N[pth.dataset.a], b=N[pth.dataset.b];
+    const dx=b.x-a.x, dy=b.y-a.y, L=Math.hypot(dx,dy)||1;
+    const bow=Math.min(70,L*0.13);
+    const cx=(a.x+b.x)/2-dy/L*bow, cy=(a.y+b.y)/2+dx/L*bow;
+    pth.setAttribute("d",`M${a.x},${a.y} Q${cx},${cy} ${b.x},${b.y}`);
+  });
+}
+
+function pickRisk(i){
+  risk=(risk===i)?null:i;
+  riskSev={};
+  if(risk!==null) RISKS[risk][1].forEach((sev,g)=>{
+    const id=RGROUP[g][1];
+    if(sev && N[id]) riskSev[id]=sev;
+  });
+  buildSpokes();
+  document.querySelectorAll("#rlist button").forEach((b,k)=>b.classList.toggle("on",k===risk));
+  paintRisk(); labels(); redraw();
+  if(risk===null){ document.getElementById("i-sev").innerHTML="";
+                   document.getElementById("info").classList.remove("on"); }
+  else showRisk();
+}
+function paintRisk(){
+  const live = mode==="risk" && risk!==null;
+  Object.values(N).forEach(n=>{
+    const o=nEls[n.id], sev=live?(riskSev[n.id]||0):0, r=rRing[n.id];
+    r.style.display = sev?"":"none";
+    r.classList.toggle("hi", sev===3);
+    if(sev) r.setAttribute("stroke",SEV[sev]);
+    o.c.classList.toggle("rdim", live && !sev);
+    o.t.classList.toggle("rdim", live && !sev);
+    o.t.classList.toggle("rbig", live && !!sev);       // the eight get readable names
+    if(halo[n.id]) halo[n.id].style.opacity = live ? (sev?1:.08) : 1;
+  });
+  eEls.forEach(el=>{ el.classList.remove("rflow"); el.classList.toggle("rdim", live); });
+}
+function clearRisk(){
+  risk=null; riskSev={}; buildSpokes(); paintRisk();
+  Object.values(N).forEach(n=>{const o=nEls[n.id];
+    o.c.classList.remove("rdim"); o.t.classList.remove("rdim","rbig");});
+  eEls.forEach(el=>el.classList.remove("rflow","rdim"));
+  document.querySelectorAll("#rlist button").forEach(b=>b.classList.remove("on"));
+  document.getElementById("i-sev").innerHTML="";
+}
+function showRisk(){
+  const [name,sevs]=RISKS[risk];
+  const k=document.getElementById("i-kind");
+  k.textContent="Risk · who it reaches"; k.style.color="#96070F";
+  document.getElementById("i-name").textContent=name;
+  const hi=sevs.filter(v=>v===3).length;
+  document.getElementById("i-meta").textContent=
+    sevs.filter(Boolean).length+" of 8 actors affected · "+hi+" severely";
+  document.getElementById("i-note").innerHTML="";
+  document.getElementById("i-sev").innerHTML=
+    RGROUP.map((g,i)=>sevs[i]?'<div><b style="background:'+SEV[sevs[i]]+'"></b>'+g[0]+
+      '<span>'+SEVN[sevs[i]]+'</span></div>':"").join("")+
+    '<p style="font-size:11px;color:var(--soft);line-height:1.5;margin:12px 0 0">'+
+    'One node stands for each column of your table. The red thread is the real route '+
+    'through the map between the actors this risk hits.</p>';
+  document.getElementById("i-links").innerHTML="";
+  document.getElementById("info").classList.add("on");
+}
+
+/* ---------- highlight ---------- */
+function hl(id){
+  const keep=new Set([id]); adj[id].forEach(a=>keep.add(a.o));
+  focusSet=keep; labels();
+  Object.values(nEls).forEach(o=>{const i=o.g.dataset.id;
+    o.c.classList.toggle("dim",!keep.has(i)); o.t.classList.toggle("dim",!keep.has(i));});
+  eEls.forEach(p=>{const on=p.dataset.s===id||p.dataset.t===id;
+    p.classList.toggle("hot",on); p.classList.toggle("dim",!on);});
+}
+function clr(){
+  focusSet=null; labels();
+  Object.values(nEls).forEach(o=>{o.c.classList.remove("dim");o.t.classList.remove("dim");});
+  eEls.forEach(p=>{p.classList.remove("hot","dim");});
+}
+let sel=null;
+function show(id){
+  document.getElementById("i-sev").innerHTML="";
+  hl(id); const n=N[id];
+  const k=document.getElementById("i-kind");
+  k.textContent=n.kind+" · "+n.cluster+(sel===id?"  · pinned":"");
+  k.style.color=col(n);
+  document.getElementById("i-name").textContent=n.label;
+  const o=adj[id].filter(a=>a.dir==="out"), i=adj[id].filter(a=>a.dir==="in");
+  document.getElementById("i-meta").textContent=`${adj[id].length} connections · ${i.length} in · ${o.length} out`;
+  document.getElementById("i-note").innerHTML = n.note?`<div class="note">${n.note}</div>`:"";
+  const list=(a,ar)=>a.length?"<ul>"+a.map(x=>`<li data-go="${x.o}"><span class="ar">${ar}</span>${N[x.o].label}<em>${x.r}</em></li>`).join("")+"</ul>":"<p class='none'>none</p>";
+  document.getElementById("i-links").innerHTML=
+    `<h4>Receives from / depends on</h4>${list(i,"←")}<h4>Leads to / supplies</h4>${list(o,"→")}`;
+  document.querySelectorAll("#i-links li").forEach(li=>li.onclick=e=>{
+    e.stopPropagation(); sel=li.dataset.go; show(sel);});
+  document.getElementById("info").classList.add("on");
+}
+function unfocus(){sel=null;clr();document.getElementById("info").classList.remove("on");}
+document.getElementById("close").onclick=unfocus;
+document.getElementById("stage").addEventListener("click",unfocus);
+addEventListener("keydown",e=>{if(e.key==="Escape")unfocus();});
+
+/* ---------- filters ---------- */
+function chk(host,items,cb){
+  items.forEach(([v,c])=>{
+    const l=document.createElement("label");
+    l.innerHTML=`<input type="checkbox" checked><span class="sw" style="background:${c}"></span>${v}`;
+    l.querySelector("input").onchange=e=>cb(v,e.target.checked);
+    host.append(l);
+  });
+}
+chk(document.getElementById("kinds"),
+  [["Process","#100B7B"],["Actor","#7194C9"],["Institution","#FF6C28"]],
+  (v,on)=>{Object.values(N).forEach(n=>{if(n.kind===v)n.on=on;});apply();});
+chk(document.getElementById("clusters"),Object.entries(CL),
+  (v,on)=>{Object.values(N).forEach(n=>{if(n.cluster===v)n.on=on;});apply();});
+
+let showE=false;
+const shown = n => n.on && (mode!=="onion" || inOnion(n))
+                        && (mode!=="grow"  || growLvl(n)<=stage);
+function apply(){
+  Object.values(nEls).forEach(o=>{
+    const n=N[o.g.dataset.id], vis=shown(n);
+    o.g.style.display=vis?"":"none";
+    if(halo[n.id]) halo[n.id].style.display=(vis && mode!=="org")?"":"none";
+  });
+  const onion = mode==="onion";
+  eEls.forEach((p,k)=>{const ok=!onion && shown(N[p.dataset.s])&&shown(N[p.dataset.t]);
+    p.style.display=ok?"":"none"; eLbl[k].style.display=(showE&&ok)?"":"none";});
+}
+document.getElementById("q").oninput=e=>{
+  const q=e.target.value.trim().toLowerCase();
+  Object.values(nEls).forEach(o=>{const n=N[o.g.dataset.id];
+    const hit=!q||n.label.toLowerCase().includes(q);
+    o.c.classList.toggle("dim",!hit); o.t.classList.toggle("dim",!hit);});
+};
+document.getElementById("elab").onclick=()=>{showE=!showE;
+  eLbl.forEach((t,k)=>t.style.display=(showE&&eEls[k].style.display!=="none")?"":"none");};
+document.getElementById("lbls").onclick=e=>{labelMode=labelMode==="key"?"all":"key";
+  e.target.textContent=labelMode==="all"?"Key labels":"All labels"; labels();};
+document.getElementById("toggle").onclick=()=>document.getElementById("ctl").classList.toggle("hide");
+
+/* ---------- pan + zoom ---------- */
+let vx=0,vy=0,vk=1;
+const paint=()=>{cam.setAttribute("transform",`translate(${vx},${vy}) scale(${vk})`);
+  if(Math.abs(vk-zoomK)>.001){zoomK=vk; labels();}};
+function fit(){
+  const ns=Object.values(N).filter(shown);
+  const xs=ns.map(n=>n.x), ys=ns.map(n=>n.y);
+  const pad=mode==='onion'?60:130, w=svg.clientWidth, h=svg.clientHeight;
+  const x0=Math.min(...xs)-pad,x1=Math.max(...xs)+pad,y0=Math.min(...ys)-pad,y1=Math.max(...ys)+pad;
+  vk=Math.min(w/(x1-x0),h/(y1-y0),2.2);
+  vx=w/2-((x0+x1)/2)*vk; vy=h/2-((y0+y1)/2)*vk; paint();
+}
+document.getElementById("fit").onclick=fit;
+document.getElementById("reset").onclick=()=>{
+  Object.values(N).forEach(n=>n.on=true);
+  document.querySelectorAll("#ctl input[type=checkbox]").forEach(c=>c.checked=true);
+  document.getElementById("q").value=""; apply(); unfocus(); fit();};
+
+const st=document.getElementById("stage");
+let dr=false,px,py;
+st.addEventListener("pointerdown",e=>{dr=true;px=e.clientX;py=e.clientY;st.classList.add("drag");st.setPointerCapture(e.pointerId);});
+st.addEventListener("pointermove",e=>{if(!dr)return;vx+=e.clientX-px;vy+=e.clientY-py;px=e.clientX;py=e.clientY;paint();});
+st.addEventListener("pointerup",()=>{dr=false;st.classList.remove("drag");});
+st.addEventListener("wheel",e=>{e.preventDefault();
+  const f=e.deltaY<0?1.13:1/1.13, k=Math.max(.1,Math.min(5,vk*f));
+  vx=e.clientX-(e.clientX-vx)*(k/vk); vy=e.clientY-(e.clientY-vy)*(k/vk); vk=k; paint();},{passive:false});
+addEventListener("resize",fit);
+
+(function(){
+  const host=document.getElementById("rlist");
+  RISKS.forEach(([name,sevs],i)=>{
+    const b=document.createElement("button");
+    b.innerHTML=name+'<em>'+sevs.filter(v=>v===3).length+' high</em>';
+    b.onclick=()=>pickRisk(i); host.append(b);
+  });
+})();
+(function(){
+  const host=document.getElementById("stages");
+  STAGE_LABELS.forEach((lab,i)=>{
+    const b=document.createElement("button");
+    b.dataset.st=i; b.textContent=(i+1)+"  "+lab;
+    b.onclick=()=>holdAt(i);
+    host.append(b);
+  });
+  const r=document.createElement("button");
+  r.textContent="↻ replay"; r.onclick=()=>unfold(); host.append(r);
+})();
+computeFlorets(); style(); redraw(); fit();
+</script>

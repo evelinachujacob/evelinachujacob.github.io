@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shrimp Aquaculture — Risk × Actor Propagation Matrix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f5f2; --panel:#ffffff; --text:#171717; --muted:#6b6b67;
+    --line:#d9d9d3; --high:#00008B; --medium:#4169E1; --low:#ADD8E6; --none:#eeeeea;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Inter", "Google Sans", Arial, sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+
+  header { position:relative; padding:40px 42px 26px; border-bottom:1px solid var(--line); background:#fafaf8; overflow:hidden; }
+  .eyebrow { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:11.5px; font-weight:600; letter-spacing:.4px; margin-bottom:10px; }
+  .eyebrow svg { width:15px; height:15px; stroke:var(--high); flex-shrink:0; }
+  h1 { margin:0 0 10px; font-size:29px; font-weight:800; letter-spacing:-.7px; line-height:1.15; }
+  .subtitle { color:var(--muted); font-size:14px; max-width:780px; line-height:1.6; }
+  .header-wave { position:absolute; right:-10px; top:0; bottom:0; width:260px; opacity:.5; pointer-events:none; }
+
+  main { padding:30px 42px 54px; max-width:1500px; margin:auto; }
+
+  .controls { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px; align-items:center; }
+
+  button { border:1px solid var(--line); background:#fff; padding:9px 14px; border-radius:7px; cursor:pointer; font:inherit; font-size:13px; font-weight:500; color:var(--text); display:inline-flex; align-items:center; transition:.12s ease; }
+  button:hover { background:#eee; }
+  button:focus-visible { outline:2px solid var(--medium); outline-offset:1px; }
+  button.active { background:#171717; color:#fff; border-color:#171717; }
+  button .swatch { width:8px; height:8px; border-radius:2px; display:inline-block; margin-right:7px; }
+  button[data-filter="high"] .swatch { background:var(--high); }
+  button[data-filter="medium"] .swatch { background:var(--medium); }
+  button[data-filter="low"] .swatch { background:var(--low); }
+  button[data-filter="none"] .swatch { background:#c9c9c3; }
+  button.active .swatch { outline:1px solid rgba(255,255,255,.5); }
+
+  .matrix-wrap { background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:auto; box-shadow:0 4px 18px rgba(20,20,20,.05); }
+  table { border-collapse:separate; border-spacing:0; min-width:1220px; width:100%; }
+  th, td { border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+  th { background:#f0f0ec; padding:13px 8px 12px; font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:.6px; text-align:center; position:sticky; top:0; z-index:3; color:#403f3b; }
+  th:first-child { text-align:left; min-width:250px; left:0; z-index:5; text-transform:none; letter-spacing:0; font-size:12px; color:var(--muted); font-weight:600; }
+  .th-inner { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .th-inner svg { width:19px; height:19px; stroke:#55554f; }
+  .th-inner span { line-height:1.25; }
+
+  td:first-child { position:sticky; left:0; z-index:2; background:#fff; font-weight:600; text-align:left; min-width:250px; padding-left:16px !important; }
+  td { height:56px; text-align:center; padding:7px; font-size:12px; }
+  .risk-label { display:flex; align-items:center; gap:10px; }
+  .risk-label .icon-badge { width:26px; height:26px; border-radius:7px; background:#f0f0ec; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .risk-label .icon-badge svg { width:14px; height:14px; stroke:var(--high); }
+  .risk-label span.rname { font-size:12.5px; line-height:1.25; }
+
+  td.cell { cursor:pointer; transition:.14s ease; position:relative; }
+  td.cell:hover { outline:2px solid #171717; outline-offset:-2px; z-index:1; }
+  td.cell .lvl { display:inline-flex; align-items:center; gap:5px; font-weight:700; font-size:11px; letter-spacing:.4px; }
+  td.cell .lvl svg { width:11px; height:11px; }
+
+  .high { background:var(--high); color:#fff; }
+  .medium { background:var(--medium); color:#fff; }
+  .low { background:var(--low); color:#1f2937; }
+  .none { background:var(--none); color:#9a9a94; }
+
+  .legend { display:flex; gap:20px; align-items:center; margin:20px 2px 0; color:var(--muted); font-size:12.5px; flex-wrap:wrap; }
+  .legend span { display:flex; align-items:center; }
+  .dot { width:13px; height:13px; border-radius:3.5px; display:inline-block; margin-right:6px; border:1px solid rgba(0,0,0,.08); }
+
+  .insight { margin-top:28px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:24px 26px; box-shadow:0 4px 18px rgba(20,20,20,.04); }
+  .insight-head { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .insight-head svg { width:18px; height:18px; stroke:var(--high); flex-shrink:0; }
+  .insight h2 { font-size:16.5px; margin:0; font-weight:700; }
+  .insight-row { display:flex; gap:13px; align-items:flex-start; padding:11px 0; border-top:1px solid #f0f0ec; }
+  .insight-row:first-of-type { border-top:none; padding-top:2px; }
+  .insight-row .ibadge { width:30px; height:30px; border-radius:8px; background:#f0f0ec; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+  .insight-row .ibadge svg { width:15px; height:15px; stroke:var(--high); }
+  .insight p { margin:0; line-height:1.58; font-size:13.3px; color:#2b2b28; }
+  .insight p strong { color:var(--text); }
+
+  .tooltip { position:fixed; pointer-events:none; display:none; max-width:290px; padding:11px 13px; background:#171717; color:white; border-radius:8px; font-size:12px; line-height:1.5; z-index:20; box-shadow:0 8px 26px rgba(0,0,0,.25); }
+  .tooltip .tt-level { display:inline-flex; align-items:center; gap:5px; font-weight:700; letter-spacing:.3px; margin:3px 0 6px; }
+  .tt-dot { width:8px; height:8px; border-radius:2px; display:inline-block; }
+  .tt-dot.high { background:var(--high); }
+  .tt-dot.medium { background:var(--medium); }
+  .tt-dot.low { background:var(--low); }
+  .tt-dot.none { background:#c9c9c3; }
+
+  .footer { margin-top:24px; color:#8c8c86; font-size:11.5px; line-height:1.6; max-width:900px; }
+
+  /* the way back to the story */
+  .back { position:relative; z-index:1; display:inline-flex; align-items:center; gap:5px; margin-bottom:18px;
+    padding:5px 12px 5px 8px; border-radius:999px; border:1.5px solid var(--high); background:#fff; color:var(--high);
+    text-decoration:none; font-size:12px; font-weight:600; letter-spacing:.01em; line-height:1.2; transition:background-color .2s, color .2s; }
+  .back svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .back:hover { background:var(--high); color:#fff; }
+  .back:focus-visible { outline:2px solid var(--medium); outline-offset:3px; }
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="shrimp_story/index.html"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Back to the story</a>
+  <div class="eyebrow">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M2 18c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/></svg>
+    System mapping
+  </div>
+  <h1>Risk × Actor Propagation Matrix</h1>
+  <div class="subtitle">
+    Shrimp aquaculture in Andhra Pradesh — interactive view of how major system risks intersect with actors across the value chain.
+    Click any cell to inspect the propagation relationship. Use the filters to isolate high, medium, or low-impact connections.
+  </div>
+  <svg class="header-wave" viewBox="0 0 260 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M-10 30c20-14 40-14 60 0s40 14 60 0 40-14 60 0 40 14 60 0" stroke="#d9d9d3" stroke-width="1.4"/>
+    <path d="M-10 65c20-14 40-14 60 0s40 14 60 0 40-14 60 0 40 14 60 0" stroke="#d9d9d3" stroke-width="1.4"/>
+    <path d="M-10 100c20-14 40-14 60 0s40 14 60 0 40-14 60 0 40 14 60 0" stroke="#00008B" stroke-width="1.6" opacity=".35"/>
+    <path d="M-10 135c20-14 40-14 60 0s40 14 60 0 40-14 60 0 40 14 60 0" stroke="#d9d9d3" stroke-width="1.4"/>
+  </svg>
+</header>
+
+<main>
+  <div class="controls">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="high"><span class="swatch"></span>High</button>
+    <button data-filter="medium"><span class="swatch"></span>Medium</button>
+    <button data-filter="low"><span class="swatch"></span>Low</button>
+    <button data-filter="none"><span class="swatch"></span>Limited</button>
+  </div>
+
+  <div class="matrix-wrap">
+    <table id="matrix">
+      <thead><tr id="head"></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot high"></i>High</span>
+    <span><i class="dot medium"></i>Medium</span>
+    <span><i class="dot low"></i>Low</span>
+    <span><i class="dot none"></i>Limited / indirect</span>
+  </div>
+
+  <section class="insight">
+    <div class="insight-head">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3-4 3 3 5-6"/></svg>
+      <h2 id="insight-title">System-level insights</h2>
+    </div>
+    <div id="insight-body">
+      <div class="insight-row">
+        <div class="ibadge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c1.5-4.2 5-6 6.5-6s5 1.8 6.5 6"/><path d="M12 2v2.2M4.6 6l1.6 1.4M19.4 6l-1.6 1.4"/></svg></div>
+        <p><strong>1. Farmer as risk concentration point:</strong> the farmer intersects with seed, inputs, water, disease, finance, market and regulatory risks.</p>
+      </div>
+      <div class="insight-row">
+        <div class="ibadge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><circle cx="5" cy="6" r="1.6"/><circle cx="19" cy="6" r="1.6"/><circle cx="5" cy="18" r="1.6"/><circle cx="19" cy="18" r="1.6"/><path d="M9.8 10.2 6.2 7.2M14.2 10.2l3.6-3M9.8 13.8 6.2 16.8M14.2 13.8l3.6 3"/></svg></div>
+        <p><strong>2. Disease is systemic:</strong> a farm-level disease event can propagate through seed, water, neighbouring farms, harvest and processing.</p>
+      </div>
+      <div class="insight-row">
+        <div class="ibadge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M11 20V4M18 20v-7"/><path d="M2.5 10 4 8.5 5.5 10M9.5 4 11 2.5 12.5 4M16.5 13 18 11.5 19.5 13"/></svg></div>
+        <p><strong>3. Risks compound:</strong> input-cost pressure can encourage intensification, which increases water-quality and disease risk, potentially leading to crop loss and further financial pressure.</p>
+      </div>
+      <div class="insight-row">
+        <div class="ibadge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v5.2M12 8.2 16 5"/><path d="M12 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg></div>
+        <p><strong>4. Information is asymmetric:</strong> biological and economic risks can travel through the network faster than reliable information reaches every actor.</p>
+      </div>
+      <div class="insight-row">
+        <div class="ibadge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-6 8v6l-6 2v-8L3 5Z"/></svg></div>
+        <p><strong>5. Export houses act as downstream filters:</strong> problems originating at farms can become quality, residue, traceability or compliance issues at processing/export level.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    Analytical matrix based on the risk relationships discussed from the Dakshin Foundation Social-Ecological Comprehensive Report on Andhra Pradesh shrimp aquaculture (2025). Ratings are an analytical interpretation for system mapping, not numerical measurements from the report.
+  </div>
+</main>
+
+<div id="tooltip" class="tooltip"></div>
+
+<script>
+const actors = [
+  "Hatchery","Feed / Input Supplier","Shrimp Farmer","Middleman / Trader",
+  "Processor / Exporter","Workers","Government / Regulators","Local Community / Fishers"
+];
+
+const risks = [
+  ["Disease outbreaks", ["high","medium","high","medium","high","low","medium","medium"]],
+  ["Poor biosecurity", ["medium","medium","high","medium","high","none","medium","medium"]],
+  ["Overstocking / intensive farming", ["medium","medium","high","medium","high","none","medium","high"]],
+  ["Water pollution / effluents", ["low","medium","high","low","high","medium","high","high"]],
+  ["Antimicrobial resistance / chemical use", ["medium","high","high","medium","high","medium","high","medium"]],
+  ["Market / price volatility", ["low","medium","high","high","high","medium","medium","low"]],
+  ["Weak farmer bargaining power", ["none","medium","high","high","medium","none","medium","low"]],
+  ["Labour / human-rights violations", ["none","none","medium","medium","high","high","high","medium"]],
+  ["Land-use / illegal aquaculture", ["none","none","high","medium","medium","none","high","high"]],
+  ["Mangrove / habitat degradation", ["none","none","high","medium","medium","none","high","high"]],
+  ["Climate / coastal vulnerability", ["low","low","high","medium","medium","medium","high","high"]],
+  ["Traceability / compliance failure", ["medium","medium","high","high","high","low","high","low"]]
+];
+
+const descriptions = {
+  "Disease outbreaks":"Disease can originate or amplify around seed and farming conditions, then affect harvest quality, processing and export.",
+  "Poor biosecurity":"Weak movement controls, pond hygiene and farm-level safeguards can allow biological risks to spread between connected production nodes.",
+  "Overstocking / intensive farming":"Higher production intensity can increase pressure on water quality and disease management and amplify downstream losses.",
+  "Water pollution / effluents":"Farm discharges can affect surrounding water systems, ecology, fisheries and communities, while also influencing farm health.",
+  "Antimicrobial resistance / chemical use":"Input and treatment practices can create food-safety, environmental and regulatory consequences that reach processing and export.",
+  "Market / price volatility":"Changes in market prices and bargaining conditions affect farm decisions, trader relationships, processing economics and export outcomes.",
+  "Weak farmer bargaining power":"Information and negotiating power can be unevenly distributed between farmers, intermediaries and downstream buyers.",
+  "Labour / human-rights violations":"Working conditions become particularly visible in intensive processing and export operations and can create compliance/reputation risks.",
+  "Land-use / illegal aquaculture":"Unregulated or inappropriate expansion can create governance, land-use and ecological conflicts that involve farms, communities and regulators.",
+  "Mangrove / habitat degradation":"Conversion or pressure on coastal habitats creates ecological impacts extending beyond individual farms.",
+  "Climate / coastal vulnerability":"Coastal hazards and climate variability can affect farm infrastructure, water conditions, workers, communities and supply continuity.",
+  "Traceability / compliance failure":"Gaps in documentation and traceability can turn upstream production problems into downstream rejection or regulatory risks."
+};
+
+// --- icon library (inline, stroke-based, currentColor) -----------------
+function svg(inner){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`; }
+
+const actorIcons = {
+  "Hatchery": svg(`<rect x="4" y="9" width="16" height="10" rx="1.4"/><path d="M4 9 12 3l8 6"/><path d="M8 13.2c.8-1.2 2-1.2 2.8 0s2 1.2 2.8 0 2-1.2 2.8 0"/>`),
+  "Feed / Input Supplier": svg(`<path d="M6 3h12l1.5 5.5c.6 4.2-1.8 12-7.5 12s-8.1-7.8-7.5-12L6 3Z"/><path d="M8.7 9.5h6.6M9.3 13h5.4"/>`),
+  "Shrimp Farmer": svg(`<circle cx="12" cy="6.4" r="2.6"/><path d="M6 20c1.3-4.6 4-6.4 6-6.4s4.7 1.8 6 6.4"/><path d="M3 19.5c3-1 15-1 18 0"/>`),
+  "Middleman / Trader": svg(`<path d="M4 8h12M12 4l4 4-4 4"/><path d="M20 16H8M12 20l-4-4 4-4"/>`),
+  "Processor / Exporter": svg(`<path d="M3 21V10l5-3 5 3v11"/><path d="M13 21v-7l4-2.4 4 2.4V21"/><path d="M3 21h18"/><path d="M6.5 12.5h1M10.5 12.5h1M6.5 16h1M10.5 16h1"/>`),
+  "Workers": svg(`<circle cx="8.3" cy="7" r="2.3"/><circle cx="16.2" cy="8.4" r="2"/><path d="M3.5 19c.6-3.4 2.7-5 4.8-5s4.2 1.6 4.8 5"/><path d="M13.6 19c.5-2.7 2-4.2 3.7-4.6"/>`),
+  "Government / Regulators": svg(`<path d="M12 3l7 3v5c0 5-3 8.3-7 10-4-1.7-7-5-7-10V6l7-3Z"/><path d="M9.3 12l1.9 1.9L15 10"/>`),
+  "Local Community / Fishers": svg(`<path d="M3 15c2 1.4 4 1.4 6 0s4-1.4 6 0 4 1.4 6 0"/><path d="M12 15V5"/><path d="M12 5l6 3-6 2-6-2 6-3Z"/>`)
+};
+
+const riskIcons = {
+  "Disease outbreaks": svg(`<circle cx="12" cy="12" r="4"/><path d="M12 3.5v2.3M12 18.2v2.3M3.5 12h2.3M18.2 12h2.3M6 6l1.6 1.6M16.4 16.4 18 18M18 6l-1.6 1.6M7.6 16.4 6 18"/>`),
+  "Poor biosecurity": svg(`<path d="M12 3l7 3v5c0 5-3 8.3-7 10-4-1.7-7-5-7-10V6l7-3Z"/><path d="M12 8v5M12 15.8h.01"/>`),
+  "Overstocking / intensive farming": svg(`<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>`),
+  "Water pollution / effluents": svg(`<path d="M12 2.5c3 4 5.5 7.3 5.5 10.3a5.5 5.5 0 1 1-11 0c0-3 2.5-6.3 5.5-10.3Z"/><path d="M9.3 14.5h5.4"/>`),
+  "Antimicrobial resistance / chemical use": svg(`<path d="M10 2h4M11 2v6.2L6.5 16a3 3 0 0 0 2.6 4.5h5.8a3 3 0 0 0 2.6-4.5L13 8.2V2"/><path d="M8.3 15h7.4"/>`),
+  "Market / price volatility": svg(`<path d="M3 17l5-6 4 3 6-8"/><path d="M14 6h4v4"/>`),
+  "Weak farmer bargaining power": svg(`<path d="M12 3v18M6 7l-3 5.5a3.3 3.3 0 0 0 6 0L6 7Z"/><path d="M18 5l-3 6.5a3.3 3.3 0 0 0 6 0L18 5Z"/><path d="M5.5 21h13"/>`),
+  "Labour / human-rights violations": svg(`<circle cx="12" cy="7.2" r="2.7"/><path d="M6 20c1.3-4.6 4-6.4 6-6.4s4.7 1.8 6 6.4"/><path d="M12 20.5h.01"/>`),
+  "Land-use / illegal aquaculture": svg(`<path d="M12 21s-6.5-6.1-6.5-11.2A6.5 6.5 0 0 1 12 3a6.5 6.5 0 0 1 6.5 6.8C18.5 14.9 12 21 12 21Z"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/>`),
+  "Mangrove / habitat degradation": svg(`<path d="M12 21v-8"/><path d="M12 13c-3 0-5-2-5-5 3 0 5 1.5 5 4"/><path d="M12 10c3 0 5-2.3 5-5.5-3.2 0-5 1.7-5 4"/><path d="M8 21h8"/>`),
+  "Climate / coastal vulnerability": svg(`<circle cx="8" cy="6.5" r="2.6"/><path d="M8 2.5v1.3M8 9.4v1.3M4.4 6.5h1.3M10.3 6.5h1.3"/><path d="M3 17c1.7 1.2 3.3 1.2 5 0s3.3-1.2 5 0 3.3 1.2 5 0"/><path d="M3 21c1.7 1.2 3.3 1.2 5 0s3.3-1.2 5 0 3.3 1.2 5 0"/>`),
+  "Traceability / compliance failure": svg(`<path d="M7 3h8l3 3v15H7z"/><path d="M15 3v3h3"/><path d="M9.5 12.5l1.8 1.8L15 10.7"/>`)
+};
+
+const levelIcons = {
+  high: svg(`<path d="M4 20 10 8l5 6 5-9"/>`),
+  medium: svg(`<path d="M4 14h16"/>`),
+  low: svg(`<path d="M4 6 20 18"/>`),
+  none: svg(`<circle cx="12" cy="12" r="1.4"/>`)
+};
+
+// --- render ---------------------------------------------------------------
+const head = document.getElementById("head");
+head.innerHTML = "<th>Risk ↓ / Actor →</th>" + actors.map(a =>
+  `<th><div class="th-inner">${actorIcons[a] || ""}<span>${a}</span></div></th>`
+).join("");
+
+const body = document.getElementById("body");
+function render(filter="all") {
+  body.innerHTML = "";
+  risks.forEach(([risk, vals]) => {
+    const tr = document.createElement("tr");
+    const label = document.createElement("td");
+    label.innerHTML = `<div class="risk-label"><span class="icon-badge">${riskIcons[risk] || ""}</span><span class="rname">${risk}</span></div>`;
+    tr.appendChild(label);
+    vals.forEach((level,i) => {
+      const td = document.createElement("td");
+      td.className = `cell ${level}`;
+      const labelText = level === "high" ? "HIGH" : level === "medium" ? "MED" : level === "low" ? "LOW" : "—";
+      td.innerHTML = level === "none"
+        ? `<span class="lvl">${labelText}</span>`
+        : `<span class="lvl">${levelIcons[level]}${labelText}</span>`;
+      td.dataset.level = level;
+      td.dataset.risk = risk;
+      td.dataset.actor = actors[i];
+      if (filter !== "all" && level !== filter) td.style.opacity = ".14";
+      td.onclick = () => showInfo(risk, actors[i], level);
+      td.onmouseenter = e => {
+        tooltip.style.display="block";
+        tooltip.innerHTML = `<strong>${risk}</strong><br>${actors[i]}
+          <div class="tt-level"><span class="tt-dot ${level}"></span>${level.toUpperCase()}</div>
+          ${descriptions[risk]}`;
+        moveTip(e);
+      };
+      td.onmousemove = moveTip;
+      td.onmouseleave = () => tooltip.style.display="none";
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
+function moveTip(e){ tooltip.style.left=(e.clientX+14)+"px"; tooltip.style.top=(e.clientY+14)+"px"; }
+function showInfo(risk, actor, level) {
+  document.getElementById("insight-title").textContent = `${risk} → ${actor}`;
+  document.getElementById("insight-body").innerHTML = `
+    <div class="insight-row" style="border-top:none;padding-top:2px;">
+      <div class="ibadge">${riskIcons[risk] || ""}</div>
+      <p>
+        <span class="tt-level" style="display:inline-flex;align-items:center;gap:5px;font-weight:700;">
+          <span class="tt-dot ${level}" style="width:9px;height:9px;border-radius:2px;display:inline-block;"></span>${level.toUpperCase()} propagation
+        </span><br>
+        ${descriptions[risk]}<br><br>
+        This connection is useful for identifying where intervention, monitoring or information-sharing could interrupt propagation.
+      </p>
+    </div>`;
+}
+document.querySelectorAll("button[data-filter]").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll("button[data-filter]").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    render(btn.dataset.filter);
+  };
+});
+render();
+</script>
+</body>
+</html>

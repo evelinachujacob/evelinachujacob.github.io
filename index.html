@@ -73,6 +73,42 @@ footer .links a:hover{color:var(--ink)}
 .rise{opacity:0;transform:translateY(60px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .rise.in{opacity:1;transform:none}
 
+
+/* more work: a strip of smaller cards that slides left on a loop, full width, below the featured case studies.
+   The six cards are listed twice so the loop has no jump; the script at the bottom moves the track.
+   Hover or keyboard focus pauses it; the arrows in the label row step one card back or forward. */
+section.more-work{padding-bottom:96px}
+.more-work .bar{align-items:center}
+.arrows{display:flex;gap:8px;margin:-8px 0}
+.arrows button{width:40px;height:40px;display:grid;place-items:center;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--ink);cursor:pointer;transition:background .2s,border-color .2s}
+.arrows button:hover{background:#f3f3f3;border-color:#dcdcdc}
+.arrows button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.arrows svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,#000 48px,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(to right,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+.track{display:flex;width:max-content;padding-left:40px;will-change:transform}
+.card.sm{flex:none;width:400px;margin-right:28px}
+.card.sm .img{aspect-ratio:428/277}
+.card.sm .hint{padding:40px 18px 14px;font-size:14px}
+.card.sm .meta{padding-top:12px}
+.card.sm .meta h2{font-size:18px}
+.card.sm .tags{margin-top:6px;font-size:14px}
+@media (max-width:809px){
+  .marquee{-webkit-mask-image:none;mask-image:none}
+  .arrows button{width:36px;height:36px}
+  .track{padding-left:20px}
+  .card.sm{width:260px;margin-right:16px}
+  .card.sm .meta h2{font-size:16px}
+  .card.sm .tags{font-size:13px}
+  .card.sm .tags span+span::before{margin:0 5px}
+  section.more-work{padding-bottom:64px}
+}
+/* reduced motion: no sliding; the row scrolls sideways by hand or with the arrows, and the copies are hidden */
+@media (prefers-reduced-motion:reduce){
+  .marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none;padding:0 40px}
+  .track{transform:none!important;padding-left:0}
+  .track [aria-hidden="true"]{display:none}
+}
+
 @media (max-width:1199px){
   .split{grid-template-columns:1fr;row-gap:20px}
   .head .role{display:none}
@@ -110,7 +146,7 @@ footer .links a:hover{color:var(--ink)}
 
 <main>
   <section class="hero pad rise">
-    <h1>Hi there! I&rsquo;m Evelin,<br>a fourth-year Industrial Design student at NID,<br>exploring the intersection of human behaviour,<br>interaction design and intelligent products.</h1>
+    <h1>Hi there! I&rsquo;m Evelin, <br>a fourth-year Industrial Design student at NID, <br>exploring the intersection of human behaviour, <br>interaction design and intelligent products.</h1>
   </section>
 
   <section class="work pad rise" id="work">
@@ -139,6 +175,80 @@ footer .links a:hover{color:var(--ink)}
         <div class="img"><img src="images/home/cmf-ev6.jpg" width="1300" height="644" alt="Kia EV6 rear lights at night"><p class="hint">Colour, material and finish &middot; 2025</p></div>
         <div class="meta"><h2>KIA EV6</h2><p class="tags"><span>CMF Design</span><span>Automotive</span></p></div>
       </a>
+    </div>
+  </section>
+
+
+  <section class="more-work rise" id="more">
+    <div class="pad">
+      <div class="row bar">
+        <p class="label">More work</p>
+        <div class="arrows">
+          <button type="button" class="prev" aria-label="Previous project"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button>
+          <button type="button" class="next" aria-label="Next project"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="marquee">
+     <div class="track">
+      <div class="card sm" tabindex="0">
+        <div class="img"><img src="images/thumbs/egg-boiler.jpg" width="428" height="277" loading="lazy" alt="Egg boiler render, assembled and taken apart"><p class="hint">Teardown and redesign for fewer parts and screws &middot; 2025</p></div>
+        <div class="meta"><h2>Egg Boiler</h2><p class="tags"><span>DFA</span><span>DFM</span></p></div>
+      </div>
+      <a class="card sm" href="shrimp/shrimp_story/index.html" target="_blank" rel="noopener" data-cursor-text="Open website">
+        <div class="img"><img src="images/thumbs/shrimp.jpg" width="856" height="554" loading="lazy" alt="The Shrimp Coast website: a painted shrimp pond with aerators, and the line 70% of all shrimp exported from India comes from one state, Andhra Pradesh"><p class="hint">Bhimavaram shrimp farming, from hatchery to export, as a scroll story &middot; 2026</p></div>
+        <div class="meta"><h2>The Shrimp Coast</h2><p class="tags"><span>System Visualisation</span><span>Data Storytelling</span></p></div>
+      </a>
+      <div class="card sm" tabindex="0">
+        <div class="img"><img src="images/thumbs/grater.jpg" width="428" height="277" loading="lazy" alt="Grater with the new handle, and the row of clay handle models"><p class="hint">Handle redesign, tested on 4 users for pulse, SpO&#8322;, BP and time &middot; 2025</p></div>
+        <div class="meta"><h2>Handheld Grater</h2><p class="tags"><span>Ergonomics</span><span>User Testing</span></p></div>
+      </div>
+      <div class="card sm" tabindex="0">
+        <div class="img"><img src="images/thumbs/steamer.jpg" width="428" height="277" loading="lazy" alt="Facial steamer replica with a green funnel, assembled and opened"><p class="hint">Working replica in heat-bent PVC and vacuum-formed parts &middot; 2024</p></div>
+        <div class="meta"><h2>Facial Steamer</h2><p class="tags"><span>Prototyping</span><span>Vacuum Forming</span></p></div>
+      </div>
+      <div class="card sm" tabindex="0">
+        <div class="img"><img src="images/thumbs/street-dogs.jpg" width="428" height="277" loading="lazy" alt="Street dogs walking down a lane in Mangalagiri"><p class="hint">Field research in a team of 7: 88 dogs counted, 15 sterilised &middot; 2025</p></div>
+        <div class="meta"><h2>Mangalagiri Street Dogs</h2><p class="tags"><span>Design Research</span><span>Systems</span></p></div>
+      </div>
+      <div class="card sm" tabindex="0">
+        <div class="img"><img src="images/thumbs/anveshana.jpg" width="428" height="277" loading="lazy" alt="Anveshana title card beside students sitting outside a school building"><p class="hint">Helping Classes 6&ndash;8 discover their interests and learn by thinking for themselves &middot; 2026</p></div>
+        <div class="meta"><h2>Anveshana</h2><p class="tags"><span>System Design</span><span>Education</span></p></div>
+      </div>
+      <div class="card sm" tabindex="0">
+        <div class="img"><img src="images/thumbs/sugarcane.jpg" width="428" height="277" loading="lazy" alt="Bag made of sugarcane fibre composite, lit from inside"><p class="hint">Thirteen experiments on sugarcane, stalk to fibre composite &middot; with Rashmi Ray &middot; 2026</p></div>
+        <div class="meta"><h2>Sugarcane Fibre</h2><p class="tags"><span>Material Driven Design</span><span>Material Research</span></p></div>
+      </div>
+      <!-- the same six again, hidden from screen readers, so the loop joins up -->
+      <div class="card sm" aria-hidden="true">
+        <div class="img"><img src="images/thumbs/egg-boiler.jpg" width="428" height="277" loading="lazy" alt=""><p class="hint">Teardown and redesign for fewer parts and screws &middot; 2025</p></div>
+        <div class="meta"><h2>Egg Boiler</h2><p class="tags"><span>DFA</span><span>DFM</span></p></div>
+      </div>
+      <a class="card sm" href="shrimp/shrimp_story/index.html" target="_blank" rel="noopener" data-cursor-text="Open website" aria-hidden="true" tabindex="-1">
+        <div class="img"><img src="images/thumbs/shrimp.jpg" width="856" height="554" loading="lazy" alt=""><p class="hint">Bhimavaram shrimp farming, from hatchery to export, as a scroll story &middot; 2026</p></div>
+        <div class="meta"><h2>The Shrimp Coast</h2><p class="tags"><span>System Visualisation</span><span>Data Storytelling</span></p></div>
+      </a>
+      <div class="card sm" aria-hidden="true">
+        <div class="img"><img src="images/thumbs/grater.jpg" width="428" height="277" loading="lazy" alt=""><p class="hint">Handle redesign, tested on 4 users for pulse, SpO&#8322;, BP and time &middot; 2025</p></div>
+        <div class="meta"><h2>Handheld Grater</h2><p class="tags"><span>Ergonomics</span><span>User Testing</span></p></div>
+      </div>
+      <div class="card sm" aria-hidden="true">
+        <div class="img"><img src="images/thumbs/steamer.jpg" width="428" height="277" loading="lazy" alt=""><p class="hint">Working replica in heat-bent PVC and vacuum-formed parts &middot; 2024</p></div>
+        <div class="meta"><h2>Facial Steamer</h2><p class="tags"><span>Prototyping</span><span>Vacuum Forming</span></p></div>
+      </div>
+      <div class="card sm" aria-hidden="true">
+        <div class="img"><img src="images/thumbs/street-dogs.jpg" width="428" height="277" loading="lazy" alt=""><p class="hint">Field research in a team of 7: 88 dogs counted, 15 sterilised &middot; 2025</p></div>
+        <div class="meta"><h2>Mangalagiri Street Dogs</h2><p class="tags"><span>Design Research</span><span>Systems</span></p></div>
+      </div>
+      <div class="card sm" aria-hidden="true">
+        <div class="img"><img src="images/thumbs/anveshana.jpg" width="428" height="277" loading="lazy" alt=""><p class="hint">Helping Classes 6&ndash;8 discover their interests and learn by thinking for themselves &middot; 2026</p></div>
+        <div class="meta"><h2>Anveshana</h2><p class="tags"><span>System Design</span><span>Education</span></p></div>
+      </div>
+      <div class="card sm" aria-hidden="true">
+        <div class="img"><img src="images/thumbs/sugarcane.jpg" width="428" height="277" loading="lazy" alt=""><p class="hint">Thirteen experiments on sugarcane, stalk to fibre composite &middot; with Rashmi Ray &middot; 2026</p></div>
+        <div class="meta"><h2>Sugarcane Fibre</h2><p class="tags"><span>Material Driven Design</span><span>Material Research</span></p></div>
+      </div>
+     </div>
     </div>
   </section>
 
@@ -172,6 +282,51 @@ footer .links a:hover{color:var(--ink)}
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   },{rootMargin:'0px 0px -8% 0px'});
   els.forEach(function(e){ io.observe(e); });
+})();
+
+/* more work strip: slides left by itself, stops while the pointer or keyboard focus is on it,
+   and the arrows glide one card back or forward (then it waits 4 s before sliding again) */
+(function(){
+  var box=document.querySelector('.marquee'), track=box&&box.querySelector('.track');
+  var prev=document.querySelector('.arrows .prev'), next=document.querySelector('.arrows .next');
+  if(!track||!prev||!next) return;
+  var cards=track.children, n=cards.length/2, SPEED=40;   /* px per second */
+  var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var x=0, half=1, step=1, last=0, hover=false, rest=0, glide=null;
+
+  function measure(){ half=cards[n].offsetLeft-cards[0].offsetLeft; step=cards[1].offsetLeft-cards[0].offsetLeft; }
+  function wrap(v){ return ((v%half)+half)%half; }
+  function ease(t){ return 1-Math.pow(1-t,3); }
+  measure(); window.addEventListener('resize',measure);
+
+  function go(dir){
+    if(still){ box.scrollBy({left:dir*step}); return; }
+    var now=performance.now(), from=glide?glide.to:x, k=from/step;
+    var to=(dir>0?Math.floor(k+.001)+1:Math.ceil(k-.001)-1)*step;
+    glide={from:x,to:to,t0:now}; rest=now+4000;
+  }
+  prev.addEventListener('click',function(){ go(-1); });
+  next.addEventListener('click',function(){ go(1); });
+  if(still) return;
+
+  box.addEventListener('mouseenter',function(){ hover=true; });
+  box.addEventListener('mouseleave',function(){ hover=false; });
+  box.addEventListener('focusin',function(){ hover=true; });
+  box.addEventListener('focusout',function(){ hover=false; });
+
+  function frame(now){
+    var dt=Math.min((now-(last||now))/1000,.05); last=now;
+    if(glide){
+      var p=Math.min((now-glide.t0)/500,1);
+      x=glide.from+(glide.to-glide.from)*ease(p);
+      if(p===1){ glide=null; x=wrap(x); }
+    } else if(!hover && now>rest){
+      x=wrap(x+SPEED*dt);
+    }
+    track.style.transform='translateX('+(-wrap(x))+'px)';
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 })();
 </script>
 </html>

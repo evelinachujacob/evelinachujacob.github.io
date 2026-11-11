@@ -1,0 +1,1633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Andhra Pradesh — the shrimp coast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* ============================================================
+   Hero — parallax pond.
+
+   The artwork is one tall piece (pond, coastal band, lavender water,
+   torn wavy edge), far taller than any browser window. It is laid out
+   at its own proportions and the scroll walks down it; the copy is
+   pinned to the window, never moves, and fades out over the last
+   stretch once the water has risen behind it.
+
+   Every vertical measurement is a percentage or a fraction of the
+   width — in CSS a margin percentage resolves against WIDTH — so the
+   scene stays locked to the artwork's proportions at any window size.
+   ============================================================ */
+
+:root{
+  --ink:#100B7B;              /* sampled off the reference */
+  --hot:#F26A2E;              /* her orange, for the thing in focus */
+  --ground:#FFFFFF;           /* one ground under the wave, the egg and the map,
+                                 as in her mockup — so no section has a seam */
+  --ease:cubic-bezier(.22,.75,.2,1);
+}
+
+/* the artwork (art.webp) is 2360 x 2230. In fractions of its width:
+     palm tops ........................ 323/2360 = 0.137
+     fully opaque from/to ...... 1200..1760/2360 = 0.508..0.746
+     wavy lavender edge ends at ...... 2210/2360 = 0.936
+     canvas bottom ................... 2230/2360 = 0.945          */
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  overflow-x:hidden;
+  background:var(--ground);
+  font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+}
+
+/* ---------- hero ---------- */
+.hero{ position:relative; height:250vh }   /* replaced by measure() */
+.stage{
+  position:sticky; top:0;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* the sky is a fixed diagonal ramp, pinned to the width so it doesn't
+   shift when the window's aspect does */
+.sky{
+  position:absolute; inset:0;
+  background:linear-gradient(150deg,
+    #FFFFFF 0,
+    #FFFFFF calc(var(--w,1440px) * 0.121),
+    #F4F7FB calc(var(--w,1440px) * 0.167),
+    #E4EBF5 calc(var(--w,1440px) * 0.250),
+    #D5DFEF calc(var(--w,1440px) * 0.333),
+    #C4D2E8 calc(var(--w,1440px) * 0.417),
+    #ACC0DF calc(var(--w,1440px) * 0.548),
+    #9CB3D9 calc(var(--w,1440px) * 0.694),
+    #8CA5D2 calc(var(--w,1440px) * 0.833),
+    #7A96CA calc(var(--w,1440px) * 1.000));
+}
+
+/* the scene moves as one; its transform is written straight to
+   style.transform each frame (not via a custom property, which would
+   re-resolve the sky gradient on every frame) */
+.scene{
+  position:absolute; left:0; top:0; width:100%;
+  will-change:transform;
+}
+.scene img{
+  position:relative; z-index:1;
+  display:block; width:100%; height:auto;
+}
+/* solid ground tucked behind the art's fully opaque middle and running
+   on below it, so the wavy lavender edge lands on --ground (the same
+   colour as the section that follows) instead of on sky */
+.ground{
+  position:absolute; left:0; right:0; top:0; z-index:0;
+  margin-top:72%;
+  height:200vh;
+  background:var(--ground);
+}
+
+/* ---------- pinned copy ---------- */
+.copy{
+  position:absolute; left:7.5%; top:0;
+  margin-top:13.9%;
+  width:56%;
+  z-index:2;
+  will-change:opacity;
+}
+.copy p{
+  margin:0;
+  font-size:min(calc(var(--w,1440px) * 0.0333), 56px);
+  line-height:1.5;
+  font-weight:400;
+  letter-spacing:-0.005em;
+}
+.copy b{font-weight:700}
+
+/* ---------- scroll cue ---------- */
+.cue{
+  position:absolute; left:7.5%; bottom:6%;
+  z-index:2;
+  display:flex; align-items:center; gap:12px;
+  font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ink); opacity:.5;
+  pointer-events:none;
+}
+.cue i{
+  display:block; width:1px; height:30px; background:currentColor;
+  animation:drop 2.1s var(--ease) infinite;
+}
+@keyframes drop{
+  0%  {transform:scaleY(.15); transform-origin:top; opacity:0}
+  35% {transform:scaleY(1); opacity:1}
+  100%{transform:scaleY(1); transform-origin:bottom; opacity:0}
+}
+
+/* ---------- next section ---------- */
+/* ---------- top bar ----------
+   See-through over the hero's sky, frosted once the page moves. It
+   steps out of the way while you scroll down - most of this page is
+   scroll-driven, and a bar would sit on the animation - and comes
+   back the moment you scroll up. */
+.topbar{
+  position:fixed; left:0; right:0; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+  padding:13px 7.5%;
+  background:rgba(255,255,255,.74);
+  -webkit-backdrop-filter:saturate(1.4) blur(12px); backdrop-filter:saturate(1.4) blur(12px);
+  box-shadow:0 1px 0 rgba(16,11,123,.08);
+  transition:transform .38s var(--ease), background-color .3s, box-shadow .3s;
+}
+.topbar.clear{
+  background:transparent; box-shadow:none;
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+}
+.topbar.away{ transform:translateY(-105%) }
+.topbar .home{
+  color:var(--ink); text-decoration:none;
+  font-size:15px; font-weight:700; letter-spacing:-0.01em;
+}
+.navbtn{
+  display:inline-flex; align-items:center;
+  padding:9px 18px; border-radius:999px;
+  border:1.5px solid var(--ink); color:var(--ink); background:transparent;
+  font-size:14px; font-weight:500; line-height:1; text-decoration:none;
+  transition:background-color .2s, color .2s;
+}
+.navbtn:hover{ background:var(--ink); color:#fff }
+.navlinks{ display:flex; gap:10px; min-width:0 }
+.navbtn{ flex:none; white-space:nowrap }
+.topbar .home{ flex:none }
+/* four pages don't fit beside the name on a narrow screen: let the row scroll */
+@media (max-width:980px){
+  .navlinks{ overflow-x:auto; scrollbar-width:none; padding:2px }
+  .navlinks::-webkit-scrollbar{ display:none }
+}
+.topbar a:focus-visible{ outline:2px solid var(--hot); outline-offset:3px; border-radius:999px }
+
+/* ---------- the way out: on to the density map ---------- */
+.outro{
+  position:relative; z-index:2; background:var(--ground);
+  padding:20vh 7.5% 22vh;
+  display:grid; gap:11vh; justify-items:start;
+}
+.outro-lead{
+  margin:0 0 3.5vh; max-width:24em;
+  font-size:clamp(17px, 1.35vw, 23px); line-height:1.5; font-weight:400;
+}
+.outro-link{
+  display:inline-flex; align-items:center; gap:clamp(18px, 2.2vw, 36px);
+  color:var(--ink); text-decoration:none;
+}
+.outro-word{
+  font-size:clamp(44px, 6.4vw, 116px); line-height:.98;
+  font-weight:700; letter-spacing:-0.03em;
+}
+.outro-arrow{
+  flex:none; display:grid; place-items:center;
+  width:clamp(58px, 6.2vw, 108px); aspect-ratio:1; border-radius:50%;
+  background:var(--ink); color:#fff;
+  transition:background-color .25s, transform .35s var(--ease);
+}
+.outro-arrow svg{
+  width:42%; height:42%; fill:none; stroke:currentColor;
+  stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round;
+  transition:transform .35s var(--ease);
+}
+.outro-link:hover .outro-arrow{ background:var(--hot) }
+.outro-link:hover .outro-arrow svg{ transform:translate(3px, -3px) }
+.outro-link:focus-visible{ outline:3px solid var(--hot); outline-offset:10px; border-radius:14px }
+
+@media (max-width:700px){
+  .topbar{ padding:11px 6% }
+  .navbtn{ padding:8px 14px; font-size:13px }
+  .navlinks{ gap:6px }
+  .outro{ padding:14vh 6% 16vh }
+}
+@media (max-width:560px){
+  .topbar .home{ display:none }
+  .navbtn{ padding:7px 11px; font-size:12px }
+}
+
+/* ============================================================
+   Origin — scroll hatches the egg.
+
+   Her GIF (34 frames at 200ms: egg, crack, split, larva, lavender
+   bloom, black tiger shrimp) is cut into registered stills and stepped
+   by scroll like a flipbook. No cross-fade: the frames are transparent
+   drawings, and blending two would ghost them. Only the shrimp's last
+   flick of poses plays on its own, once it has hatched.
+
+   The frame is anchored to the bottom of the window and its edges are
+   masked, so shell pieces flying out of her canvas dissolve instead of
+   being sliced by an invisible line.
+   ============================================================ */
+.origin{ position:relative; z-index:2; height:340vh; background:var(--ground) }
+.origin-stage{ position:sticky; top:0; height:100vh; overflow:hidden }
+
+.origin-copy{
+  position:absolute; left:50%; top:13vh;
+  transform:translateX(-50%);
+  width:max-content; max-width:88vw;
+  margin:0;
+  font-size:clamp(18px, 1.95vw, 34px);
+  line-height:1.6;
+  letter-spacing:-0.005em;
+}
+.origin-copy abbr{ text-decoration:none; cursor:help }
+.origin-copy .late{ opacity:0 }
+
+.origin-fig{
+  position:absolute; left:50%; bottom:0; margin:0;
+  height:min(64vh, calc(94vw * 1031 / 1400));
+  aspect-ratio:1400/1031;
+  transform:translateX(-50%);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, #000 0, #000 86%, transparent 100%);
+  -webkit-mask-composite:source-in;
+          mask-image:
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, #000 0, #000 86%, transparent 100%);
+          mask-composite:intersect;
+}
+.origin-fig canvas{ display:block; width:100%; height:100% }
+
+@media (max-width:700px){
+  .origin-copy{ top:11vh; width:84vw; font-size:18px }
+  .origin-copy br{ display:none }
+  .origin-fig{ bottom:auto; top:36vh }
+}
+
+/* ---------- coast band, between the egg and the map ----------
+   Her Footer.png: torn and transparent above and below, so it sits on
+   the white ground with no box around it. Drifts a little slower than
+   the page, like everything else here that the scroll moves. */
+.coast{ position:relative; z-index:3; margin:0; pointer-events:none }
+.coast img{ display:block; width:100%; height:auto; will-change:transform }
+
+/* ============================================================
+   Spread — pinned map, scroll is time.
+
+   The map never moves. The two GIFs share the exact same map pixels
+   (same camera, same 1640x2360 canvas), so their frames are cut into
+   one sequence — growth forward (Ikkk.gif 0-4), then disease
+   cream->red (Ikk .gif 9-14) — and cross-faded as you scroll. Only the
+   clusters change; the map underneath is identical in every frame.
+   ============================================================ */
+.spread{ position:relative; z-index:2; height:880vh; background:var(--ground) }  /* map: first 41%, the switch and the go: the rest */
+.spread-stage{
+  position:sticky; top:0;
+  height:100vh; overflow:hidden;
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.55fr);
+  align-items:center; gap:4vw;
+  padding-inline:7.5%;
+}
+.spread-copy{ display:grid }
+.beat{ grid-area:1/1; align-self:center; opacity:0; will-change:opacity }
+.beat .num{
+  display:block; margin-bottom:18px;
+  font-size:12px; letter-spacing:.22em; text-transform:uppercase; opacity:.5;
+}
+.beat p{
+  margin:0;
+  font-size:clamp(19px, 2vw, 32px); line-height:1.45; letter-spacing:-0.005em;
+}
+.beat b{font-weight:700}
+
+.spread-map{
+  position:relative; margin:0; justify-self:center;
+  width:min(100%, calc(86vh * 1552 / 1348));
+  aspect-ratio:1552/1348;
+}
+.spread-map img{
+  position:absolute; inset:0; width:100%; height:100%;
+  opacity:0;
+}
+.spread-map img:first-child{opacity:1}
+
+.key{
+  position:absolute; right:0; bottom:-4px;
+  display:flex; gap:20px;
+  font-size:12px; letter-spacing:.06em; opacity:.7;
+}
+.key span{display:flex; align-items:center; gap:8px}
+.key i{display:block; width:10px; height:10px; border-radius:50%}
+.key .farm i{background:#FFE6A3; box-shadow:0 0 0 1px rgba(16,11,123,.18)}
+.key .sick i{background:#F2401C}
+.key .sick{transition:opacity .4s}
+
+/* ============================================================
+   The switch - second half of the spread.
+
+   The disease line fades, the map glides up out of the way, and the
+   tiger shrimp comes out of the sea beside the red coast and follows
+   a drawn trail down to the left, growing as it comes. Once it lands,
+   scrolling turns it from tiger blue to vannamei white (her Beau GIF,
+   cross-faded: every frame shares one silhouette, so nothing ghosts),
+   and the sparkle, split into its own layer, twinkles on top.
+   ============================================================ */
+.trail{
+  position:absolute; inset:0; width:100%; height:100%;
+  z-index:3; pointer-events:none; overflow:visible; opacity:0;
+}
+.trail path{
+  fill:none; stroke:var(--ink); stroke-opacity:.42;
+  stroke-width:1.2; stroke-linecap:round;
+}
+.beau{
+  position:absolute; left:0; top:0; z-index:4;
+  pointer-events:none; opacity:0;
+  transform-origin:50% 50%;
+  will-change:transform, opacity;
+}
+.beau img{ position:absolute; inset:0; width:100%; height:100%; opacity:0 }
+.beau img.b0{ opacity:1 }
+/* her cream vannamei clip, cut to frames: it takes over from the white
+   shrimp on the same silhouette, then breaks into a chain of tiny
+   shrimp that stretches into a wavy line and dissolves */
+.cream{
+  position:absolute; left:0; top:0; z-index:4;
+  pointer-events:none; opacity:0;
+  transform-origin:0 0;
+  will-change:transform, opacity;
+}
+.switch-copy{
+  position:absolute; z-index:4;
+  left:44vw; top:64vh;
+  width:min(34vw, 30em);
+  margin:0;
+  font-size:clamp(17px, 1.5vw, 26px);
+  line-height:1.55;
+  letter-spacing:-0.005em;
+  opacity:0;
+}
+@media (max-width:700px){
+  .switch-copy{ left:8vw; top:auto; bottom:5vh; width:84vw; font-size:16px }
+}
+
+/* ============================================================
+   Exports - where the shrimp goes.
+
+   Her reference: a dotted world bent over a gentle globe arch, with
+   dark pins. Arcs leave Andhra's coast in rank order as you scroll in,
+   drawn as thick as each market's share; after that every market is a
+   control - hover, focus or tap one to light its countries and read
+   its tonnage.
+   ============================================================ */
+.exports{ position:relative; z-index:2; height:230vh; background:var(--ground) }
+.exports-stage{
+  position:sticky; top:0; height:100vh; overflow:hidden;
+  padding:max(7vh, 80px) 7.5% 0;   /* clear of the top bar when it is showing */
+}
+.ex-head{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+  gap:6vw; align-items:start;
+}
+.ex-title{
+  margin:0 0 .45em;
+  font-size:clamp(30px, 3.6vw, 62px); line-height:1.02;
+  font-weight:700; letter-spacing:-0.02em;
+}
+.ex-lede{ margin:0; max-width:32em; font-size:clamp(16px, 1.25vw, 21px); line-height:1.55 }
+
+.ex-list{ list-style:none; margin:0; padding:0; display:grid; gap:0 }
+.ex-list button{
+  all:unset; box-sizing:border-box; width:100%; cursor:pointer;
+  display:grid; grid-template-columns:minmax(0,1fr) auto;
+  column-gap:14px; row-gap:4px;
+  padding:4px 10px; border-radius:6px;
+  font-size:clamp(13px, .88vw, 15px);
+  transition:background-color .18s;
+}
+.ex-list .nm{ font-weight:500 }
+.ex-list .t{ font-variant-numeric:tabular-nums; opacity:.65 }
+.ex-list .bar{ grid-column:1 / -1; height:3px; border-radius:2px; background:rgba(16,11,123,.10); overflow:hidden }
+.ex-list .bar i{
+  display:block; height:100%; width:var(--w); background:var(--ink);
+  transform-origin:0 50%; transform:scaleX(var(--drawn,0));
+  transition:background-color .18s;
+}
+.ex-list button:hover, .ex-list button.hot, .ex-list button[aria-pressed="true"]{ background:rgba(16,11,123,.06) }
+.ex-list button.hot .bar i, .ex-list button[aria-pressed="true"] .bar i{ background:var(--hot) }
+.ex-list button:focus-visible{ outline:2px solid var(--ink); outline-offset:2px }
+
+.ex-map{ position:absolute; left:0; right:0; top:30vh; bottom:4vh; margin:0 }
+.ex-map svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible }
+.ex-country{ fill:#A9ABD4; transition:fill .22s }
+.ex-country.mk{ fill:#6F6BB6 }
+.ex-country.home{ fill:#F4A06E }
+.ex-country.on{ fill:var(--ink) }
+.ex-arc{
+  fill:none; stroke:var(--hot); stroke-opacity:.9; stroke-linecap:round;
+  stroke-width:var(--sw);
+  transition:stroke-width .22s, stroke-opacity .22s, opacity .22s;
+}
+.ex-arc.on{ stroke-opacity:1; stroke-width:calc(var(--sw) * 1.6) }
+.ex-arc.dim{ opacity:.18 }
+.ex-pin.dim{ opacity:.35 }
+.ex-pin{ cursor:pointer; outline:none; transition:opacity .22s }
+.ex-pin .body{ fill:var(--ink); transition:fill .22s }
+.ex-pin .eye{ fill:#fff }
+.ex-pin.on .body{ fill:var(--hot) }
+.ex-pin:focus-visible .ring{ stroke:var(--ink); stroke-width:2; fill:none }
+.ex-origin .dot{ fill:var(--hot) }
+.ex-origin .halo{ fill:none; stroke:var(--hot); stroke-width:1.5; opacity:.6 }
+.ex-origin text{ font-size:23px; font-weight:600; fill:var(--ink) }
+
+.ex-card{
+  position:absolute; left:0; top:0; z-index:3;
+  pointer-events:none; opacity:0;
+  transform:translate(-50%, calc(-100% - 10px));
+  background:#fff; color:var(--ink);
+  padding:9px 14px 10px; border-radius:10px;
+  box-shadow:0 0 0 1px rgba(16,11,123,.10), 0 10px 26px rgba(16,11,123,.14);
+  white-space:nowrap; transition:opacity .16s;
+}
+.ex-card.on{ opacity:1 }
+.ex-card b{ display:block; font-size:15px; font-weight:700 }
+.ex-card span{ font-size:13px; opacity:.75 }
+.ex-source{ position:absolute; left:7.5%; bottom:2.2vh; margin:0; font-size:12px; opacity:.55; max-width:60em }
+
+@media (max-width:900px){
+  .exports-stage{ padding:6vh 6% 0 }
+  .ex-head{ grid-template-columns:minmax(0,1fr); gap:2.5vh }
+  .ex-list{ grid-template-columns:1fr 1fr; column-gap:8px }
+  .ex-map{ top:44vh; bottom:6vh }
+  .ex-source{ left:6% }
+}
+
+/* ============================================================
+   Take a look at the Journey - the title, then her value chain.
+
+   The chain is ported from shrimp_value_chain.html: same drawing,
+   same camera, same hovers (frames 1, 1.1, 1.2, 2, 3). What changed:
+   everything is scoped under .journey (the site already uses .stage,
+   .cue and a navy --ink, which would break it), progress comes from
+   this section's own scroll rather than the window's, and the
+   artboard fits this pinned stage. Its white paper now meets the
+   site's white ground, so the artboard has no visible edge.
+   ============================================================ */
+.jtitle{ position:relative; z-index:2; background:var(--ground); padding:24vh 7.5% 12vh }
+.jtitle-h{
+  margin:0; max-width:11ch;
+  font-size:clamp(44px, 6.4vw, 116px); line-height:.98;
+  font-weight:700; letter-spacing:-0.03em; color:var(--ink);
+}
+
+.journey{
+  position:relative; z-index:2; background:var(--ground);
+  height:calc(100vh + 1600px);             /* 1600px of travel, as in the original */
+  --vc-blue:#0000B8; --vc-yellow:#FFCB30; --vc-orange:#FF6C28; --vc-dim:.44;
+}
+.vc-stage{ position:sticky; top:0; height:100vh; overflow:hidden; background:var(--ground) }
+.journey .vc-frame{
+  position:absolute; left:0; top:0; width:1920px; height:1080px;
+  transform-origin:0 0; background:#fff; overflow:hidden;
+}
+.journey .vc-world{
+  position:absolute; left:0; top:0; width:3400px; height:1080px;
+  transform-origin:0 0; will-change:transform;
+}
+.journey .lines{ position:absolute; left:0; top:0; width:3400px; height:1080px; overflow:visible; z-index:2 }
+.journey .lines path{ fill:none; stroke-linecap:round }
+.journey .lines .solid{ stroke:var(--vc-orange); stroke-width:3 }
+.journey .lines .pale{ stroke:var(--vc-orange); stroke-opacity:.46; stroke-width:3 }
+.journey .deco{ position:absolute; inset:0; pointer-events:none }
+.journey .shr{ position:absolute; background:url(assets/vc_shrimp.png) center/contain no-repeat }
+
+.journey .vnode{ position:absolute; left:var(--x); top:var(--y); width:0; height:0; pointer-events:none }
+.journey .dot{
+  position:absolute; left:calc(-1 * var(--r)); top:calc(-1 * var(--r));
+  width:calc(2 * var(--r)); height:calc(2 * var(--r));
+  border-radius:50%; background:var(--vc-yellow); z-index:1;
+}
+.journey .hit{
+  position:absolute;
+  left:calc(-1 * var(--r) - 22px); top:calc(-1 * var(--r) - 22px);
+  width:calc(2 * var(--r) + 44px); height:calc(2 * var(--r) + 44px);
+  border-radius:50%; pointer-events:auto; cursor:pointer;
+  -webkit-tap-highlight-color:transparent; z-index:4;
+}
+.journey .hit:focus-visible{ outline:4px solid var(--vc-orange); outline-offset:6px }
+.journey .lab{
+  position:absolute; z-index:3;
+  font-size:40px; line-height:50px; font-weight:500; color:var(--vc-blue);
+  pointer-events:auto; cursor:pointer; white-space:pre;
+}
+.journey .lab.above{ bottom:calc(var(--r) + 1px); left:0; transform:translateX(-50%); text-align:center }
+.journey .lab.below{ top:calc(var(--r) + 17px); left:calc(-1 * var(--r)); text-align:left }
+.journey .vnode.focus .lab{ font-weight:700 }
+.journey .vnode.proc .lab{ font-size:calc(40px + 13px * var(--p,0)); transform:none }
+.journey .vnode.sub .lab{
+  color:var(--vc-blue); font-size:28px; line-height:35px; font-weight:400;
+  opacity:var(--rail,0); transition:opacity .2s linear;
+}
+.journey .vnode.sub .lab.above{ bottom:calc(var(--r) - 2px) }
+.journey .vnode.sub .lab.below{ top:calc(var(--r) + 3px); left:0; transform:translateX(-50%); text-align:center }
+
+.journey .cardwrap{ position:absolute; left:0; width:0; height:0; z-index:5 }
+.journey .card{
+  position:absolute; background:var(--vc-yellow); border-radius:28px;
+  opacity:0; transform:scale(.965); transform-origin:50% var(--corg, 0%);
+  pointer-events:none;
+  transition:opacity .26s var(--ease), transform .38s var(--ease);
+}
+.journey .vnode.focus .card{ opacity:1; transform:scale(1) }
+.journey .vnode.sub.focus .lab{ opacity:0 }
+.journey .card.stg{
+  width:384px; left:-192px; padding:60px 42px 65px;
+  font-size:26px; line-height:36px; font-weight:400; color:var(--vc-orange);
+}
+.journey .cardwrap.stg-top .card{ top:calc(-1 * var(--r)); --corg:0% }
+.journey .cardwrap.stg-bot .card{ bottom:calc(-1 * var(--r)); --corg:100% }
+.journey .card.sub{ width:324px; left:-162px; padding:27px 27px 24px; text-align:center }
+.journey .cardwrap.sub-top .card{ bottom:calc(var(--r) + 11px); --corg:100% }
+.journey .cardwrap.sub-bot .card{ top:calc(var(--r) + 11px); --corg:0% }
+.journey .card.sub .ill, .journey .card.sub .plant{
+  display:block; width:270px; height:165px; border-radius:12px; overflow:hidden;
+}
+.journey .card.sub .plant{ background:url(assets/vc_plant.jpg) center/cover no-repeat }
+.journey .sc-name{ margin-top:13px; font-size:30px; line-height:37px; font-weight:500; color:var(--vc-blue) }
+.journey .sc-note{ margin-top:6px; font-size:20px; line-height:26px; color:var(--vc-orange) }
+
+.journey .vc-world .vnode, .journey .vc-world .deco, .journey .vc-world .lines{ transition:opacity .3s var(--ease) }
+.journey .vc-world.is-focus .vnode:not(.focus),
+.journey .vc-world.is-focus .lines{ opacity:var(--vc-dim) }
+.journey .deco{ opacity:var(--deco,1) }
+.journey .vc-world.is-focus .deco{ opacity:calc(var(--deco,1) * var(--vc-dim)) }
+.journey .vc-world:not(.pa) .vnode:not(.sub) .hit,
+.journey .vc-world:not(.pa) .vnode:not(.sub) .lab{ pointer-events:none }
+.journey .vc-world:not(.pb) .vnode.sub .hit,
+.journey .vc-world:not(.pb) .vnode.sub .lab{ pointer-events:none }
+
+.vc-credit{ position:absolute; left:24px; bottom:18px; z-index:6; margin:0; font-size:11px; color:#A0A0A0 }
+.vc-turn{ display:none }
+@media (max-width:700px) and (orientation:portrait){
+  .vc-turn{
+    display:flex; position:absolute; inset:0; z-index:20;
+    align-items:center; justify-content:center; text-align:center;
+    background:var(--ground); color:var(--ink); padding:32px;
+    font-size:15px; line-height:1.6;
+  }
+  .vc-turn span{ max-width:22ch }
+}
+@media (prefers-reduced-motion:reduce){ .journey .card{ transition-duration:.01s } }
+
+@media (prefers-reduced-motion:reduce){
+  .scene{transform:none!important}
+  .cue i{animation:none}
+}
+@media (max-width:700px){
+  .copy{left:8%; margin-top:20%; width:84%}
+  .copy p{font-size:min(calc(var(--w,390px) * 0.062), 30px); line-height:1.45}
+  .cue{left:8%}
+
+  .spread-stage{
+    grid-template-columns:minmax(0,1fr);
+    align-content:center; gap:5vh;
+    padding-inline:8%;
+  }
+  .spread-map{ order:-1; width:min(100%, calc(52vh * 1552 / 1348)) }
+  .beat p{font-size:18px}
+  .key{right:auto; left:0; bottom:-26px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar clear" id="topbar" aria-label="Site">
+  <a class="home" href="#hero">The shrimp coast</a>
+  <div class="navlinks">
+    <a class="navbtn" href="../shrimp_farm_map.html">Density map</a>
+    <a class="navbtn" href="../shrimp_system_map.html">System map</a>
+    <a class="navbtn" href="../shrimp_sankey.html">Supply flow</a>
+    <a class="navbtn" href="../shrimp_risk_propagation.html">Risk propagation</a>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="stage" id="stage">
+    <div class="sky"></div>
+
+    <div class="scene" id="scene">
+      <div class="ground"></div>
+      <img src="assets/art.webp" width="2360" height="2230"
+           alt="An aerated shrimp pond on the Andhra coast: paddlewheel aerators churning the water, palms along the far bank, and below it the coastal strip and backwater drawn as bands of colour.">
+    </div>
+
+    <div class="copy" id="copy">
+      <p>70% of all shrimp exported from<br>India comes from one state -<br><b>Andhra Pradesh</b>.</p>
+    </div>
+
+    <div class="cue" id="cue">scroll<i></i></div>
+  </div>
+</section>
+
+<section class="origin" id="origin">
+  <div class="origin-stage">
+    <p class="origin-copy">In the early 1980s, <abbr title="Marine Products Export Development Authority">MPEDA</abbr> introduced commercial<br>
+      shrimp farming to the state <span class="late" id="originLate">with black tiger shrimp.</span></p>
+    <figure class="origin-fig">
+      <canvas id="eggCanvas" width="1400" height="1031" role="img"
+              aria-label="A shrimp egg cracks open, a larva climbs out, and it grows into a black tiger shrimp."></canvas>
+    </figure>
+  </div>
+</section>
+
+<figure class="coast" id="coast" aria-hidden="true">
+  <img src="assets/coast.webp" width="2360" height="893" alt="">
+</figure>
+
+<section class="spread" id="spread">
+  <div class="spread-stage">
+    <div class="spread-copy">
+      <!-- draft copy — replace with your own lines and years -->
+      <div class="beat"><span class="num">01 &nbsp;Spread</span>
+        <p>The ponds follow the brackish water — a thin strip hugging the coast, <b>nowhere else</b>.</p></div>
+      <div class="beat"><span class="num">02 &nbsp;Crowding</span>
+        <p>Farms pack in shoulder to shoulder, drawing from and draining into <b>the same canals</b>.</p></div>
+      <div class="beat"><span class="num">03 &nbsp;Disease</span>
+        <p>One sick pond is enough. Disease moves through the shared water, and <b>whole clusters go down together</b>.</p></div>
+    </div>
+
+    <figure class="spread-map" id="spreadMap">
+      <img src="assets/mapseq/f00.webp" width="1552" height="1348"
+           alt="Map of Andhra Pradesh. Scrolling shows shrimp-farm clusters growing along the coast, then turning red as disease spreads through them.">
+      <img src="assets/mapseq/f01.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f02.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f03.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f04.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f05.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f06.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f07.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f08.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f09.webp" alt="" aria-hidden="true">
+      <img src="assets/mapseq/f10.webp" alt="" aria-hidden="true">
+      <figcaption class="key">
+        <span class="farm"><i></i>Shrimp farms</span>
+        <span class="sick" id="keySick"><i></i>Disease</span>
+      </figcaption>
+    </figure>
+
+    <svg class="trail" id="trail" aria-hidden="true"><path id="trailPath" d=""/></svg>
+
+    <div class="beau" id="beau" role="img"
+         aria-label="A blue tiger shrimp leaves the diseased coast, turns into a pale vannamei, then scatters into a long line of tiny shrimp.">
+      <img class="b b0" src="assets/beau/b0.webp" width="1000" height="1060" alt="">
+      <img class="b"    src="assets/beau/b2.webp" width="1000" height="1060" alt="">
+      <img class="b"    src="assets/beau/b3.webp" width="1000" height="1060" alt="">
+      <img id="spark"   src="assets/beau/sA.webp" width="1000" height="1060" alt="">
+    </div>
+
+    <canvas class="cream" id="cream" width="1440" height="1120" aria-hidden="true"></canvas>
+
+    <p class="switch-copy" id="switchCopy">Farmers switched to specific pathogen-free vannamei — hardier, faster-growing, and better suited to scale — right as disease was starting to devastate competitors elsewhere in Asia.</p>
+  </div>
+</section>
+
+<section class="exports" id="exports" aria-labelledby="exTitle">
+  <div class="exports-stage">
+    <div class="ex-head">
+      <div>
+        <!-- draft copy - replace with your own -->
+        <h2 class="ex-title" id="exTitle">Across the globe</h2>
+        <p class="ex-lede">In 2024–25 India shipped 7.4 lakh tonnes of frozen shrimp, most of it farmed in Andhra Pradesh. Six markets took nine-tenths of it.</p>
+      </div>
+      <ol class="ex-list" id="exList" aria-label="Markets, by tonnes of frozen shrimp"></ol>
+    </div>
+    <figure class="ex-map" id="exMap">
+      <svg id="exSvg" viewBox="0 0 1600 790" preserveAspectRatio="xMidYMax meet"
+           role="group" aria-label="World map: shrimp export routes from Andhra Pradesh to its six largest markets">
+        <g id="exDots"></g><g id="exArcs"></g><g id="exOrigin"></g><g id="exPins"></g>
+      </svg>
+      <div class="ex-card" id="exCard" role="status" aria-live="polite"></div>
+    </figure>
+    <p class="ex-source">Source: MPEDA, India's frozen shrimp exports by market, 2024–25. The EU, South-East Asia and the Middle East are MPEDA's own groupings; their countries are lit approximately.</p>
+  </div>
+</section>
+
+<section class="jtitle" aria-labelledby="jTitle">
+  <h2 class="jtitle-h" id="jTitle">Take a look at the Journey</h2>
+</section>
+
+<section class="journey" id="journey" aria-label="The shrimp value chain, from hatchery to export">
+  <div class="vc-stage" id="vcStage">
+    <div class="vc-frame" id="vcFrame">
+      <div class="vc-world" id="vcWorld">
+        <svg class="lines" viewBox="0 0 3400 1080" preserveAspectRatio="none" aria-hidden="true">
+          <path class="pale"  id="vcPale"></path>
+          <path class="solid" id="vcSolid"></path>
+        </svg>
+        <div class="deco" aria-hidden="true">
+          <div class="shr" style="left:84px;   top:691px;  width:172px; height:105px"></div>
+          <div class="shr" style="left:1790px; top:768px;  width:190px; height:116px; transform:rotate(22deg)"></div>
+          <div class="shr" style="left:1782px; top:936px;  width:190px; height:116px; transform:rotate(197deg)"></div>
+          <div class="shr" style="left:1588px; top:1002px; width:190px; height:116px; transform:rotate(-20deg)"></div>
+        </div>
+        <div id="vcNodes"></div>
+      </div>
+    </div>
+    <p class="vc-credit">Shrimp illustration: Ryo Takemasa (placeholder)</p>
+    <div class="vc-turn"><span>Turn your phone sideways to read the chain.</span></div>
+  </div>
+</section>
+
+<section class="outro" id="outro" aria-label="Explore further">
+  <div>
+    <p class="outro-lead">See how thickly shrimp farming covers the coast, district by district.</p>
+    <a class="outro-link" href="../shrimp_farm_map.html">
+      <span class="outro-word">Density map</span>
+      <span class="outro-arrow" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 34 34 14M18 14h16v16"/></svg></span>
+    </a>
+  </div>
+  <div>
+    <p class="outro-lead">See who is connected to whom in the Bhimavaram shrimp system: 87 actors and 119 links.</p>
+    <a class="outro-link" href="../shrimp_system_map.html">
+      <span class="outro-word">System map</span>
+      <span class="outro-arrow" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 34 34 14M18 14h16v16"/></svg></span>
+    </a>
+  </div>
+  <div>
+    <p class="outro-lead">Follow the shrimp from broodstock to buyer: 22 flows, from the breeding centre to seven destinations.</p>
+    <a class="outro-link" href="../shrimp_sankey.html">
+      <span class="outro-word">Supply flow</span>
+      <span class="outro-arrow" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 34 34 14M18 14h16v16"/></svg></span>
+    </a>
+  </div>
+  <div>
+    <p class="outro-lead">See how twelve risks, from disease to price swings, reach the eight actors across the chain.</p>
+    <a class="outro-link" href="../shrimp_risk_propagation.html">
+      <span class="outro-word">Risk propagation</span>
+      <span class="outro-arrow" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 34 34 14M18 14h16v16"/></svg></span>
+    </a>
+  </div>
+</section>
+
+
+<script src="assets/world-dots.js"></script>
+<script>
+(function(){
+  var hero  = document.getElementById('hero');
+  var stage = document.getElementById('stage');
+  var scene = document.getElementById('scene');
+  var copy  = document.getElementById('copy');
+  var cue   = document.getElementById('cue');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* where the pan stops: the art's canvas bottom, as a fraction of width */
+  var ART_BOTTOM = 0.945;
+
+  /* the copy fades across this stretch of the hero's progress —
+     long, so it goes slowly, and late, so it's read first */
+  var FADE_FROM = 0.55, FADE_TO = 0.95;
+
+  function clamp(v,a,b){ return v < a ? a : (v > b ? b : v); }
+
+  var q = 0, painted = -1;
+  var travel = 0, w = 0;
+
+  /* Pan until the bottom of the artwork lands on the window floor —
+     the wavy lavender edge then sits on --ground, which runs straight
+     on into the next section. A small minimum drift keeps something
+     moving on windows tall enough to show the whole piece. */
+  function measure(){
+    w = stage.clientWidth;
+    var vh = stage.clientHeight;
+    travel = Math.max(ART_BOTTOM * w - vh, 0.08 * w);
+
+    /* a runway longer than the pan, so the art always reads as moving
+       slower than the page */
+    hero.style.height = (vh + travel * 1.4) + 'px';
+
+    document.documentElement.style.setProperty('--w', w + 'px');
+    painted = -1;
+  }
+
+  function frame(){
+    var vh  = innerHeight;
+    var top = hero.getBoundingClientRect().top;
+    var run = hero.offsetHeight - vh;
+    var tq  = run > 0 ? clamp(-top / run, 0, 1) : 0;
+
+    if(reduce) q = tq;
+    else{
+      q += (tq - q) * 0.14;
+      if(Math.abs(tq - q) < 0.0004) q = tq;
+    }
+
+    if(q !== painted){
+      painted = q;
+      scene.style.transform = 'translate3d(0,' + (-travel * q).toFixed(2) + 'px,0)';
+
+      /* pinned throughout — only its opacity changes, eased so the
+         last of it lingers */
+      var f = clamp((q - FADE_FROM) / (FADE_TO - FADE_FROM), 0, 1);
+      f = f * f * (3 - 2 * f);
+      copy.style.opacity = (1 - f).toFixed(3);
+      copy.style.visibility = f >= 1 ? 'hidden' : 'visible';
+
+      cue.style.opacity = (0.5 * (1 - clamp(q * 5, 0, 1))).toFixed(3);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  addEventListener('resize', measure);
+  addEventListener('load', measure);
+  measure();
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- origin: scroll hatches the egg ---------- */
+(function(){
+  var sec    = document.getElementById('origin');
+  var canvas = document.getElementById('eggCanvas');
+  var late   = document.getElementById('originLate');
+  var ctx    = canvas.getContext('2d');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var N = 34, HATCHED = 28;
+
+  /* progress -> frame. Slowest where her drawing does the most work:
+     the crack, then the split, the larva, the bloom. */
+  var TIMELINE = [            /* [progress, frame] */
+    [0.00, 0], [0.08, 0],     /* the whole egg, while the line is read */
+    [0.42, 12],               /* the crack runs down */
+    [0.56, 16],               /* it splits; the shell flies off */
+    [0.70, 20],               /* the larva */
+    [0.82, 26],               /* the lavender bloom */
+    [0.88, HATCHED],          /* black tiger shrimp */
+    [1.00, HATCHED]
+  ];
+  /* the sentence finishes when the shrimp arrives */
+  var LATE_FROM = 0.84, LATE_TO = 0.92;
+  /* once hatched, her last six frames play as a flick, then rest */
+  var FLICK = [28, 29, 30, 31, 32, 33], FLICK_MS = 200, FLICK_REST = 1600;
+
+  var frames = [], ready = [], want = 0, drawn = -1;
+  for(var i = 0; i < N; i++){
+    var im = new Image();
+    im.decoding = 'async';
+    im.src = 'assets/eggseq/e' + (i < 10 ? '0' : '') + i + '.webp';
+    frames.push(im);
+    (function(k, im){
+      im.onload = function(){ ready[k] = true; if(k <= want) drawn = -1; };
+    })(i, im);
+  }
+
+  function clamp(v,a,b){ return v < a ? a : (v > b ? b : v); }
+  function framePos(p){
+    for(var i = 1; i < TIMELINE.length; i++){
+      var a = TIMELINE[i-1], b = TIMELINE[i];
+      if(p <= b[0]) return a[1] + (b[1] - a[1]) * ((p - a[0]) / (b[0] - a[0] || 1));
+    }
+    return HATCHED;
+  }
+  /* draw frame k — or, while it is still loading, the nearest one before it */
+  function draw(k){
+    while(k > 0 && !ready[k]) k--;
+    if(!ready[k] || k === drawn) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(frames[k], 0, 0, canvas.width, canvas.height);
+    drawn = k;
+  }
+
+  var q = 0, lateShown = -1, flickStart = 0;
+
+  function frame(now){
+    var r   = sec.getBoundingClientRect();
+    var run = sec.offsetHeight - innerHeight;
+    var tq  = run > 0 ? clamp(-r.top / run, 0, 1) : 0;
+
+    if(reduce) q = tq;
+    else{
+      q += (tq - q) * 0.14;
+      if(Math.abs(tq - q) < 0.0004) q = tq;
+    }
+
+    var pos = framePos(q);
+    if(pos >= HATCHED && !reduce){
+      if(!flickStart) flickStart = now;
+      var t = (now - flickStart) % (FLICK.length * FLICK_MS + FLICK_REST);
+      var k = Math.floor(t / FLICK_MS);
+      want = k < FLICK.length ? FLICK[k] : HATCHED;
+    }else{
+      flickStart = 0;
+      want = Math.round(pos);
+    }
+    /* only draw while the section is anywhere near the window */
+    if(r.bottom > -innerHeight && r.top < innerHeight * 2) draw(want);
+
+    var f = clamp((q - LATE_FROM) / (LATE_TO - LATE_FROM), 0, 1);
+    f = f * f * (3 - 2 * f);
+    if(f !== lateShown){ late.style.opacity = f.toFixed(3); lateShown = f; }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- coast band: a slow drift against the scroll ---------- */
+(function(){
+  var band = document.querySelector('#coast img');
+  if(!band || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var painted = null;
+  function frame(){
+    var r  = band.parentNode.getBoundingClientRect();
+    var vh = innerHeight;
+    if(r.bottom > 0 && r.top < vh){
+      /* -0.5 as it enters at the bottom, +0.5 as it leaves at the top */
+      var p = (vh - r.top) / (vh + r.height) - 0.5;
+      var y = (p * r.width * 0.04).toFixed(1);
+      if(y !== painted){ band.style.transform = 'translate3d(0,' + y + 'px,0)'; painted = y; }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* the spread's runway is shared: the map plays across the first part,
+   the switch (and the vannamei's exit) across the rest
+   (map 320vh of a 780vh run) */
+var SPREAD_SPLIT = 0.410;
+
+/* ---------- spread: scroll scrubs the map's frames ---------- */
+(function(){
+  var sec   = document.getElementById('spread');
+  var imgs  = [].slice.call(document.querySelectorAll('#spreadMap img'));
+  var beats = [].slice.call(sec.querySelectorAll('.beat'));
+  var sick  = document.getElementById('keySick');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var LAST = imgs.length - 1;   /* 10 */
+  var GROWN = 4;                /* last growth frame; 5..10 turn red */
+
+  /* section progress -> frame position. Holds between the moves so
+     each state can be read before the next one starts. */
+  var TIMELINE = [            /* [progress, frame] */
+    [0.00, 0], [0.10, 0],     /* empty coast */
+    [0.40, GROWN],            /* farms grow */
+    [0.52, GROWN],            /* hold: crowded */
+    [0.86, LAST],             /* disease — the red only builds in the
+                                 last few frames, so it starts early */
+    [1.00, LAST]
+  ];
+  /* which line of copy is up, by progress. The disease line waits
+     until red is actually on the map (~frame 7) */
+  var BEATS = [[0, 0.38], [0.38, 0.66], [0.66, 1]];
+  var EDGE = 0.035;
+
+  function clamp(v,a,b){ return v < a ? a : (v > b ? b : v); }
+
+  function framePos(p){
+    for(var i = 1; i < TIMELINE.length; i++){
+      var a = TIMELINE[i-1], b = TIMELINE[i];
+      if(p <= b[0]) return a[1] + (b[1] - a[1]) * ((p - a[0]) / (b[0] - a[0] || 1));
+    }
+    return LAST;
+  }
+  /* out, then in — the lines share one spot, so they never overlap */
+  function beatOpacity(p, from, to){
+    var fin  = from === 0 ? 1 : clamp((p - from) / EDGE, 0, 1);
+    var fout = to   === 1 ? 1 : clamp((to - p) / EDGE, 0, 1);
+    return Math.min(fin, fout);
+  }
+
+  var q = 0, painted = -1, shown = [];
+
+  function frame(){
+    var r   = sec.getBoundingClientRect();
+    var run = sec.offsetHeight - innerHeight;
+    var tq  = run > 0 ? clamp(-r.top / run / SPREAD_SPLIT, 0, 1) : 0;
+
+    if(reduce) q = tq;
+    else{
+      q += (tq - q) * 0.14;
+      if(Math.abs(tq - q) < 0.0004) q = tq;
+    }
+
+    if(q !== painted){
+      painted = q;
+
+      /* frame i fully on, frame i+1 fading in over it — both carry the
+         same opaque map, so only the clusters appear to change */
+      var x = framePos(q), i = Math.min(Math.floor(x), LAST), t = x - i;
+      for(var k = 0; k <= LAST; k++){
+        var o = k === i ? 1 : (k === i + 1 ? t : 0);
+        if(shown[k] !== o){ imgs[k].style.opacity = o; shown[k] = o; }
+      }
+
+      for(var b = 0; b < beats.length; b++)
+        beats[b].style.opacity = beatOpacity(q, BEATS[b][0], BEATS[b][1]).toFixed(3);
+
+      sick.style.opacity = x > GROWN + 0.5 ? 1 : 0.25;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- the switch: the tiger shrimp leaves the red coast ---------- */
+(function(){
+  var sec   = document.getElementById('spread');
+  var stage = sec.querySelector('.spread-stage');
+  var map   = document.getElementById('spreadMap');
+  var copyA = sec.querySelector('.spread-copy');
+  var mapKey = map.querySelector('.key');
+  var trail = document.getElementById('trail');
+  var path  = document.getElementById('trailPath');
+  var beau  = document.getElementById('beau');
+  var body  = [].slice.call(beau.querySelectorAll('img.b'));   /* blue, grey, white */
+  var spark = document.getElementById('spark');
+  var cream = document.getElementById('cream');
+  var cctx  = cream.getContext('2d');
+  var cframes = [], cready = [], creamDrawn = -1;
+  var copyB = document.getElementById('switchCopy');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* where the shrimp starts: the sea just south-east of the southern
+     red cluster, as a fraction of the map image. From here the trail
+     can drop below the land before it turns left, so it never crosses
+     the state */
+  var START  = [0.52, 0.90];
+  var ASPECT = 1000 / 1060;      /* the shrimp frames */
+  var SMALL  = 1 / 2.3;          /* its size leaving the map, vs landed */
+
+  /* the switch's own timeline, 0..1 across its part of the runway */
+  var T_COPY_OUT = [0.000, 0.091],   /* the disease line goes */
+      T_MAP      = [0.026, 0.196],   /* the map glides up out of the way */
+      T_APPEAR   = [0.143, 0.209],   /* the shrimp surfaces beside the coast */
+      T_TRAVEL   = [0.209, 0.430],   /* ...and follows the trail down */
+      T_COLOUR   = [0.456, 0.561],   /* tiger blue -> grey -> vannamei white */
+      T_COPY_IN  = [0.482, 0.587],
+      T_SPARK_A  = [0.561, 0.606],
+      T_SPARK_B  = [0.606, 0.652],
+                                     /* 0.652-0.690: a held beat, twinkling */
+      T_TOCREAM  = [0.690, 0.730],   /* white -> her cream, same silhouette */
+      T_TRAIL_OUT= [0.700, 0.780],   /* the trail it came down goes */
+      T_GO       = [0.730, 0.960],   /* it scatters into a line of tiny shrimp */
+      T_COPY_OUT2= [0.735, 0.800];   /* its line has been read; it clears the way */
+
+  /* the cream clip: 34 frames, 1440x1120. Its frame 0 is the white
+     shrimp's own drawing (silhouette IoU 0.96), so it is placed by
+     matching the two silhouettes' boxes */
+  var CREAM_N   = 34;
+  var CREAM_BOX = [42, 42, 556, 602];     /* frame 0 silhouette, clip px (measured) */
+  var B3_BOX    = [0, 0, 975, 1060];      /* the white shrimp's, frame px */
+  var F0_CY = 322, LINE_CY = 960;         /* clip-px centre: whole shrimp, stretched line (c29-c30) */
+
+  function clamp(v,a,b){ return v < a ? a : (v > b ? b : v); }
+  function seg(p, r){ return clamp((p - r[0]) / (r[1] - r[0]), 0, 1); }
+  function ease(t){ return t * t * (3 - 2 * t); }
+  function ease5(t){ return t * t * t * (t * (t * 6 - 15) + 10); }
+  function pulse(x){ return x <= 0 || x >= 1 ? 0 : Math.sin(Math.PI * x); }
+  function f1(n){ return n.toFixed(1); }
+
+  var vw, vh, base, bigW, bigH, E, mobile, creamGeo;
+  var q = 0, painted = -1, restStart = 0;
+
+  function drawCream(pos){
+    var key = Math.round(pos * 50) / 50;
+    if(key === creamDrawn) return;
+    var i = Math.min(Math.floor(pos), CREAM_N - 1), t = pos - i;
+    while(i > 0 && !cready[i]) { i--; t = 0; }
+    if(!cready[i]) return;
+    cctx.clearRect(0, 0, cream.width, cream.height);
+    cctx.globalAlpha = 1;
+    cctx.drawImage(cframes[i], 0, 0);
+    if(t > 0.01 && i + 1 < CREAM_N && cready[i + 1]){
+      cctx.globalAlpha = t;
+      cctx.drawImage(cframes[i + 1], 0, 0);
+      cctx.globalAlpha = 1;
+    }
+    creamDrawn = key;
+  }
+
+  function measure(){
+    vw = stage.clientWidth; vh = stage.clientHeight;
+    mobile = vw < 700;
+    map.style.transform = '';
+    var r = map.getBoundingClientRect(), s = stage.getBoundingClientRect();
+    base = { left:r.left - s.left, top:r.top - s.top, w:r.width, h:r.height };
+    bigH = mobile ? Math.min(vh * 0.36, vw * 0.62 / ASPECT)
+                  : Math.min(vh * 0.58, vw * 0.28 / ASPECT);
+    bigW = bigH * ASPECT;
+    E = mobile ? [vw * 0.30, vh * 0.62] : [vw * 0.23, vh * 0.60];
+    beau.style.width  = bigW + 'px';
+    beau.style.height = bigH + 'px';
+    trail.setAttribute('viewBox', '0 0 ' + vw + ' ' + vh);
+
+    /* the clip, placed so its frame-0 silhouette lands exactly on the
+       landed white shrimp's (scale 1, no tilt once it has landed) */
+    var s  = bigW / 1000;                                         /* page px per white-shrimp px */
+    var pc = s * (B3_BOX[2] - B3_BOX[0]) / (CREAM_BOX[2] - CREAM_BOX[0]);   /* page px per clip px */
+    var bl = E[0] - bigW / 2, bt = E[1] - bigH / 2;
+    creamGeo = { left: bl + B3_BOX[0] * s - CREAM_BOX[0] * pc,
+                 top:  bt + B3_BOX[1] * s - CREAM_BOX[1] * pc,
+                 w: 1440 * pc, h: 1120 * pc };
+    cream.style.width  = creamGeo.w + 'px';
+    cream.style.height = creamGeo.h + 'px';
+    /* in her clip the line forms well below the shrimp — below this
+       window. Lift the layer while it plays so the line settles just
+       under the copy */
+    var lineY = creamGeo.top + LINE_CY * pc;
+    creamGeo.rise = Math.max(0, lineY - vh * (mobile ? 0.80 : 0.74));
+    painted = -1; creamDrawn = -1;
+  }
+
+  /* where the map ends up: top right, its upper part off the top */
+  function mapTarget(){
+    var ks = mobile ? 0.90 : 0.92;
+    var w = base.w * ks, h = base.h * ks;
+    var right  = vw * (mobile ? 0.98 : 0.94);
+    var bottom = vh * (mobile ? 0.40 : 0.44);
+    return { dx:(right - w) - base.left, dy:(bottom - h) - base.top, ks:ks };
+  }
+
+  function frame(now){
+    var r   = sec.getBoundingClientRect();
+    var run = sec.offsetHeight - innerHeight;
+    var raw = run > 0 ? clamp(-r.top / run, 0, 1) : 0;
+    var tq  = clamp((raw - SPREAD_SPLIT) / (1 - SPREAD_SPLIT), 0, 1);
+
+    if(reduce) q = tq;
+    else{
+      q += (tq - q) * 0.12;
+      if(Math.abs(tq - q) < 0.0004) q = tq;
+    }
+
+    var resting = !reduce && q >= T_SPARK_B[1] && q < T_TOCREAM[0];
+    if(q !== painted || resting){
+      painted = q;
+
+      /* the disease line goes, the map moves up */
+      copyA.style.opacity = (1 - ease(seg(q, T_COPY_OUT))).toFixed(3);
+      mapKey.style.opacity = copyA.style.opacity;
+      var T = mapTarget(), m = ease5(seg(q, T_MAP));
+      var ks = 1 + (T.ks - 1) * m;
+      map.style.transformOrigin = '0 0';
+      map.style.transform = m ? 'translate3d(' + f1(T.dx * m) + 'px,' + f1(T.dy * m) + 'px,0) scale(' + ks.toFixed(4) + ')' : '';
+
+      /* the trail: from the sea off the southern tip (riding on the map
+         while it moves), down below the land, then a long sweep left to
+         the landing spot, passing above the copy */
+      var S  = [base.left + T.dx * m + base.w * ks * START[0],
+                base.top  + T.dy * m + base.h * ks * START[1]];
+      var C1 = mobile ? [S[0] - vw * 0.04, S[1] + vh * 0.14] : [S[0] - vw * 0.02, S[1] + vh * 0.17];
+      var C2 = mobile ? [E[0] + vw * 0.25, E[1] - vh * 0.06] : [E[0] + vw * 0.19, E[1] - vh * 0.03];
+      path.setAttribute('d', 'M' + f1(S[0]) + ' ' + f1(S[1]) +
+                             ' C' + f1(C1[0]) + ' ' + f1(C1[1]) + ' ' + f1(C2[0]) + ' ' + f1(C2[1]) +
+                             ' ' + f1(E[0]) + ' ' + f1(E[1]));
+      var len = path.getTotalLength();
+      var u   = ease5(seg(q, T_TRAVEL));
+      path.style.strokeDasharray  = len;
+      path.style.strokeDashoffset = f1(len * (1 - u));
+      trail.style.opacity = u > 0 ? (1 - ease(seg(q, T_TRAIL_OUT))).toFixed(3) : 0;
+
+      /* the shrimp rides the trail's leading end, placed by arc length so
+         the line always stops exactly at it, banking a little into the
+         curve and growing as it comes */
+      var P = path.getPointAtLength(len * u), tilt = 0;
+      if(u > 0 && u < 1){
+        var a1 = path.getPointAtLength(Math.max(0, len * u - 3));
+        var a2 = path.getPointAtLength(Math.min(len, len * u + 3));
+        var heading = Math.atan2(a2.y - a1.y, a2.x - a1.x);
+        var chord   = Math.atan2(E[1] - S[1], E[0] - S[0]);
+        tilt = clamp((heading - chord) * 57.3 * 0.6, -12, 12) * Math.sin(Math.PI * u);
+      }
+      var appear = ease(seg(q, T_APPEAR));
+      var sc = (SMALL + (1 - SMALL) * u) * (0.7 + 0.3 * appear);
+      beau.style.opacity = appear.toFixed(3);
+      beau.style.transform = 'translate3d(' + f1(P.x - bigW / 2) + 'px,' + f1(P.y - bigH / 2) + 'px,0)' +
+                             ' rotate(' + tilt.toFixed(2) + 'deg) scale(' + sc.toFixed(4) + ')';
+
+      /* tiger blue -> grey -> white: the lower frame stays fully on and
+         the next fades in over it, so the body is never see-through */
+      var c = 2 * ease(seg(q, T_COLOUR));
+      var i = Math.min(Math.floor(c), 2), t = c - i;
+      for(var k = 0; k < body.length; k++)
+        body[k].style.opacity = k === i ? 1 : (k === i + 1 ? t.toFixed(3) : 0);
+
+      copyB.style.opacity = (ease(seg(q, T_COPY_IN)) * (1 - ease(seg(q, T_COPY_OUT2)))).toFixed(3);
+
+      /* the sparkle: twice on the way in, then a slow twinkle at rest */
+      var sp;
+      if(resting){
+        if(!restStart) restStart = now;
+        var tt = ((now - restStart) % 2600) / 2600;
+        sp = pulse(tt / 0.24) + pulse((tt - 0.30) / 0.24);
+      }else{
+        restStart = 0;
+        sp = pulse(seg(q, T_SPARK_A)) + pulse(seg(q, T_SPARK_B));
+      }
+      var toC = ease(seg(q, T_TOCREAM));
+      spark.style.opacity = (Math.min(sp, 1) * (1 - toC)).toFixed(3);
+
+      /* the clip fades in over the white shrimp on the same silhouette
+         (white -> cream), then the white one steps out underneath it */
+      cream.style.opacity = toC.toFixed(3);
+      if(toC >= 1) beau.style.opacity = 0;
+      var g   = seg(q, T_GO);
+      var pos = g * (CREAM_N - 1);
+      cream.style.transform = 'translate3d(' + f1(creamGeo.left) + 'px,' +
+                              f1(creamGeo.top - creamGeo.rise * g) + 'px,0)';
+      if(toC > 0) drawCream(pos);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* preload the cream clip - only here, once CREAM_N and the paint
+     state above are defined (earlier, CREAM_N was still undefined and
+     nothing loaded) */
+  for(var ci = 0; ci < CREAM_N; ci++){
+    var cim = new Image();
+    cim.decoding = 'async';
+    cim.src = 'assets/cream/c' + (ci < 10 ? '0' : '') + ci + '.webp';
+    cframes.push(cim);
+    (function(k, im){ im.onload = function(){ cready[k] = true; painted = -1; creamDrawn = -1; }; })(ci, cim);
+  }
+  addEventListener('resize', measure);
+  addEventListener('load', measure);
+  measure();
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- exports: the dotted world ---------- */
+(function(){
+  var sec  = document.getElementById('exports');
+  if(!sec || !window.WORLD_DOTS) return;
+  var svg  = document.getElementById('exSvg');
+  var gDots = document.getElementById('exDots'), gArcs = document.getElementById('exArcs'),
+      gPins = document.getElementById('exPins'), gOrig = document.getElementById('exOrigin');
+  var card = document.getElementById('exCard'), list = document.getElementById('exList');
+  var fig  = document.getElementById('exMap');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  /* MPEDA, India's frozen shrimp exports by market, FY 2024-25 (tonnes) */
+  var TOTAL = 741529;
+  var ORIGIN = { lon:82.4, lat:17.1 };   /* the Kakinada - Visakhapatnam coast */
+  var EU  = ['Austria','Belgium','Bulgaria','Croatia','Cyprus','Czechia','Denmark','Estonia','Finland','France',
+             'Germany','Greece','Hungary','Ireland','Italy','Latvia','Lithuania','Luxembourg','Netherlands',
+             'Poland','Portugal','Romania','Slovakia','Slovenia','Spain','Sweden'];
+  var SEA = ['Brunei','Cambodia','Indonesia','Laos','Malaysia','Myanmar','Philippines','Thailand','Vietnam','Timor-Leste'];
+  var ME  = ['Saudi Arabia','United Arab Emirates','Qatar','Kuwait','Oman','Iran','Iraq','Israel','Jordan','Lebanon','Syria','Yemen'];
+  var MARKETS = [
+    { name:'United States',   t:311948, lon:-97,   lat:38.5, members:['United States of America'] },
+    { name:'China',           t:136164, lon:112,   lat:31.5, members:['China'] },
+    { name:'European Union',  t:99310,  lon:7.5,   lat:50.5, members:EU },
+    { name:'South-East Asia', t:58003,  lon:104,   lat:13.5, members:SEA },
+    { name:'Japan',           t:38917,  lon:138.5, lat:36.5, members:['Japan'] },
+    { name:'Middle East',     t:32784,  lon:50,    lat:25.5, members:ME }
+  ];
+
+  /* the projection: plate carree over 128W-152E, 70N-42S, bent over a
+     gentle arch - the middle rides high, the edges fall away - with the
+     dots shrinking towards the edges as if they were turning away */
+  var L0 = -128, L1 = 152, LAT_T = 70, LAT_B = -42;
+  var DEG = 1600 / (L1 - L0), TOP = 40, ARCH = 90;
+  function xn(x){ return (x - 800) / 800; }
+  function proj(lon, lat){
+    var x = (lon - L0) * DEG, n = xn(x);
+    return [x, TOP + (LAT_T - lat) * DEG + ARCH * n * n];
+  }
+
+  function el(tag, attrs, parent){
+    var e = document.createElementNS(NS, tag);
+    for(var k in attrs) e.setAttribute(k, attrs[k]);
+    if(parent) parent.appendChild(e);
+    return e;
+  }
+  function fmt(n){ return n.toLocaleString('en-IN'); }
+  function pct(t){ return Math.round(t / TOTAL * 100); }
+  function clamp(v,a,b){ return v < a ? a : (v > b ? b : v); }
+  function seg(p, a, b){ return clamp((p - a) / (b - a), 0, 1); }
+  function ease(t){ return t * t * (3 - 2 * t); }
+
+  /* ---- dots: one path per country, a circle per dot ---- */
+  var W = window.WORLD_DOTS, byName = {}, paths = {};
+  var memberOf = {};
+  MARKETS.forEach(function(m, i){ m.members.forEach(function(n){ memberOf[n] = i; }); });
+  var d = {};
+  W.dots.forEach(function(p){
+    if(p[0] < L0 || p[0] > L1 || p[1] > LAT_T || p[1] < LAT_B) return;
+    var xy = proj(p[0], p[1]), r = 3.2 * (1 - 0.28 * xn(xy[0]) * xn(xy[0]));
+    (d[p[2]] = d[p[2]] || []).push('M' + (xy[0] - r).toFixed(1) + ' ' + xy[1].toFixed(1) +
+      'a' + r.toFixed(2) + ' ' + r.toFixed(2) + ' 0 1 0 ' + (2 * r).toFixed(2) + ' 0' +
+      'a' + r.toFixed(2) + ' ' + r.toFixed(2) + ' 0 1 0 ' + (-2 * r).toFixed(2) + ' 0');
+  });
+  Object.keys(d).forEach(function(k){
+    var name = W.names[k];
+    var cls = 'ex-country' + (name === 'India' ? ' home' : (name in memberOf ? ' mk' : ''));
+    paths[name] = el('path', { d: d[k].join(''), 'class': cls }, gDots);
+  });
+
+  /* ---- origin ---- */
+  var O = proj(ORIGIN.lon, ORIGIN.lat);
+  var og = el('g', { 'class':'ex-origin', transform:'translate(' + O[0].toFixed(1) + ' ' + O[1].toFixed(1) + ')' }, gOrig);
+  el('circle', { 'class':'halo', r:13 }, og);
+  el('circle', { 'class':'dot', r:5.5 }, og);
+  var ot = el('text', { x:-18, y:34, 'text-anchor':'end' }, og); ot.textContent = 'Andhra Pradesh';
+
+  /* ---- arcs, pins, list ---- */
+  var PIN = 'M0 0 C-3.5 -9 -12 -15.5 -12 -24.5 A12 12 0 1 1 12 -24.5 C12 -15.5 3.5 -9 0 0 Z';
+  MARKETS.forEach(function(m, i){
+    var D = proj(m.lon, m.lat), share = m.t / TOTAL;
+    var dist = Math.hypot(D[0] - O[0], D[1] - O[1]);
+    var C = [(O[0] + D[0]) / 2, Math.min(O[1], D[1]) - Math.min(250, dist * 0.34)];
+    m.arc = el('path', { 'class':'ex-arc', d:'M' + O.join(' ') + ' Q' + C.join(' ') + ' ' + D.join(' ') }, gArcs);
+    m.arc.style.setProperty('--sw', (1.3 + 5.4 * Math.pow(share, 0.6)).toFixed(2) + 'px');
+    m.len = m.arc.getTotalLength();
+    m.arc.style.strokeDasharray = m.len;
+    m.D = D;
+
+    m.pin = el('g', { 'class':'ex-pin', tabindex:0, role:'button',
+                      'aria-label': m.name + ': ' + fmt(m.t) + ' tonnes, ' + pct(m.t) + ' per cent of the total',
+                      transform:'translate(' + D[0].toFixed(1) + ' ' + D[1].toFixed(1) + ')' }, gPins);
+    m.pinInner = el('g', {}, m.pin);
+    el('circle', { 'class':'ring', cy:-24.5, r:17 }, m.pinInner);
+    el('path', { 'class':'body', d:PIN }, m.pinInner);
+    el('circle', { 'class':'eye', cy:-24.5, r:4.8 }, m.pinInner);
+
+    var li = document.createElement('li');
+    li.innerHTML = '<button type="button" aria-pressed="false"><span class="nm">' + m.name + '</span>' +
+      '<span class="t">' + fmt(m.t) + ' t</span><span class="bar"><i style="--w:' + (share / (MARKETS[0].t / TOTAL) * 100).toFixed(1) + '%"></i></span></button>';
+    m.btn = li.firstChild; m.bar = m.btn.querySelector('.bar i');
+    list.appendChild(li);
+
+    function enter(){ hover = i; paint(); }
+    function leave(){ if(hover === i){ hover = -1; paint(); } }
+    function toggle(){ picked = picked === i ? -1 : i; paint(); }
+    [m.pin, m.btn].forEach(function(t){
+      t.addEventListener('pointerenter', function(e){ if(e.pointerType !== 'touch') enter(); });
+      t.addEventListener('pointerleave', function(e){ if(e.pointerType !== 'touch') leave(); });
+      t.addEventListener('focus', enter);
+      t.addEventListener('blur', leave);
+      t.addEventListener('click', toggle);
+    });
+    m.pin.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); } });
+  });
+  addEventListener('keydown', function(e){ if(e.key === 'Escape' && picked !== -1){ picked = -1; paint(); } });
+
+  /* ---- focus: one market lit, the rest stepping back ---- */
+  var hover = -1, picked = -1;
+  function paint(){
+    var a = hover !== -1 ? hover : picked;
+    Object.keys(paths).forEach(function(n){ paths[n].classList.toggle('on', a !== -1 && memberOf[n] === a); });
+    MARKETS.forEach(function(m, i){
+      m.arc.classList.toggle('on', i === a);  m.arc.classList.toggle('dim', a !== -1 && i !== a);
+      m.pin.classList.toggle('on', i === a);  m.pin.classList.toggle('dim', a !== -1 && i !== a);
+      m.btn.classList.toggle('hot', i === a); m.btn.setAttribute('aria-pressed', i === picked ? 'true' : 'false');
+    });
+    if(a === -1){ card.classList.remove('on'); return; }
+    var m = MARKETS[a];
+    card.innerHTML = '<b>' + m.name + '</b><span>' + fmt(m.t) + ' tonnes, ' + pct(m.t) + '% of the total</span>';
+    var pt = svg.createSVGPoint(); pt.x = m.D[0]; pt.y = m.D[1] - 40;
+    var sp = pt.matrixTransform(svg.getScreenCTM()), fr = fig.getBoundingClientRect();
+    card.style.left = (sp.x - fr.left) + 'px';
+    card.style.top  = (sp.y - fr.top) + 'px';
+    card.classList.add('on');
+  }
+  addEventListener('resize', function(){ if(hover !== -1 || picked !== -1) paint(); });
+
+  /* ---- the entrance: arcs leave Andhra in rank order as you scroll in ---- */
+  var q = 0, painted = -1;
+  function frame(){
+    var r = sec.getBoundingClientRect(), run = sec.offsetHeight - innerHeight;
+    var tq = run > 0 ? clamp(-r.top / run, 0, 1) : 1;
+    if(reduce) tq = 1;
+    q += (tq - q) * 0.14; if(Math.abs(tq - q) < 0.0005) q = tq;
+    if(q !== painted){
+      painted = q;
+      MARKETS.forEach(function(m, i){
+        var a0 = 0.06 + i * 0.09, u = ease(seg(q, a0, a0 + 0.18));
+        m.arc.style.strokeDashoffset = (m.len * (1 - u)).toFixed(1);
+        var p = ease(seg(q, a0 + 0.15, a0 + 0.23));
+        m.pin.style.visibility = p > 0 ? 'visible' : 'hidden';
+        m.pinInner.setAttribute('transform', 'translate(0 ' + (-(1 - p) * 26).toFixed(1) + ')');
+        m.pinInner.style.opacity = p.toFixed(3);
+        m.bar.style.setProperty('--drawn', p.toFixed(3));
+      });
+      if(hover !== -1 || picked !== -1) paint();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- the journey: her value chain, ported ----------
+   Same drawing and camera as shrimp_value_chain.html; only the driver
+   changed - progress comes from this section's scroll, and the
+   artboard fits the pinned stage instead of the window. */
+(function(){
+  var sec = document.getElementById('journey');
+  if(!sec) return;
+  var stageEl = document.getElementById('vcStage');
+  var frameEl = document.getElementById('vcFrame');
+  var world   = document.getElementById('vcWorld');
+
+  /* the wave: extrema measured off the prototype, bezier handles fitted */
+  var EXT = [
+    [   0, 690], [ 250, 690],
+    [ 429, 439, 0.66, 0.78], [ 632, 763, 0.78, 0.80], [ 834, 313, 0.74, 0.86],
+    [1036, 690, 0.70, 0.90], [1213, 475, 0.66, 0.76], [1415, 690, 0.82, 0.80],
+    [1617, 348, 0.76, 0.82], [3400, 348]
+  ];
+  var EXT_PALE = [
+    [   0, 668], [ 230, 668],
+    [ 414, 418, 0.68, 0.80], [ 622, 752, 0.74, 0.82], [ 809, 291, 0.64, 0.80],
+    [1015, 679, 0.72, 0.82], [1204, 453, 0.60, 0.76], [1388, 679, 0.76, 0.68],
+    [1600, 328, 0.76, 0.78], [3400, 328]
+  ];
+  function wavePath(pts){
+    var d = 'M ' + pts[0][0] + ' ' + pts[0][1];
+    for(var i = 1; i < pts.length; i++){
+      var x0 = pts[i-1][0], y0 = pts[i-1][1], x1 = pts[i][0], y1 = pts[i][1];
+      if(y0 === y1){ d += ' L ' + x1 + ' ' + y1; continue; }
+      var f1 = pts[i][2] === undefined ? 0.5 : pts[i][2];
+      var f2 = pts[i][3] === undefined ? 0.5 : pts[i][3];
+      var dx = x1 - x0;
+      d += ' C ' + (x0 + f1 * dx) + ' ' + y0 + ' ' + (x1 - f2 * dx) + ' ' + y1 + ' ' + x1 + ' ' + y1;
+    }
+    return d;
+  }
+  document.getElementById('vcSolid').setAttribute('d', wavePath(EXT));
+  document.getElementById('vcPale').setAttribute('d', wavePath(EXT_PALE));
+
+  var STAGES = [
+    { x:417.6, y:438.2, r:68, side:'above', label:'Hatcheries',
+      chain:'Broodstock → Maturation/Spawning → Eggs → Nauplii → Zoea → Mysis → Post-Larvae (PL) → Seed Distribution → Farmer' },
+    { x:607.9, y:740.5, r:67, side:'below', label:'Farm\nPreparation',
+      chain:'Pond drying → De-silting → Ploughing & Liming → Filling → Filtration → Water treatment → Plankton bloom → Aerators set → Pond ready' },
+    { x:762.6, y:320.5, r:67, side:'above', label:'Stocking',
+      chain:'PL testing (PCR) → Purchase from hatchery → Oxygen-bag transport → Acclimatisation → Nursery or direct release → Density fixed → Counting & sampling' },
+    { x:1012.1, y:672.6, r:67, side:'below', label:'Feeding and\nFarm\nmanagement',
+      chain:'Feed schedule (starter → grower → finisher) → Check-tray sampling → Aeration & DO control → Water exchange → Probiotics & minerals → Disease watch (WSSV, EHP) → Growth sampling' },
+    { x:1207.1, y:468.9, r:68, side:'above', label:'Harvesting',
+      chain:'Buyer & price fixed → Antibiotic withdrawal → Partial or full harvest → Netting / sluice drain → Ice-slurry chilling → Weighing & count grading → Insulated transport' },
+    { x:1563.2, y:348, r:67, side:'above', label:'Processing', proc:true,
+      chain:'Collection → Washing/Grading → De-heading/Peeling → Quality Testing → Packing & Labelling → Cold Storage → Export / Shipping' }
+  ];
+  var SUB_X0 = 1978, SUB_DX = 208.8, SUB_Y = 348, SUB_R = 33.5;
+  var SUBS = [
+    { side:'below', label:'Collection',              note:'Iced shrimp arrives from the farm and is weighed in.', ill:'crate' },
+    { side:'above', label:'Washing /\nGrading',      note:'Washed, then sorted by count size on the belt.',       ill:'plant' },
+    { side:'below', label:'De-heading /\nPeeling',   note:'Headed, peeled and deveined on the hand lines.',       ill:'peel' },
+    { side:'above', label:'Quality\nTesting',        note:'Antibiotic and microbial checks before packing.',      ill:'test' },
+    { side:'below', label:'Packing &\nLabelling',    note:'Block, IQF or value-added packs, labelled per buyer.', ill:'pack' },
+    { side:'above', label:'Cold Storage\nExport /\nShipping', note:'Held at −18°C, then containerised for export.', ill:'cold' }
+  ];
+  var ILL = {
+    crate:'<rect x="34" y="78" width="88" height="56" rx="8"/><rect x="148" y="78" width="88" height="56" rx="8"/><rect x="91" y="26" width="88" height="44" rx="8"/><path d="M34 98h88M148 98h88M91 46h88"/>',
+    peel:'<path d="M46 114h180a12 12 0 0 1 0 26H46a12 12 0 0 1 0-26z"/><path d="M62 100 168 40l14 24-92 36z"/><path d="M182 64l30-17"/><path d="M74 128h30M120 128h26"/>',
+    test:'<circle cx="104" cy="68" r="40"/><path d="M133 97l30 30"/><path d="M88 74c-2-14 8-24 22-24 11 0 19 7 19 15"/><path d="M188 30h38M198 30v26l-22 44a10 10 0 0 0 9 15h40a10 10 0 0 0 9-15l-22-44V30"/><path d="M182 100h58"/>',
+    pack:'<path d="M50 68h168v74H50z"/><path d="M50 68l26-30h116l26 30"/><path d="M134 38v30"/><rect x="146" y="90" width="56" height="34" rx="4"/><path d="M158 102h32M158 113h20"/>',
+    cold:'<rect x="28" y="62" width="134" height="72" rx="6"/><path d="M55 62v72M82 62v72M109 62v72M136 62v72"/><path d="M212 64v70M182 81l60 34M242 81l-60 34"/>'
+  };
+  function illMarkup(kind){
+    if(kind === 'plant') return '<div class="plant"></div>';
+    return '<svg class="ill" viewBox="0 0 270 165" aria-hidden="true"><rect width="270" height="165" fill="#CDE7F7"/>' +
+      '<g fill="none" stroke="#FF6C28" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">' + ILL[kind] + '</g></svg>';
+  }
+
+  var nodesEl = document.getElementById('vcNodes');
+  var frag = document.createDocumentFragment();
+  function makeStage(cfg, isSub){
+    var el = document.createElement('div');
+    el.className = 'vnode' + (isSub ? ' sub' : '') + (cfg.proc ? ' proc' : '');
+    el.style.setProperty('--x', cfg.x + 'px');
+    el.style.setProperty('--y', cfg.y + 'px');
+    el.style.setProperty('--r', cfg.r + 'px');
+    var wrapSide = (isSub ? 'sub-' : 'stg-') + (cfg.side === 'above' ? 'top' : 'bot');
+    var card = isSub
+      ? '<div class="cardwrap ' + wrapSide + '"><div class="card sub">' + illMarkup(cfg.ill) +
+          '<div class="sc-name">' + cfg.label.replace(/\n/g, '<br>') + '</div>' +
+          '<div class="sc-note">' + cfg.note + '</div></div></div>'
+      : '<div class="cardwrap ' + wrapSide + '"><div class="card stg">' + cfg.chain + '</div></div>';
+    el.innerHTML = '<div class="dot"></div><div class="lab ' + cfg.side + '">' + cfg.label + '</div>' + card +
+      '<div class="hit" tabindex="0" role="button" aria-label="' + cfg.label.replace(/\n/g, ' ') + '"></div>';
+    frag.appendChild(el);
+    return el;
+  }
+  var allStages = [];
+  STAGES.forEach(function(st){ allStages.push(makeStage(st, false)); });
+  SUBS.forEach(function(st, i){
+    st.x = SUB_X0 + i * SUB_DX; st.y = SUB_Y; st.r = SUB_R;
+    allStages.push(makeStage(st, true));
+  });
+  nodesEl.appendChild(frag);
+
+  /* ---- hover (frames 1.1 and 3) ---- */
+  var focused = null;
+  function clampCard(el){
+    var wrap = el.querySelector('.cardwrap'), card = wrap.firstChild;
+    wrap.style.transform = '';
+    var z = 1 + (ZOOM - 1) * cur;
+    var viewTop = CAM_Y * cur + VIEW_TOP / z, viewBot = viewTop + VIEW_H / z;
+    var top = parseFloat(el.style.getPropertyValue('--y')) + card.offsetTop, bot = top + card.offsetHeight;
+    var dy = 0;
+    if(top < viewTop + 14)      dy = viewTop + 14 - top;
+    else if(bot > viewBot - 14) dy = Math.max(viewBot - 14 - bot, viewTop + 14 - top);
+    if(dy) wrap.style.transform = 'translateY(' + dy + 'px)';
+  }
+  function setFocus(el){
+    if(focused === el) return;
+    if(focused) focused.classList.remove('focus');
+    focused = el;
+    if(el){ clampCard(el); el.classList.add('focus'); }
+    world.classList.toggle('is-focus', !!el);
+  }
+  allStages.forEach(function(el){
+    var hit = el.querySelector('.hit'), lab = el.querySelector('.lab');
+    function enter(){ setFocus(el); }
+    function leave(){ if(focused === el) setFocus(null); }
+    [hit, lab].forEach(function(t){
+      t.addEventListener('pointerenter', function(e){ if(e.pointerType !== 'touch') enter(); });
+      t.addEventListener('pointerleave', function(e){ if(e.pointerType !== 'touch') leave(); });
+      t.addEventListener('click', function(e){ e.preventDefault(); setFocus(focused === el ? null : el); });
+    });
+    hit.addEventListener('focus', enter);
+    hit.addEventListener('blur', leave);
+  });
+  addEventListener('keydown', function(e){ if(e.key === 'Escape' && focused) setFocus(null); });
+
+  /* ---- camera: frame 1 -> 1.2 -> frame 2 ---- */
+  var CAM_X = 1563.2, CAM_Y = -100.5, ZOOM = 1.18;
+  var procLab = world.querySelector('.vnode.proc .lab');
+  function clamp(v, a, b){ return v < a ? a : (v > b ? b : v); }
+  function smoothstep(a, b, x){ var t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+  var target = 0, cur = 0, painted = -1;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* fill the stage's width, cropping top and bottom; SAFE_H is the band
+     every frame-1 label lives in, which must never be cropped */
+  var SAFE_H = 760, FIT = 1, VIEW_TOP = 0, VIEW_H = 1080;
+  function fit(){
+    var vw = stageEl.clientWidth, vh = stageEl.clientHeight;
+    FIT = Math.min(vw / 1920, vh / SAFE_H);
+    VIEW_H = Math.min(1080, vh / FIT);
+    VIEW_TOP = (1080 - VIEW_H) / 2;
+    frameEl.style.transform = 'translate(' + ((vw - 1920 * FIT) / 2) + 'px,' + ((vh - 1080 * FIT) / 2) + 'px) scale(' + FIT + ')';
+    if(focused) clampCard(focused);
+  }
+  function readScroll(){
+    var r = sec.getBoundingClientRect(), run = sec.offsetHeight - innerHeight;
+    target = run > 0 ? clamp(-r.top / run, 0, 1) : 0;
+  }
+  function tick(){
+    var eased = smoothstep(0.10, 0.90, target);
+    cur = reduce ? eased : cur + (eased - cur) * 0.16;
+    if(Math.abs(eased - cur) < 0.0002) cur = eased;
+    if(cur === painted){ requestAnimationFrame(tick); return; }
+    painted = cur;
+
+    var z = 1 + (ZOOM - 1) * cur;
+    world.style.transform = 'scale(' + z + ') translate(' + (-CAM_X * cur) + 'px,' + (-CAM_Y * cur) + 'px)';
+    world.style.setProperty('--p', cur.toFixed(4));
+    var pw = procLab.offsetWidth;
+    procLab.style.transform = 'translateX(' + (-pw / 2 + cur * (pw / 2 + 24)) + 'px)';
+    world.style.setProperty('--deco', (1 - smoothstep(0.12, 0.44, cur)).toFixed(3));
+    world.style.setProperty('--rail', smoothstep(0.58, 0.94, cur).toFixed(3));
+
+    world.classList.toggle('pa', cur < 0.45);
+    world.classList.toggle('pb', cur > 0.55);
+    if(focused){
+      var isSub = focused.classList.contains('sub');
+      if((isSub && cur <= 0.55) || (!isSub && cur >= 0.45)) setFocus(null);
+    }
+    requestAnimationFrame(tick);
+  }
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ painted = -1; });
+  addEventListener('scroll', readScroll, {passive:true});
+  addEventListener('resize', function(){ fit(); readScroll(); });
+  fit(); readScroll(); requestAnimationFrame(tick);
+})();
+
+/* ---------- top bar: out of the way going down, back going up ---------- */
+(function(){
+  var bar = document.getElementById('topbar');
+  if(!bar) return;
+  var lastY = scrollY, run = 0;
+  function onScroll(){
+    var y = scrollY, dy = y - lastY;
+    lastY = y;
+    bar.classList.toggle('clear', y < 40);
+    if(y < 90){ bar.classList.remove('away'); run = 0; return; }
+    /* only react to a deliberate move in one direction, not jitter */
+    run = (dy > 0) === (run > 0) ? run + dy : dy;
+    if(run > 28) bar.classList.add('away');
+    else if(run < -28) bar.classList.remove('away');
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  bar.addEventListener('focusin', function(){ bar.classList.remove('away'); });
+  onScroll();
+})();
+</script>
+</body>
+</html>

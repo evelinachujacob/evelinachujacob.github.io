@@ -1,0 +1,416 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bhimavaram Shrimp — supply &amp; production flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* palette: #F7D2B4 peach · #FF6C28 orange · #FFCB30 yellow · #100B7B navy · #7194C9 blue */
+  --paper:#FFFFFF; --paper2:#FDF2EA; --ink:#100B7B; --soft:#7C79B6;
+  --bund:#D4D3E7;
+  --peach:#F7D2B4; --terra:#B0532A; --blue:#7194C9; --orange:#FF6C28; --yellow:#FFCB30;
+  --disp:'Archivo',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--disp);-webkit-font-smoothing:antialiased}
+body{padding:0 0 30px}
+
+/* ---------- chrome ---------- */
+.hd{padding:20px 26px 12px}
+.hd h1{font-size:17px;font-weight:800;letter-spacing:-.01em;margin:0}
+.hd p{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--soft);margin:5px 0 0}
+/* the way back to the story - in the title row */
+.hd-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.back{pointer-events:auto;display:inline-flex;align-items:center;gap:5px;flex:none;
+  padding:5px 12px 5px 8px;border-radius:999px;border:1.5px solid var(--ink,#100B7B);
+  background:#fff;color:var(--ink,#100B7B);text-decoration:none;
+  font-size:12px;font-weight:600;letter-spacing:.01em;line-height:1.2;
+  transition:background-color .2s,color .2s}
+.back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.back:hover{background:var(--ink,#100B7B);color:#fff}
+.back:focus-visible{outline:2px solid var(--ink,#100B7B);outline-offset:3px}
+
+.bar{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;
+  padding:12px 26px 14px;border-bottom:1px solid var(--bund)}
+.grp h2{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);margin:0 0 7px;font-weight:500}
+.seg{display:flex;border:1px solid var(--bund)}
+.seg button{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  background:transparent;border:none;border-right:1px solid var(--bund);color:var(--ink);
+  padding:7px 11px;cursor:pointer}
+.seg button:last-child{border-right:none}
+.seg button.on{background:var(--ink);color:var(--paper)}
+label.ck{display:flex;align-items:center;gap:7px;font-size:12.5px;cursor:pointer;line-height:1.3;margin-top:2px}
+input[type=checkbox]{accent-color:var(--ink);margin:0;flex:none}
+.key{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;align-items:center}
+.key span{display:flex;align-items:center;gap:6px}
+.sw{width:11px;height:11px;flex:none}
+
+/* ---------- canvas ---------- */
+#wrap{overflow-x:auto;padding:8px 0 0}
+svg{display:block}
+.link{stroke:none;cursor:pointer}
+.link.dim{opacity:.07 !important}
+.node rect{cursor:pointer}
+.node.dim{opacity:.18}
+/* labels sit over the ribbons, so they carry a paper-coloured halo */
+.nlab,.nval,.colhd{paint-order:stroke;stroke:var(--paper);stroke-linejoin:round}
+.nlab{font-size:12px;font-weight:600;letter-spacing:-.005em;pointer-events:none;stroke-width:3.4px}
+.nval{font-family:var(--mono);font-size:9.5px;fill:var(--soft);pointer-events:none;stroke-width:3px}
+.colhd{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  fill:var(--soft);pointer-events:none;stroke-width:3px}
+.brk{stroke:var(--orange);stroke-width:1;stroke-dasharray:3 3}
+.brklab{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;fill:var(--orange);text-transform:uppercase}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed;z-index:40;pointer-events:none;background:var(--ink);color:var(--paper);
+  padding:9px 12px;max-width:270px;opacity:0;transition:opacity .12s;font-size:12.5px;line-height:1.35}
+#tip.on{opacity:1}
+#tip b{font-weight:700}
+#tip .v{font-family:var(--mono);font-size:11px;color:var(--yellow);display:block;margin-top:4px}
+#tip .w{font-family:var(--mono);font-size:10px;color:var(--peach);display:block;margin-top:6px;line-height:1.45}
+
+/* ---------- notes ---------- */
+.notes{margin:26px 26px 0;max-width:940px;border-top:1px solid var(--bund);padding-top:18px}
+.notes h3{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);margin:0 0 12px;font-weight:500}
+.notes ol{margin:0;padding-left:18px}
+.notes li{font-size:13px;line-height:1.5;margin-bottom:11px}
+.notes li b{font-weight:700}
+.notes code{font-family:var(--mono);font-size:11.5px;background:var(--paper2);padding:1px 4px}
+.flag{border-left:2px solid var(--orange);padding-left:11px}
+</style>
+
+<div class="hd">
+  <div class="hd-row"><a class="back" href="shrimp_story/index.html"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Back to the story</a><h1>Bhimavaram shrimp — supply &amp; production flow</h1></div>
+  <p>SANKEY · SOURCE: SANKEY.XLSX (22 FLOWS) · HOVER A BAND TO TRACE IT</p>
+</div>
+
+<div class="bar">
+  <div class="grp">
+    <h2>Product → market split</h2>
+    <div class="seg" id="segMode">
+      <button data-m="raw" class="on">As entered</button>
+      <button data-m="prop">Proportional 40/60</button>
+    </div>
+  </div>
+  <div class="grp">
+    <h2>Show</h2>
+    <label class="ck"><input type="checkbox" id="ckResid" checked> Unaccounted volume at farm</label>
+    <label class="ck"><input type="checkbox" id="ckVals" checked> Values on nodes</label>
+  </div>
+  <div class="grp" style="flex:1;min-width:280px">
+    <h2>Product type</h2>
+    <div class="key" id="key"></div>
+  </div>
+</div>
+
+<div id="wrap"><svg id="svg"></svg></div>
+<div id="tip"></div>
+
+<div class="notes">
+  <h3>Reading this / what the sheet does not say</h3>
+  <ol>
+    <li class="flag"><b>The product-to-market split in the sheet is uniform, and cannot be right.</b>
+      Every one of the four product types is entered as sending exactly 7.65&nbsp;bn domestic and
+      11.475&nbsp;bn international. So <i>Value-added</i> receives 0.77&nbsp;bn from the processor but
+      emits 19.125&nbsp;bn — a 25× gain across a node that only packs. The column totals still add to
+      76.5&nbsp;bn, so the error hides in the totals. Switch to <b>Proportional 40/60</b> to apply the
+      overall domestic:international ratio (30.6&nbsp;bn : 45.9&nbsp;bn) to each product instead; every
+      column total stays identical, only the split changes.</li>
+    <li class="flag"><b>Flow is not conserved at two points, and a Sankey assumes it is.</b>
+      NBC 13,222&nbsp;→ BMC 210,000&nbsp;→ hatchery 90&nbsp;bn is biological multiplication, not
+      transport — a few thousand broodstock become billions of post-larvae. That is drawn here on its
+      own thickness scale, marked by the dashed break, because on the downstream scale 13,222 is
+      1/7,000,000th of a pixel. Second, the farm takes in 90&nbsp;bn and passes on 76.5&nbsp;bn; the
+      13.5&nbsp;bn gap is not in the sheet, so it is drawn as a derived <i>unaccounted</i> stub rather
+      than quietly dropped.</li>
+    <li><b>Units are not stated in the sheet.</b> Upstream the values are plainly counts of animals
+      (broodstock, then post-larvae). Downstream, 76.5&nbsp;bn is too large to be kilograms of shrimp
+      and too small to be rupees of export value, so the downstream figures are carried through as
+      entered and labelled only as <code>units</code>. Worth resolving before this goes in the report.</li>
+    <li>Everything below the processor <i>does</i> balance: the four product types sum to 76.51&nbsp;bn
+      against 76.5&nbsp;bn in, and the seven export destinations sum to 45.9&nbsp;bn against 45.9&nbsp;bn
+      leaving <i>International</i>.</li>
+  </ol>
+</div>
+
+<script>
+/* ===================== data — transcribed from sankey.xlsx ===================== */
+/* the sheet's "Frozen raw – HLSO/HOSO" carries a stray Windows-1252 dash byte;
+   written here as a proper em dash.                                              */
+
+const N = {
+  NBC   :{lab:'NBC',            full:'Nucleus breeding centre',                  col:0, c:'--blue'},
+  BMC   :{lab:'BMC',            full:'Broodstock multiplication centre',         col:1, c:'--blue'},
+  HATCH :{lab:'Hatchery',       full:'Hatchery',                                 col:2, c:'--blue'},
+  FARM  :{lab:'Farm',           full:'Grow-out farm',                            col:3, c:'--blue'},
+  PROC  :{lab:'Processor',      full:'Processing plant',                         col:4, c:'--ink'},
+  P_RAW :{lab:'Frozen raw',     full:'Frozen raw — HLSO / HOSO',                 col:5, c:'--ink',    prod:1},
+  P_PD  :{lab:'Peeled & deveined', full:'Peeled & deveined (PD / PDTO)',         col:5, c:'--orange', prod:1},
+  P_CKD :{lab:'Frozen cooked',  full:'Frozen cooked',                            col:5, c:'--yellow', prod:1, o:.58},
+  P_VA  :{lab:'Value-added',    full:'Value-added — breaded, marinated, RTE/RTC', col:5, c:'--terra',  prod:1, o:.42},
+  RESID :{lab:'Unaccounted',    full:'Unaccounted at farm (derived, not in sheet)', col:5, c:'--bund', derived:true},
+  DOM   :{lab:'Domestic',       full:'Domestic market',                          col:6, c:'--blue'},
+  INTL  :{lab:'International',  full:'Export',                                   col:6, c:'--soft'},
+  USA   :{lab:'USA',            full:'United States',                            col:7, c:'--soft'},
+  CHN   :{lab:'China',          full:'China',                                    col:7, c:'--soft'},
+  EU    :{lab:'EU',             full:'European Union',                           col:7, c:'--soft'},
+  SEA   :{lab:'SE Asia',        full:'Southeast Asia',                           col:7, c:'--soft'},
+  JPN   :{lab:'Japan',          full:'Japan',                                    col:7, c:'--soft'},
+  ME    :{lab:'Middle East',    full:'Middle East',                              col:7, c:'--soft'},
+  OTH   :{lab:'Others',         full:'Other destinations',                       col:7, c:'--soft'}
+};
+/* a link takes the product's colour when it touches a product node, so the four
+   product forms stay traceable from the processor all the way into the markets */
+const lcol = l => N[l.t].prod ? N[l.t] : N[l.s];
+
+/* s → t, value, scale band. `warn` marks a flow the sheet gets wrong or that is derived. */
+const L = [
+  {s:'NBC',   t:'BMC',   v:13222,        sc:'up'},
+  {s:'BMC',   t:'HATCH', v:210000,       sc:'up'},
+  {s:'HATCH', t:'FARM',  v:90000000000,  sc:'dn'},
+  {s:'FARM',  t:'PROC',  v:76500000000,  sc:'dn'},
+  {s:'FARM',  t:'RESID', v:13500000000,  sc:'dn', derived:true,
+   warn:'Derived, not in the sheet. The farm is entered as taking in 90 bn and passing on 76.5 bn.'},
+
+  {s:'PROC',  t:'P_RAW', v:49730000000,  sc:'dn'},
+  {s:'PROC',  t:'P_PD',  v:19890000000,  sc:'dn'},
+  {s:'PROC',  t:'P_CKD', v:6120000000,   sc:'dn'},
+  {s:'PROC',  t:'P_VA',  v:770000000,    sc:'dn'},
+
+  {s:'P_RAW', t:'DOM',   v:7650000000,   sc:'dn', split:1},
+  {s:'P_PD',  t:'DOM',   v:7650000000,   sc:'dn', split:1},
+  {s:'P_CKD', t:'DOM',   v:7650000000,   sc:'dn', split:1},
+  {s:'P_VA',  t:'DOM',   v:7650000000,   sc:'dn', split:1},
+  {s:'P_RAW', t:'INTL',  v:11475000000,  sc:'dn', split:1},
+  {s:'P_PD',  t:'INTL',  v:11475000000,  sc:'dn', split:1},
+  {s:'P_CKD', t:'INTL',  v:11475000000,  sc:'dn', split:1},
+  {s:'P_VA',  t:'INTL',  v:11475000000,  sc:'dn', split:1},
+
+  {s:'INTL',  t:'USA',   v:19309309818,  sc:'dn'},
+  {s:'INTL',  t:'CHN',   v:8428433143,   sc:'dn'},
+  {s:'INTL',  t:'EU',    v:6147202604,   sc:'dn'},
+  {s:'INTL',  t:'SEA',   v:3590335240,   sc:'dn'},
+  {s:'INTL',  t:'JPN',   v:2408928444,   sc:'dn'},
+  {s:'INTL',  t:'ME',    v:2029301079,   sc:'dn'},
+  {s:'INTL',  t:'OTH',   v:3986489672,   sc:'dn'}
+];
+
+const COLS = [['NBC'],['BMC'],['HATCH'],['FARM'],['PROC'],
+              ['P_RAW','P_PD','P_CKD','P_VA','RESID'],
+              ['DOM','INTL'],
+              ['USA','CHN','EU','SEA','JPN','ME','OTH']];
+const COLHD = ['Genetics','Multiplication','Seed','Grow-out','Processing','Product form','Market','Destination'];
+
+/* ===================== geometry constants ===================== */
+const NW=13, GAP=30, MINW=2.2, PAD_T=78, PAD_B=40, PAD_L=64, PAD_R=138;
+const KDN = 300/90e9;      // px per unit, downstream (90 bn -> 300px)
+const KUP = 40/210000;     // px per unit, genetics chain (210,000 -> 40px)
+const CSS = getComputedStyle(document.documentElement);
+const col = v => CSS.getPropertyValue(v).trim();
+
+/* ===================== state ===================== */
+let mode='raw', showResid=true, showVals=true, focus=null, pinned=null;
+
+/* ===================== helpers ===================== */
+function fmt(v){
+  if(v>=1e9) return (v/1e9).toFixed(v/1e9<10?2:1)+' bn';
+  if(v>=1e6) return (v/1e6).toFixed(1)+' mn';
+  return v.toLocaleString('en-IN');
+}
+function links(){
+  // product totals drive proportional mode; totals per column are unchanged either way
+  const tot={};
+  L.forEach(l=>{ if(l.s==='PROC') tot[l.t]=l.v; });
+  return L.filter(l=>showResid||!l.derived).map(l=>{
+    let v=l.v;
+    if(mode==='prop'&&l.split) v = tot[l.s]*(l.t==='DOM'?0.4:0.6);
+    return Object.assign({},l,{v:v, v0:l.v, adj:(mode==='prop'&&l.split&&v!==l.v)});
+  });
+}
+const wOf = l => Math.max(MINW, l.v*(l.sc==='up'?KUP:KDN));
+
+/* ===================== layout ===================== */
+function layout(W){
+  const LK=links();
+  const nodes={};
+  Object.keys(N).forEach(k=>{ if(k==='RESID'&&!showResid) return;
+    nodes[k]=Object.assign({id:k},N[k],{in:[],out:[]}); });
+  LK.forEach(l=>{ l.w=wOf(l); nodes[l.s].out.push(l); nodes[l.t].in.push(l); });
+
+  // node height = whichever side carries more ribbon
+  Object.values(nodes).forEach(n=>{
+    const si=n.in.reduce((a,l)=>a+l.w,0), so=n.out.reduce((a,l)=>a+l.w,0);
+    n.hIn=si; n.hOut=so; n.h=Math.max(si,so,MINW);
+    n.vIn=n.in.reduce((a,l)=>a+l.v,0); n.vOut=n.out.reduce((a,l)=>a+l.v,0);
+  });
+
+  // x per column — gaps are weighted, not even: the genetics chain carries one ribbon
+  // and needs little room, the product/market fans carry eleven and need more
+  const WT=[.8,.8,1,1,1.05,1.2,1.15], tw=WT.reduce((a,b)=>a+b,0), inner=W-PAD_L-PAD_R-NW;
+  let x=PAD_L;
+  COLS.forEach((ids,ci)=>{ ids.forEach(id=>{ if(nodes[id]) nodes[id].x=x; });
+    if(ci<WT.length) x+=inner*WT[ci]/tw; });
+
+  // a thin node loses its label to the right of the bar; that label is ~25px tall and
+  // will collide with the next node's label unless the stack makes room for it
+  const isRight = n => n.col===7 || n.h<24;
+  const labTop  = n => isRight(n) ? n.y+n.h/2-(showVals?10:8) : n.y-(showVals?26:14);
+  const labBot  = n => isRight(n) ? n.y+n.h/2+(showVals?13:7) : n.y+n.h;
+
+  // stack each column from zero, honouring label extents, then measure
+  const lists=COLS.map(ids=>ids.map(i=>nodes[i]).filter(Boolean));
+  const colH=lists.map(list=>{
+    let y=0;
+    list.forEach((n,i)=>{
+      n.y=y;
+      const nx=list[i+1]; if(!nx) return;
+      // try the plain gap, then push down until the next label clears this one
+      nx.y=y+n.h+GAP;
+      const need=labBot(n)+7;
+      if(labTop(nx)<need) nx.y+=need-labTop(nx);
+      y=nx.y;
+    });
+    const last=list[list.length-1];
+    return last? last.y+last.h : 0;
+  });
+  const H=Math.max(...colH)+PAD_T+PAD_B, mid=PAD_T+(H-PAD_T-PAD_B)/2;
+  lists.forEach((list,ci)=>{ const d=mid-colH[ci]/2; list.forEach(n=>n.y+=d); });
+
+  // stack ribbons at each node, ordered by the other end's centre — keeps crossings down
+  Object.values(nodes).forEach(n=>{
+    const cy=o=>nodes[o].y+nodes[o].h/2;
+    n.out.sort((a,b)=>cy(a.t)-cy(b.t));
+    n.in .sort((a,b)=>cy(a.s)-cy(b.s));
+    let y=n.y+(n.h-n.hOut)/2; n.out.forEach(l=>{ l.y0=y; y+=l.w; });
+    y=n.y+(n.h-n.hIn)/2;      n.in .forEach(l=>{ l.y1=y; y+=l.w; });
+  });
+  return {nodes,LK,H};
+}
+
+function ribbon(l,n){
+  const x0=n[l.s].x+NW, x1=n[l.t].x, dx=(x1-x0)*.42;
+  const a0=l.y0, b0=l.y0+l.w, a1=l.y1, b1=l.y1+l.w;
+  return `M${x0},${a0} C${x0+dx},${a0} ${x1-dx},${a1} ${x1},${a1} `
+       + `L${x1},${b1} C${x1-dx},${b1} ${x0+dx},${b0} ${x0},${b0} Z`;
+}
+
+/* ===================== reachability, for hover focus ===================== */
+function touched(id,LK){
+  const keep=new Set([id]), lk=new Set();
+  const walk=(cur,dir)=>{ const nxt=[];
+    LK.forEach((l,i)=>{ const a=dir>0?l.s:l.t, b=dir>0?l.t:l.s;
+      if(cur.has(a)&&!keep.has(b)){keep.add(b);nxt.push(b);}
+      if(cur.has(a)) lk.add(i); });
+    if(nxt.length) walk(new Set(nxt),dir); };
+  walk(new Set([id]),1); walk(new Set([id]),-1);
+  return {keep,lk};
+}
+
+/* ===================== render ===================== */
+const svg=document.getElementById('svg'), wrap=document.getElementById('wrap'), tip=document.getElementById('tip');
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+let CUR=null;
+
+function draw(){
+  const W=Math.max(1220, wrap.clientWidth);
+  const {nodes,LK,H}=layout(W); CUR={nodes,LK};
+  svg.setAttribute('width',W); svg.setAttribute('height',H);
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const gL=el('g'), gN=el('g'), gT=el('g');
+
+  // column headers
+  COLS.forEach((ids,ci)=>{ const n=ids.map(i=>nodes[i]).find(Boolean); if(!n) return;
+    const t=el('text',{x:n.x,y:PAD_T-48,class:'colhd'}); t.textContent=COLHD[ci]; gT.appendChild(t); });
+
+  // ribbons
+  LK.forEach((l,i)=>{
+    const src=lcol(l), base=l.derived?.16:(src.o||.34), hot=l.derived?.34:Math.min(.85,(src.o||.34)+.28);
+    const p=el('path',{d:ribbon(l,nodes),class:'link','data-i':i,
+      fill:col(l.derived?'--bund':src.c), 'fill-opacity':base});
+    p.addEventListener('mousemove',e=>{ p.setAttribute('fill-opacity',hot);
+      showTip(e,`<b>${N[l.s].full}</b> → <b>${N[l.t].full}</b>`
+        +`<span class="v">${fmt(l.v)} units</span>`
+        +(l.warn?`<span class="w">${l.warn}</span>`:'')
+        +(l.adj?`<span class="w">Recomputed at 40/60 — the sheet enters this as ${fmt(l.v0)}, the same figure it gives every other product form.</span>`:'')); });
+    p.addEventListener('mouseleave',()=>{ p.setAttribute('fill-opacity',base); hideTip(); });
+    gL.appendChild(p);
+  });
+
+  // nodes + labels
+  Object.values(nodes).forEach(n=>{
+    const g=el('g',{class:'node','data-id':n.id});
+    const r=el('rect',{x:n.x,y:n.y,width:NW,height:Math.max(n.h,1.5),fill:col(n.c)});
+    if(n.derived){ r.setAttribute('fill',col('--paper')); r.setAttribute('stroke',col('--bund'));
+      r.setAttribute('stroke-dasharray','3 2'); }
+    g.appendChild(r);
+
+    const right = n.col===7 || n.h<24;
+    const lx = right ? n.x+NW+9 : n.x;
+    const ly = right ? n.y+n.h/2+(showVals?-1:4) : n.y-(showVals?16:5);
+    const a  = el('text',{x:lx,y:ly,class:'nlab',fill:col(n.derived?'--soft':'--ink')});
+    a.textContent=n.lab; gT.appendChild(a);
+    if(showVals){
+      // where a node does not conserve, show both sides — that is the finding, not a defect
+      const gap = n.vIn && n.vOut && Math.abs(n.vIn-n.vOut)/Math.max(n.vIn,n.vOut) > .02;
+      const v=el('text',{x:lx,y:ly+11,class:'nval'});
+      v.textContent = gap ? fmt(n.vIn)+' → '+fmt(n.vOut) : fmt(Math.max(n.vIn,n.vOut));
+      if(gap) v.setAttribute('fill',col('--orange'));
+      gT.appendChild(v);
+    }
+    g.addEventListener('mouseenter',()=>setFocus(n.id));
+    g.addEventListener('mousemove',e=>showTip(e,`<b>${n.full}</b>`
+      +`<span class="v">in ${n.vIn?fmt(n.vIn):'—'} · out ${n.vOut?fmt(n.vOut):'—'} units</span>`
+      +(n.vIn&&n.vOut&&Math.abs(n.vIn-n.vOut)/Math.max(n.vIn,n.vOut)>0.02
+        ? `<span class="w">Not conserved: ${n.vOut>n.vIn?'gains':'loses'} ${fmt(Math.abs(n.vOut-n.vIn))} across this node.</span>`:'')));
+    g.addEventListener('mouseleave',()=>{ setFocus(pinned); hideTip(); });
+    g.addEventListener('click',e=>{ e.stopPropagation(); pinned = pinned===n.id?null:n.id; setFocus(pinned); });
+    gN.appendChild(g);
+  });
+
+  // scale break between the genetics chain and everything downstream
+  const bx=(nodes.BMC.x+NW+nodes.HATCH.x)/2;
+  gT.appendChild(el('line',{x1:bx,y1:PAD_T-22,x2:bx,y2:H-PAD_B+8,class:'brk'}));
+  const bl=el('text',{x:bx+6,y:H-PAD_B+18,class:'brklab'});
+  bl.textContent='scale break — counts multiply here'; gT.appendChild(bl);
+
+  svg.appendChild(gL); svg.appendChild(gN); svg.appendChild(gT);
+}
+
+function setFocus(id){
+  focus=id;
+  const paths=svg.querySelectorAll('.link'), gs=svg.querySelectorAll('.node');
+  if(!id){ paths.forEach(p=>p.classList.remove('dim')); gs.forEach(g=>g.classList.remove('dim')); return; }
+  const {keep,lk}=touched(id,CUR.LK);
+  paths.forEach(p=>p.classList.toggle('dim',!lk.has(+p.dataset.i)));
+  gs.forEach(g=>g.classList.toggle('dim',!keep.has(g.dataset.id)));
+}
+document.addEventListener('click',()=>{ pinned=null; setFocus(null); });
+
+function showTip(e,html){ tip.innerHTML=html; tip.classList.add('on');
+  const x=Math.min(e.clientX+16, innerWidth-286), y=Math.min(e.clientY+16, innerHeight-110);
+  tip.style.left=x+'px'; tip.style.top=y+'px'; }
+function hideTip(){ tip.classList.remove('on'); }
+
+/* ===================== controls ===================== */
+document.querySelectorAll('#segMode button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#segMode button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); mode=b.dataset.m; pinned=null; draw(); }));
+document.getElementById('ckResid').addEventListener('change',e=>{showResid=e.target.checked;pinned=null;draw();});
+document.getElementById('ckVals') .addEventListener('change',e=>{showVals =e.target.checked;draw();});
+
+document.getElementById('key').innerHTML =
+  ['P_RAW','P_PD','P_CKD','P_VA'].map(k=>
+    `<span><i class="sw" style="background:${col(N[k].c)}"></i>${N[k].lab}</span>`).join('')
+  + `<span><i class="sw" style="background:${col('--paper')};border:1px dashed ${col('--bund')}"></i>derived</span>`;
+
+let rt; addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,140);});
+draw();
+</script>
