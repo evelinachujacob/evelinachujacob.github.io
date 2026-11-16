@@ -201,6 +201,11 @@ body{
 }
 .outro-link:hover .outro-arrow{ background:var(--hot) }
 .outro-link:hover .outro-arrow svg{ transform:translate(3px, -3px) }
+.credits{ position:relative; z-index:2; background:var(--ground); padding:0 7.5% 8vh; font-size:12px; line-height:1.6; color:#8A8A8A }
+.credits summary{ cursor:pointer; width:max-content }
+.credits ol{ margin:10px 0 0; padding-left:18px; columns:2 360px; column-gap:40px }
+.credits li{ break-inside:avoid }
+.credits a{ color:inherit }
 .outro-link:focus-visible{ outline:3px solid var(--hot); outline-offset:10px; border-radius:14px }
 
 @media (max-width:700px){
@@ -290,15 +295,18 @@ body{
 }
 .spread-copy{ display:grid }
 .beat{ grid-area:1/1; align-self:center; opacity:0; will-change:opacity }
-.beat .num{
-  display:block; margin-bottom:18px;
-  font-size:12px; letter-spacing:.22em; text-transform:uppercase; opacity:.5;
+.beat .num, .switch-copy .num{
+  display:block; margin-bottom:16px;
+  font-size:13px; letter-spacing:.08em; opacity:.55;
 }
-.beat p{
+.beat h3, .switch-copy h3{
+  margin:0 0 .5em;
+  font-size:clamp(24px, 2.5vw, 42px); line-height:1.12; font-weight:700; letter-spacing:-0.02em;
+}
+.beat p, .switch-copy p{
   margin:0;
-  font-size:clamp(19px, 2vw, 32px); line-height:1.45; letter-spacing:-0.005em;
+  font-size:clamp(17px, 1.35vw, 23px); line-height:1.55; letter-spacing:-0.005em;
 }
-.beat b{font-weight:700}
 
 .spread-map{
   position:relative; margin:0; justify-self:center;
@@ -359,16 +367,14 @@ body{
 }
 .switch-copy{
   position:absolute; z-index:4;
-  left:44vw; top:64vh;
+  left:44vw; top:59.5vh;
   width:min(34vw, 30em);
   margin:0;
-  font-size:clamp(17px, 1.5vw, 26px);
-  line-height:1.55;
-  letter-spacing:-0.005em;
   opacity:0;
 }
 @media (max-width:700px){
-  .switch-copy{ left:8vw; top:auto; bottom:5vh; width:84vw; font-size:16px }
+  .switch-copy{ left:8vw; top:auto; bottom:5vh; width:84vw }
+  .switch-copy p{ font-size:16px }
 }
 
 /* ============================================================
@@ -542,18 +548,29 @@ body{
 .journey .vnode.focus .card{ opacity:1; transform:scale(1) }
 .journey .vnode.sub.focus .lab{ opacity:0 }
 .journey .card.stg{
-  width:384px; left:-192px; padding:60px 42px 65px;
-  font-size:26px; line-height:36px; font-weight:400; color:var(--vc-orange);
+  width:var(--cw); left:calc(var(--cw) / -2); padding:30px 30px 28px;
+  display:grid; grid-template-columns:repeat(var(--cols), 176px); gap:22px 36px;
 }
+/* each step of the stage as a numbered photo, read left to right, arrows between */
+.journey .card.stg .step{ position:relative }
+.journey .card.stg .step img{
+  display:block; width:176px; height:118px; object-fit:cover; border-radius:12px; background:#CDE7F7;
+}
+.journey .card.stg .step .n{
+  position:absolute; left:-9px; top:-9px; width:30px; height:30px; border-radius:50%;
+  background:var(--vc-blue); color:#fff; font-size:16px; line-height:30px; font-weight:600; text-align:center;
+}
+.journey .card.stg .step .arr{ position:absolute; left:183px; top:52px; width:22px; height:14px }
+.journey .card.stg .step span{ display:block; margin-top:10px; font-size:20px; line-height:24px; font-weight:500; color:var(--vc-blue) }
+.journey .card.stg .step em{ display:block; margin-top:4px; font-style:normal; font-size:16px; line-height:20px; color:#9A3A0A }
 .journey .cardwrap.stg-top .card{ top:calc(-1 * var(--r)); --corg:0% }
 .journey .cardwrap.stg-bot .card{ bottom:calc(-1 * var(--r)); --corg:100% }
 .journey .card.sub{ width:324px; left:-162px; padding:27px 27px 24px; text-align:center }
 .journey .cardwrap.sub-top .card{ bottom:calc(var(--r) + 11px); --corg:100% }
 .journey .cardwrap.sub-bot .card{ top:calc(var(--r) + 11px); --corg:0% }
-.journey .card.sub .ill, .journey .card.sub .plant{
-  display:block; width:270px; height:165px; border-radius:12px; overflow:hidden;
+.journey .card.sub .ill{
+  display:block; width:270px; height:165px; border-radius:12px; object-fit:cover; background:#CDE7F7;
 }
-.journey .card.sub .plant{ background:url(assets/vc_plant.jpg) center/cover no-repeat }
 .journey .sc-name{ margin-top:13px; font-size:30px; line-height:37px; font-weight:500; color:var(--vc-blue) }
 .journey .sc-note{ margin-top:6px; font-size:20px; line-height:26px; color:var(--vc-orange) }
 
@@ -595,7 +612,8 @@ body{
     padding-inline:8%;
   }
   .spread-map{ order:-1; width:min(100%, calc(52vh * 1552 / 1348)) }
-  .beat p{font-size:18px}
+  .beat p{font-size:16px}
+  .beat h3{font-size:24px}
   .key{right:auto; left:0; bottom:-26px}
 }
 </style>
@@ -648,13 +666,15 @@ body{
 <section class="spread" id="spread">
   <div class="spread-stage">
     <div class="spread-copy">
-      <!-- draft copy — replace with your own lines and years -->
-      <div class="beat"><span class="num">01 &nbsp;Spread</span>
-        <p>The ponds follow the brackish water — a thin strip hugging the coast, <b>nowhere else</b>.</p></div>
-      <div class="beat"><span class="num">02 &nbsp;Crowding</span>
-        <p>Farms pack in shoulder to shoulder, drawing from and draining into <b>the same canals</b>.</p></div>
-      <div class="beat"><span class="num">03 &nbsp;Disease</span>
-        <p>One sick pond is enough. Disease moves through the shared water, and <b>whole clusters go down together</b>.</p></div>
+      <div class="beat"><span class="num">01 / 1970s–1980s</span>
+        <h3>It started small.</h3>
+        <p>Shrimp farming began as small-scale experiments along Andhra Pradesh’s coast. By the late 1980s, hatcheries emerged, making shrimp seed more accessible to farmers.</p></div>
+      <div class="beat"><span class="num">02 / Early–mid 1990s</span>
+        <h3>Then came the shrimp boom.</h3>
+        <p>Rising export demand made black tiger shrimp highly profitable. Farmers across coastal Andhra Pradesh began converting agricultural land into ponds, rapidly expanding cultivation.</p></div>
+      <div class="beat"><span class="num">03 / Late 1990s–2000s</span>
+        <h3>But the boom didn’t last.</h3>
+        <p>White Spot Syndrome Virus (WSSV) devastated farms. Dense stocking, poor biosecurity and infected seed helped the disease spread, causing major losses.</p></div>
     </div>
 
     <figure class="spread-map" id="spreadMap">
@@ -688,7 +708,9 @@ body{
 
     <canvas class="cream" id="cream" width="1440" height="1120" aria-hidden="true"></canvas>
 
-    <p class="switch-copy" id="switchCopy">Farmers switched to specific pathogen-free vannamei — hardier, faster-growing, and better suited to scale — right as disease was starting to devastate competitors elsewhere in Asia.</p>
+    <div class="switch-copy" id="switchCopy"><span class="num">04 / 2009 onwards</span>
+      <h3>A new shrimp changed everything.</h3>
+      <p>Farmers adopted vannamei shrimp, introduced commercially in 2009. Faster growth, higher stocking potential and specific pathogen-free seed helped the industry boom again.</p></div>
   </div>
 </section>
 
@@ -734,7 +756,7 @@ body{
         <div id="vcNodes"></div>
       </div>
     </div>
-    <p class="vc-credit">Shrimp illustration: Ryo Takemasa (placeholder)</p>
+    <p class="vc-credit">Shrimp illustration: Ryo Takemasa (placeholder). Step photos: Wikimedia Commons, credited at the foot of the page.</p>
     <div class="vc-turn"><span>Turn your phone sideways to read the chain.</span></div>
   </div>
 </section>
@@ -769,6 +791,58 @@ body{
     </a>
   </div>
 </section>
+
+<details class="credits">
+  <summary>Photo credits, the Journey (photos cropped and resized)</summary>
+  <ol>
+    <li>Broodstock: <a href="https://commons.wikimedia.org/wiki/File:Shrimp_Broodstock_(08010634)_(46940311272).jpg">Shrimp Broodstock (08010634) (46940311272).jpg</a>, IAEA Imagebank, CC BY 2.0</li>
+    <li>Maturation and spawning: <a href="https://commons.wikimedia.org/wiki/File:Shrimp_hatchery.jpg">Shrimp hatchery.jpg</a>, NOAA, Public domain</li>
+    <li>Eggs: <a href="https://commons.wikimedia.org/wiki/File:EPA_GULF_BREEZE_LABORATORY,_FISHERY_BIOLOGIST_CONDUCTS_STUDIES_OF_SHRIMP_AND_CRAB_LARVAE.jpg">EPA GULF BREEZE LABORATORY, FISHERY BIOLOGIST CONDUCTS STUDIES OF SHRIMP AND CRAB LARVAE.jpg</a>, William C. Shrout, Public domain</li>
+    <li>Nauplii: <a href="https://commons.wikimedia.org/wiki/File:Shrimp_nauplius.jpg">Shrimp nauplius.jpg</a>, Unknown, Public domain</li>
+    <li>Zoea: <a href="https://commons.wikimedia.org/wiki/File:Lysmata_amboinensis_zoea_1.jpg">Lysmata amboinensis zoea 1.jpg</a>, Jim Welsh, CC BY-SA 4.0</li>
+    <li>Mysis: <a href="https://commons.wikimedia.org/wiki/File:Shrimp_Larvae_Growth_(08010637)_(46940310182).jpg">Shrimp Larvae Growth (08010637) (46940310182).jpg</a>, IAEA Imagebank, CC BY 2.0</li>
+    <li>Post-larvae (PL): <a href="https://commons.wikimedia.org/wiki/File:Penaeus_vannamei_01.jpg">Penaeus vannamei 01.jpg</a>, Unknown, Public domain</li>
+    <li>Seed distribution: <a href="https://commons.wikimedia.org/wiki/File:Delicate_Items_(12905500514).jpg">Delicate Items (12905500514).jpg</a>, USFWS Mountain Prairie, Public domain</li>
+    <li>To the farmer: <a href="https://commons.wikimedia.org/wiki/File:Shrimp_postlarvae_stocking.jpg">Shrimp postlarvae stocking.jpg</a>, Unknown, Public domain</li>
+    <li>Pond drying: <a href="https://commons.wikimedia.org/wiki/File:Bluegill_Nests_in_a_Drained_Pond_(51372008781).jpg">Bluegill Nests in a Drained Pond (51372008781).jpg</a>, USFWS Mountain Prairie, Public domain</li>
+    <li>De-silting: <a href="https://commons.wikimedia.org/wiki/File:B.Singavaram_Pond_desilting.JPG">B.Singavaram Pond desilting.JPG</a>, కాసుబాబు, CC BY-SA 3.0</li>
+    <li>Ploughing and liming: <a href="https://commons.wikimedia.org/wiki/File:Surrey_County_Ploughing_Match,_2009_-_geograph.org.uk_-_1521842.jpg">Surrey County Ploughing Match, 2009 - geograph.org.uk - 1521842.jpg</a>, Simon Mortimer, CC BY-SA 2.0</li>
+    <li>Filling: <a href="https://commons.wikimedia.org/wiki/File:Filling_a_Hatchery_Pond_at_Gavins_Point_National_Fish_Hatchery_(51279888564).jpg">Filling a Hatchery Pond at Gavins Point National Fish Hatchery (51279888564).jpg</a>, USFWS Mountain Prairie, Public domain</li>
+    <li>Filtration: <a href="https://commons.wikimedia.org/wiki/File:Inlet_Pipe_of_a_Small_Scale_Fish_Farm_in_Armenia_04.JPG">Inlet Pipe of a Small Scale Fish Farm in Armenia 04.JPG</a>, Narek75, CC BY-SA 4.0</li>
+    <li>Water treatment: <a href="https://commons.wikimedia.org/wiki/File:Fertilizing_ponds_(49526448072).jpg">Fertilizing ponds (49526448072).jpg</a>, USFWS Mountain Prairie, Public domain</li>
+    <li>Plankton bloom: <a href="https://commons.wikimedia.org/wiki/File:Shrimp_pond_with_aerator.jpg">Shrimp pond with aerator.jpg</a>, Herman Gunawan, CC BY-SA 3.0</li>
+    <li>Aerators set: <a href="https://commons.wikimedia.org/wiki/File:Aeration_system_in_a_Aqua_Pond,_Eluru.jpg">Aeration system in a Aqua Pond, Eluru.jpg</a>, iMahesh, CC BY-SA 4.0</li>
+    <li>Pond ready: <a href="https://commons.wikimedia.org/wiki/File:Katalaayi_Chemmeen_kettu_-_panoramio.jpg">Katalaayi Chemmeen kettu - panoramio.jpg</a>, എം എസ്, CC BY-SA 3.0</li>
+    <li>PL testing (PCR): <a href="https://commons.wikimedia.org/wiki/File:PCR_tubes.png">PCR tubes.png</a>, Madprime, CC0</li>
+    <li>Bought from the hatchery: <a href="https://commons.wikimedia.org/wiki/File:Genoa_NFH_Brine_Shrimp_Feeder_(22696284678).jpg">Genoa NFH Brine Shrimp Feeder (22696284678).jpg</a>, U.S. Fish and Wildlife Service - Midwest Region, Public domain</li>
+    <li>Oxygen-bag transport: <a href="https://commons.wikimedia.org/wiki/File:Goldfish_market,_Kowloon_(7937855026).jpg">Goldfish market, Kowloon (7937855026).jpg</a>, shankar s., CC BY 2.0</li>
+    <li>Acclimatisation: <a href="https://commons.wikimedia.org/wiki/File:Stocking_fish_in_a_hatchery_pond_(26522843457).jpg">Stocking fish in a hatchery pond (26522843457).jpg</a>, USFWS Mountain-Prairie, CC BY 2.0</li>
+    <li>Nursery or direct release: <a href="https://commons.wikimedia.org/wiki/File:Mr._Wilfred_Okwani_releasing_Tilapia_fingerlings_into_his_newly_established_fish_pond_(5051319340).jpg">Mr. Wilfred Okwani releasing Tilapia fingerlings into his newly established fish pond (5051319340).jpg</a>, SuSanA Secretariat, CC BY 2.0</li>
+    <li>Density fixed: <a href="https://commons.wikimedia.org/wiki/File:Shrimp_Ponds_1984.jpg">Shrimp Ponds 1984.jpg</a>, Dale Dailey, CC BY-SA 4.0</li>
+    <li>Counting and sampling: <a href="https://commons.wikimedia.org/wiki/File:Cast_net_thrower_(15739104482).jpg">Cast net thrower (15739104482).jpg</a>, Esin Üstün from Istanbul, Turkey, CC BY 2.0</li>
+    <li>Starter, grower, finisher feed: <a href="https://commons.wikimedia.org/wiki/File:Fish_Feed_Pellets.jpg">Fish Feed Pellets.jpg</a>, Narek75, CC BY-SA 4.0</li>
+    <li>Check-tray sampling: <a href="https://commons.wikimedia.org/wiki/File:Tray_of_freshly_harvested_prawns.jpg">Tray of freshly harvested prawns.jpg</a>, Officialben48, CC BY-SA 4.0</li>
+    <li>Aeration and DO control: <a href="https://commons.wikimedia.org/wiki/File:Dissolved_oxygen_meter.jpg">Dissolved oxygen meter.jpg</a>, Nuno Nogueira (Nmnogueira), CC BY-SA 2.5</li>
+    <li>Water exchange: <a href="https://commons.wikimedia.org/wiki/File:Sluice_gate_and_pond_-_geograph.org.uk_-_419205.jpg">Sluice gate and pond - geograph.org.uk - 419205.jpg</a>, Walter Baxter, CC BY-SA 2.0</li>
+    <li>Probiotics and minerals: <a href="https://commons.wikimedia.org/wiki/File:Spreading_lime,_Beragh_-_geograph.org.uk_-_7285830.jpg">Spreading lime, Beragh - geograph.org.uk - 7285830.jpg</a>, Kenneth Allen, CC BY-SA 2.0</li>
+    <li>Disease watch (WSSV, EHP): <a href="https://commons.wikimedia.org/wiki/File:Verpilzung.jpg">Verpilzung.jpg</a>, J C D, CC BY-SA 3.0</li>
+    <li>Growth sampling: <a href="https://commons.wikimedia.org/wiki/File:Litopenaeus_vannamei_Mexico.jpg">Litopenaeus vannamei Mexico.jpg</a>, oscar312, CC0</li>
+    <li>Buyer and price fixed: <a href="https://commons.wikimedia.org/wiki/File:Shrimps_on_sale_at_Shivaji_Market,_Pune_Camp.jpg">Shrimps on sale at Shivaji Market, Pune Camp.jpg</a>, Siddheshnampurkar, CC BY-SA 3.0</li>
+    <li>Antibiotic withdrawal: <a href="https://commons.wikimedia.org/wiki/File:Antibiotic_sensitivity_and_resistance.jpg">Antibiotic sensitivity and resistance.jpg</a>, Dr Graham Beards, CC BY-SA 4.0</li>
+    <li>Partial or full harvest: <a href="https://commons.wikimedia.org/wiki/File:Shrimp_harvest,_Louisiana_(5984945026).jpg">Shrimp harvest, Louisiana (5984945026).jpg</a>, USEPA Environmental-Protection-Agency, Public domain</li>
+    <li>Netting or sluice drain: <a href="https://commons.wikimedia.org/wiki/File:Community_fishing_festival_in_a_rural_pond_in_Bangladesh_08.jpg">Community fishing festival in a rural pond in Bangladesh 08.jpg</a>, A S M Jobaer, CC BY-SA 4.0</li>
+    <li>Ice-slurry chilling: <a href="https://commons.wikimedia.org/wiki/File:30_g_shrimp_ice_(51299495965).jpg">30 g shrimp ice (51299495965).jpg</a>, Texas Sea Grant from College Station, CC BY 2.0</li>
+    <li>Weighing and count grading: <a href="https://commons.wikimedia.org/wiki/File:Programme_Obsventes_(Guyane)_-_Mensuration_de_crevettes_(Ifremer_00809-92108_-_53431).jpg">Programme Obsventes (Guyane) - Mensuration de crevettes (Ifremer 00809-92108 - 53431).jpg</a>, Stephane Lesbats (Ifremer), CC BY 4.0</li>
+    <li>Insulated transport: <a href="https://commons.wikimedia.org/wiki/File:1973_Mitsubishi_Fuso_FP_insulated_van.jpg">1973 Mitsubishi Fuso FP insulated van.jpg</a>, Commercial spotter63, CC BY 4.0</li>
+    <li>Collection: <a href="https://commons.wikimedia.org/wiki/File:Insulated_plastic_fish_boxes_(or_ice_cooler_containers)_sitting_in_an_alleyway_of_the_Toledo_City_Public_Market.jpg">Insulated plastic fish boxes (or ice cooler containers) sitting in an alleyway of the Toledo City Public Market.jpg</a>, QueenCityCebu, CC BY-SA 4.0</li>
+    <li>Washing and grading: <a href="https://commons.wikimedia.org/wiki/File:India_March_2015_-_Shrimp_(16309541843).jpg">India March 2015 - Shrimp (16309541843).jpg</a>, The U.S. Food and Drug Administration, Public domain</li>
+    <li>De-heading and peeling: <a href="https://commons.wikimedia.org/wiki/File:India_March_2015_-_Shrimp_(16307196634).jpg">India March 2015 - Shrimp (16307196634).jpg</a>, The U.S. Food and Drug Administration, Public domain</li>
+    <li>Quality testing: <a href="https://commons.wikimedia.org/wiki/File:FDA_microbiologist_working_in_a_biosafety_laboratory_tests_for_high_risk_pathogens_in_food.jpg">FDA microbiologist working in a biosafety laboratory tests for high risk pathogens in food.jpg</a>, The U.S. Food and Drug Administration, Public domain</li>
+    <li>Packing and labelling: <a href="https://commons.wikimedia.org/wiki/File:HKCEC_WC_HKTDC_Food_Expo_2009_Frozen_Food_Shrimp_Seafood.JPG">HKCEC WC HKTDC Food Expo 2009 Frozen Food Shrimp Seafood.JPG</a>, Faroclom, CC BY-SA 3.0</li>
+    <li>Cold storage: <a href="https://commons.wikimedia.org/wiki/File:Cold_Store_-_geograph.org.uk_-_3431838.jpg">Cold Store - geograph.org.uk - 3431838.jpg</a>, Glyn Baker, CC BY-SA 2.0</li>
+    <li>Export and shipping: <a href="https://commons.wikimedia.org/wiki/File:MCC_reefer_shipment.jpg">MCC reefer shipment.jpg</a>, MCCTransport, CC BY-SA 4.0</li>
+  </ol>
+</details>
 
 
 <script src="assets/world-dots.js"></script>
@@ -971,16 +1045,18 @@ var SPREAD_SPLIT = 0.410;
   /* section progress -> frame position. Holds between the moves so
      each state can be read before the next one starts. */
   var TIMELINE = [            /* [progress, frame] */
-    [0.00, 0], [0.10, 0],     /* empty coast */
-    [0.40, GROWN],            /* farms grow */
-    [0.52, GROWN],            /* hold: crowded */
-    [0.86, LAST],             /* disease — the red only builds in the
+    [0.00, 0], [0.08, 0],     /* empty coast */
+    [0.24, 1],                /* 01 it started small: the first few ponds */
+    [0.44, GROWN],            /* 02 the boom: farms fill the coast */
+    [0.54, GROWN],            /* hold: crowded */
+    [0.88, LAST],             /* 03 disease — the red only builds in the
                                  last few frames, so it starts early */
     [1.00, LAST]
   ];
-  /* which line of copy is up, by progress. The disease line waits
-     until red is actually on the map (~frame 7) */
-  var BEATS = [[0, 0.38], [0.38, 0.66], [0.66, 1]];
+  /* which line of copy is up, by progress: 01 small start, 02 boom,
+     03 bust (waits until red is actually on the map, ~frame 6).
+     04 (2009, vannamei) is the switch line further down. */
+  var BEATS = [[0, 0.25], [0.25, 0.67], [0.67, 1]];
   var EDGE = 0.035;
 
   function clamp(v,a,b){ return v < a ? a : (v > b ? b : v); }
@@ -1462,38 +1538,42 @@ var SPREAD_SPLIT = 0.410;
 
   var STAGES = [
     { x:417.6, y:438.2, r:68, side:'above', label:'Hatcheries',
-      chain:'Broodstock → Maturation/Spawning → Eggs → Nauplii → Zoea → Mysis → Post-Larvae (PL) → Seed Distribution → Farmer' },
+      steps:[['brood','Broodstock','Adult shrimp picked for breeding'],['spawn','Maturation and spawning','Females ripen and spawn in tanks'],['eggs','Eggs','Hatch in under a day'],['naup','Nauplii','First larva, lives off its yolk'],['zoea','Zoea','Starts feeding on algae'],['mysis','Mysis','Shrimp-like now; fed algae and Artemia'],['pl','Post-larvae (PL)','Tiny shrimp, ready for ponds'],['seed','Seed distribution','Packed in oxygen bags and boxes'],['farmer','To the farmer','Delivered to the pond edge']] },
     { x:607.9, y:740.5, r:67, side:'below', label:'Farm\nPreparation',
-      chain:'Pond drying → De-silting → Ploughing & Liming → Filling → Filtration → Water treatment → Plankton bloom → Aerators set → Pond ready' },
+      steps:[['dry','Pond drying','Drained and sun-dried between crops'],['desilt','De-silting','Sludge dug out of the pond bed'],['plough','Ploughing and liming','Soil turned, lime spread for pH'],['fill','Filling','Pumped in from canal or creek'],['filter','Filtration','Fine mesh at the inlet keeps pests out'],['treat','Water treatment','Disinfected, often with bleaching powder'],['bloom','Plankton bloom','Fertilised till the water turns green'],['aerator','Aerators set','Paddlewheels keep oxygen up'],['ready','Pond ready','Water checked before seed goes in']] },
     { x:762.6, y:320.5, r:67, side:'above', label:'Stocking',
-      chain:'PL testing (PCR) → Purchase from hatchery → Oxygen-bag transport → Acclimatisation → Nursery or direct release → Density fixed → Counting & sampling' },
+      steps:[['pcr','PL testing (PCR)','Seed tested for virus before buying'],['buy','Bought from the hatchery','Farmer picks a hatchery and batch'],['o2van','Oxygen-bag transport','Seed travels in sealed oxygen bags'],['acclim','Acclimatisation','Bags floated so temperature evens out'],['release','Nursery or direct release','Into a nursery or straight to the pond'],['density','Density fixed','How many PL per square metre'],['count','Counting and sampling','Cast net checks survival and size']] },
     { x:1012.1, y:672.6, r:67, side:'below', label:'Feeding and\nFarm\nmanagement',
-      chain:'Feed schedule (starter → grower → finisher) → Check-tray sampling → Aeration & DO control → Water exchange → Probiotics & minerals → Disease watch (WSSV, EHP) → Growth sampling' },
+      steps:[['feed','Starter, grower, finisher feed','Pellet size grows with the shrimp'],['tray','Check-tray sampling','Trays show how much feed is eaten'],['do','Aeration and DO control','Oxygen read; aerators run at night'],['exchange','Water exchange','Some water out, fresh water in'],['probio','Probiotics and minerals','Added to keep water and soil healthy'],['disease','Disease watch (WSSV, EHP)','Weak or dead shrimp checked early'],['growth','Growth sampling','Weighed to track growth']] },
     { x:1207.1, y:468.9, r:68, side:'above', label:'Harvesting',
-      chain:'Buyer & price fixed → Antibiotic withdrawal → Partial or full harvest → Netting / sluice drain → Ice-slurry chilling → Weighing & count grading → Insulated transport' },
+      steps:[['price','Buyer and price fixed','Rate set by count per kilo'],['antibio','Antibiotic withdrawal','Drugs stopped well before harvest'],['partial','Partial or full harvest','Part of the pond taken early, or all'],['net','Netting or sluice drain','Caught with drag nets or at the drain'],['ice','Ice-slurry chilling','Chilled in ice water right away'],['weigh','Weighing and count grading','Weighed and sorted by count per kilo'],['truck','Insulated transport','Iced and trucked to the plant']] },
     { x:1563.2, y:348, r:67, side:'above', label:'Processing', proc:true,
-      chain:'Collection → Washing/Grading → De-heading/Peeling → Quality Testing → Packing & Labelling → Cold Storage → Export / Shipping' }
+      steps:[['crate','Collection','Iced shrimp arrives and is weighed in'],['wash','Washing and grading','Washed, then sorted by count size'],['peel','De-heading and peeling','Headed, peeled and deveined by hand'],['test','Quality testing','Antibiotic and microbial checks'],['pack','Packing and labelling','Block, IQF or value-added packs'],['store','Cold storage','Held frozen at −18°C'],['ship','Export and shipping','Containers to the US, China, Europe']] }
   ];
   var SUB_X0 = 1978, SUB_DX = 208.8, SUB_Y = 348, SUB_R = 33.5;
   var SUBS = [
     { side:'below', label:'Collection',              note:'Iced shrimp arrives from the farm and is weighed in.', ill:'crate' },
-    { side:'above', label:'Washing /\nGrading',      note:'Washed, then sorted by count size on the belt.',       ill:'plant' },
+    { side:'above', label:'Washing /\nGrading',      note:'Washed, then sorted by count size on the belt.',       ill:'wash' },
     { side:'below', label:'De-heading /\nPeeling',   note:'Headed, peeled and deveined on the hand lines.',       ill:'peel' },
     { side:'above', label:'Quality\nTesting',        note:'Antibiotic and microbial checks before packing.',      ill:'test' },
     { side:'below', label:'Packing &\nLabelling',    note:'Block, IQF or value-added packs, labelled per buyer.', ill:'pack' },
-    { side:'above', label:'Cold Storage\nExport /\nShipping', note:'Held at −18°C, then containerised for export.', ill:'cold' }
+    { side:'above', label:'Cold Storage\nExport /\nShipping', note:'Held at −18°C, then containerised for export.', ill:'store' }
   ];
-  var ILL = {
-    crate:'<rect x="34" y="78" width="88" height="56" rx="8"/><rect x="148" y="78" width="88" height="56" rx="8"/><rect x="91" y="26" width="88" height="44" rx="8"/><path d="M34 98h88M148 98h88M91 46h88"/>',
-    peel:'<path d="M46 114h180a12 12 0 0 1 0 26H46a12 12 0 0 1 0-26z"/><path d="M62 100 168 40l14 24-92 36z"/><path d="M182 64l30-17"/><path d="M74 128h30M120 128h26"/>',
-    test:'<circle cx="104" cy="68" r="40"/><path d="M133 97l30 30"/><path d="M88 74c-2-14 8-24 22-24 11 0 19 7 19 15"/><path d="M188 30h38M198 30v26l-22 44a10 10 0 0 0 9 15h40a10 10 0 0 0 9-15l-22-44V30"/><path d="M182 100h58"/>',
-    pack:'<path d="M50 68h168v74H50z"/><path d="M50 68l26-30h116l26 30"/><path d="M134 38v30"/><rect x="146" y="90" width="56" height="34" rx="4"/><path d="M158 102h32M158 113h20"/>',
-    cold:'<rect x="28" y="62" width="134" height="72" rx="6"/><path d="M55 62v72M82 62v72M109 62v72M136 62v72"/><path d="M212 64v70M182 81l60 34M242 81l-60 34"/>'
-  };
-  function illMarkup(kind){
-    if(kind === 'plant') return '<div class="plant"></div>';
-    return '<svg class="ill" viewBox="0 0 270 165" aria-hidden="true"><rect width="270" height="165" fill="#CDE7F7"/>' +
-      '<g fill="none" stroke="#FF6C28" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">' + ILL[kind] + '</g></svg>';
+  /* real photos of each step, assets/process/<key>.jpg; credits at the foot of the page */
+  function photo(kind, cls, alt){
+    var src = 'assets/process/' + kind + '.jpg';
+    if(window.__ASSET && __ASSET[src]) src = __ASSET[src];
+    return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + src + '" alt="' + (alt || '') + '" loading="lazy" decoding="async">';
+  }
+  function illMarkup(kind){ return photo(kind, 'ill'); }
+  var ARROW = '<svg class="arr" viewBox="0 0 22 14" aria-hidden="true"><path d="M1 7h18M13 1.5L19.5 7 13 12.5" fill="none" stroke="#9A3A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  /* numbered steps; an arrow points to the next step in the same row */
+  function stepsMarkup(steps, cols){
+    return steps.map(function(st, i){
+      var next = i < steps.length - 1 && (i + 1) % cols !== 0;
+      return '<div class="step"><b class="n">' + (i + 1) + '</b>' + photo(st[0], '', st[1]) + (next ? ARROW : '') +
+             '<span>' + st[1] + '</span><em>' + st[2] + '</em></div>';
+    }).join('');
   }
 
   var nodesEl = document.getElementById('vcNodes');
@@ -1505,11 +1585,13 @@ var SPREAD_SPLIT = 0.410;
     el.style.setProperty('--y', cfg.y + 'px');
     el.style.setProperty('--r', cfg.r + 'px');
     var wrapSide = (isSub ? 'sub-' : 'stg-') + (cfg.side === 'above' ? 'top' : 'bot');
+    var cols = isSub ? 0 : (cfg.steps.length > 8 ? 5 : 4);
     var card = isSub
       ? '<div class="cardwrap ' + wrapSide + '"><div class="card sub">' + illMarkup(cfg.ill) +
           '<div class="sc-name">' + cfg.label.replace(/\n/g, '<br>') + '</div>' +
           '<div class="sc-note">' + cfg.note + '</div></div></div>'
-      : '<div class="cardwrap ' + wrapSide + '"><div class="card stg">' + cfg.chain + '</div></div>';
+      : '<div class="cardwrap ' + wrapSide + '"><div class="card stg" style="--cols:' + cols + ';--cw:' + (cols * 176 + (cols - 1) * 36 + 60) + 'px">' +
+          stepsMarkup(cfg.steps, cols) + '</div></div>';
     el.innerHTML = '<div class="dot"></div><div class="lab ' + cfg.side + '">' + cfg.label + '</div>' + card +
       '<div class="hit" tabindex="0" role="button" aria-label="' + cfg.label.replace(/\n/g, ' ') + '"></div>';
     frag.appendChild(el);
@@ -1534,7 +1616,13 @@ var SPREAD_SPLIT = 0.410;
     var dy = 0;
     if(top < viewTop + 14)      dy = viewTop + 14 - top;
     else if(bot > viewBot - 14) dy = Math.max(viewBot - 14 - bot, viewTop + 14 - top);
-    if(dy) wrap.style.transform = 'translateY(' + dy + 'px)';
+    /* the wide stage cards can also run off the sides */
+    var viewL = CAM_X * cur, viewR = viewL + 1920 / z;
+    var left = parseFloat(el.style.getPropertyValue('--x')) + card.offsetLeft, right = left + card.offsetWidth;
+    var dx = 0;
+    if(left < viewL + 24)       dx = viewL + 24 - left;
+    else if(right > viewR - 24) dx = viewR - 24 - right;
+    if(dx || dy) wrap.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
   }
   function setFocus(el){
     if(focused === el) return;

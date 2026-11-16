@@ -19,7 +19,7 @@
 html,body{margin:0;height:100%;overflow:hidden;background:var(--paper);color:var(--ink);
   font-family:var(--disp);-webkit-font-smoothing:antialiased}
 #map{position:fixed;inset:0;background:var(--paper)}
-/* the reference figures sit on a pale grey terrain — greyscale the OSM raster to match */
+/* the reference figures sit on a pale grey terrain — greyscale the basemap raster to match */
 .leaflet-tile-pane{filter:grayscale(1) contrast(.86) brightness(1.09)}
 
 .hd{position:fixed;top:0;left:0;right:0;padding:16px 22px 26px;z-index:600;pointer-events:none;
@@ -162,8 +162,9 @@ const POLY=DATA.p, SMP=DATA.s, KINDS=DATA.K, DISTS=DATA.D, UNION=DATA.u, RAWSUM=
 const BOUNDS=L.latLngBounds(DATA.b[0],DATA.b[1]);
 
 const map=L.map("map",{zoomControl:true,minZoom:2,maxZoom:18,worldCopyJump:false});
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,
-  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+/* Esri tiles: OSM's own server shows "Access blocked" to pages opened from file:// (no Referer), CARTO now needs a key */
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",{maxZoom:18,
+  attribution:'Tiles &copy; <a href="https://www.esri.com">Esri</a> &mdash; Esri, HERE, Garmin, USGS, FAO, NPS and the GIS User Community'}).addTo(map);
 L.control.scale({metric:true,imperial:false,position:"bottomright"}).addTo(map);
 map.fitBounds(BOUNDS,{padding:[70,70]});
 
@@ -233,7 +234,7 @@ function build(){
   document.getElementById("sub").textContent=
     CELLS.length+" hexes at "+hexKm+" km · "+POLY.length+" source polygons · "+
     Math.round(CELLS.reduce((s,c)=>s+c.a,0)).toLocaleString("en-IN")+
-    " ha of mapped ground · "+PTS.length+" facilities · OpenStreetMap basemap";
+    " ha of mapped ground · "+PTS.length+" facilities · Esri basemap";
 }
 
 function legend(CUT){
