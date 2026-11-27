@@ -164,6 +164,11 @@ body{
 .navlinks{ display:flex; gap:10px; min-width:0 }
 .navbtn{ flex:none; white-space:nowrap }
 .topbar .home{ flex:none }
+/* portfolio / this site: the name leads back to evelinachu.in */
+.crumbs{ display:flex; align-items:baseline; gap:8px; flex:none; font-size:15px; letter-spacing:-0.01em }
+.topbar .back{ color:var(--ink); text-decoration:none; font-weight:500; opacity:.6; transition:opacity .2s }
+.topbar .back:hover{ opacity:1 }
+.crumbs .sep{ color:var(--ink); opacity:.35 }
 /* four pages don't fit beside the name on a narrow screen: let the row scroll */
 @media (max-width:980px){
   .navlinks{ overflow-x:auto; scrollbar-width:none; padding:2px }
@@ -216,7 +221,7 @@ body{
   .outro{ padding:14vh 6% 16vh }
 }
 @media (max-width:560px){
-  .topbar .home{ display:none }
+  .topbar .home, .crumbs .sep{ display:none }
   .navbtn{ padding:7px 11px; font-size:12px }
 }
 
@@ -622,7 +627,11 @@ body{
 <body>
 
 <nav class="topbar clear" id="topbar" aria-label="Site">
-  <a class="home" href="#hero">The shrimp coast</a>
+  <div class="crumbs">
+    <a class="back" href="https://evelinachu.in/">Evelin Achu Jacob</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <a class="home" href="#hero">The shrimp coast</a>
+  </div>
   <div class="navlinks">
     <a class="navbtn" href="../shrimp_farm_map.html">Density map</a>
     <a class="navbtn" href="../shrimp_system_map.html">System map</a>

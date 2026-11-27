@@ -1,0 +1,23 @@
+/* Site header on the case studies: the same row as Home, About and Playground,
+   so the name always leads back home. Colours come from the variables, so a
+   dark page (KIA EV6) sets its own on the header's style attribute. */
+.site-head{
+  --h-ink:#0d0d0d; --h-soft:#737373; --h-line:#ebebeb;
+  box-sizing:border-box;height:75px;display:flex;align-items:center;padding:0 40px;
+  border-bottom:1px solid var(--h-line);color:var(--h-ink);
+  font:400 16px/1.4 "Inter",system-ui,-apple-system,sans-serif;font-optical-sizing:auto;
+  letter-spacing:-.01em;-webkit-font-smoothing:antialiased;
+}
+.site-head a{color:inherit;text-decoration:none}
+.site-head .name{font-size:20px;width:187px}
+.site-head .role{color:var(--h-soft)}
+.site-head nav{margin-left:auto;display:flex;gap:16px}
+.site-head nav a{transition:color .2s}
+.site-head nav a:hover{color:var(--h-soft)}
+@media (max-width:1199px){.site-head .role{display:none}}
+@media (max-width:809px){
+  .site-head{padding:0 20px}
+  .site-head .name{width:auto;font-size:17px}
+  .site-head nav{gap:14px}
+  .site-head .nav-work{display:none}
+}
