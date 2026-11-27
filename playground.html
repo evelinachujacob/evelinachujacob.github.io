@@ -7,6 +7,7 @@
 <script src="cursor.js"></script>
 <meta name="description" content="Playground: small experiments by Evelin Achu Jacob, like Calbre in your palm, a hand- and breath-controlled prototype.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap">
+<link rel="stylesheet" href="head.css">
 <style>
 /* layout after poombloom.com: header row, big greeting, label/content rows split by hairlines */
 :root{
@@ -21,13 +22,7 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 .pad{padding:0 40px}
 
-/* header */
-.head{height:75px;display:flex;align-items:center;border-bottom:1px solid var(--line)}
-.head .name{font-size:20px;width:187px}
-.head .role{color:var(--soft)}
-.head nav{margin-left:auto;display:flex;gap:16px}
-.head nav a{transition:color .2s}
-.head nav a:hover{color:var(--soft)}
+/* header: shared, in head.css */
 
 /* greeting */
 .hero{padding-top:205px;padding-bottom:28px}
@@ -76,13 +71,9 @@ footer .links a:hover{color:var(--ink)}
 
 @media (max-width:1199px){
   .split{grid-template-columns:1fr;row-gap:20px}
-  .head .role{display:none}
 }
 @media (max-width:809px){
   .pad{padding:0 20px}
-  .head .name{width:auto;font-size:17px}
-  .head nav{gap:14px}
-  .head .nav-work{display:none}
   .hero{padding-top:110px}
   .hero h1{font-size:34px}
   .hero h1 br{display:none}
@@ -130,7 +121,7 @@ footer .links a:hover{color:var(--ink)}
 @media (max-width:809px){.it.three{grid-template-columns:1fr}}
 </style>
 
-<header class="head pad">
+<header class="site-head">
   <a class="name" href="./">Evelin Achu Jacob</a>
   <span class="role">Industrial &amp; Interaction Designer</span>
   <nav>
